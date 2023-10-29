@@ -1,5 +1,6 @@
-![image](https://github.com/hunter-isaiah96/mylinx/assets/8966201/3265c190-51ae-458c-b4a7-2deee617bcac)
 # MyLinx Linktr.ee Clone built with Nuxt, Vuetify, Planetscale and Drizzle ORM
+
+![image](https://github.com/hunter-isaiah96/mylinx/assets/8966201/3265c190-51ae-458c-b4a7-2deee617bcac)
 
 # Nuxt 3 Minimal Starter
 
@@ -76,3 +77,27 @@ bun run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+## Database Connectivity
+
+You will need to create a .env file with your Planetscale database url the DATABASE_URL variable.
+Once you have your database url in your .env file, run
+
+```bash
+yarn db:push
+```
+
+This will create all of the tables in your database. Any time you make changes to the schema file
+and you want to save them to your database, run
+
+```bash
+yarn db:push
+```
+
+To view and edit your database in an interface, use the comment
+
+```bash
+yarn db:view
+```
+
+to launch the drizzle-kit studio database viewer/editor.
