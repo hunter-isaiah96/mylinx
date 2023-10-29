@@ -5,10 +5,14 @@ export default defineNuxtConfig({
   devServer: {
     port: 3000,
   },
+
   vuetify: {
     /* vuetify options */
     vuetifyOptions: {
       // @TODO: list all vuetify options
+      theme: {
+        defaultTheme: "dark",
+      },
     },
     moduleOptions: {
       /* nuxt-vuetify module options */
