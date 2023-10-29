@@ -80,24 +80,26 @@ Check out the [deployment documentation](https://nuxt.com/docs/getting-started/d
 
 ## Database Connectivity
 
-You will need to create a .env file with your Planetscale database url the DATABASE_URL variable.
+You will need to create a .env file with your Planetscale database url the `DATABASE_URL` variable.
+![image](https://github.com/hunter-isaiah96/mylinx/assets/8966201/6d681a6d-851e-43e1-a8c8-526502650c2f)
+
+If you get an SSL Version Number error, in your `DATABASE_URL` variable,
+replace  ```?sslaccept=strict``` with ```?ssl={"rejectUnauthorized":true}```
+
 Once you have your database url in your .env file, run
 
 ```bash
 yarn db:push
 ```
 
-This will create all of the tables in your database. Any time you make changes to the schema file
-and you want to save them to your database, run
+This will create all of the tables in your database. Any time you make changes to the schema file in `@/drizzle/schema.ts`
+and you want to save the changes to your database, run that same command.
 
-```bash
-yarn db:push
-```
-
-To view and edit your database in an interface, use the comment
+To view and edit your database in an interface, run
 
 ```bash
 yarn db:view
 ```
 
-to launch the drizzle-kit studio database viewer/editor.
+This will launch the drizzle-kit studio database viewer/editor.
+![image](https://github.com/hunter-isaiah96/mylinx/assets/8966201/1a9b8a29-ab2d-4439-b881-58118bf4b06a)
