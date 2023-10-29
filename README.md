@@ -1,3 +1,6 @@
+![image](https://github.com/hunter-isaiah96/mylinx/assets/8966201/3265c190-51ae-458c-b4a7-2deee617bcac)
+# MyLinx Linktr.ee Clone built with Nuxt, Vuetify, Planetscale and Drizzle ORM
+
 # Nuxt 3 Minimal Starter
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
