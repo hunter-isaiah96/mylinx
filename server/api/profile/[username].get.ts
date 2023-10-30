@@ -5,9 +5,9 @@ import { profile, blocks } from "~/drizzle/schema"
 export default defineEventHandler(async (event) => {
   try {
     if (event.context.params) {
-      const id = parseInt(event.context.params.id) as number
+      const username = event.context.params.username as string
       const profileResult = await db.query.profile.findFirst({
-        where: eq(profile.id, id),
+        where: eq(profile.displayName, username),
         columns: {
           createdAt: false,
           updatedAt: false,

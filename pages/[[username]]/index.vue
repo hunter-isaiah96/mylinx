@@ -1,5 +1,8 @@
 <template>
-  <v-container class="my-6 pa-0 main-container">
+  <v-container
+    v-if="profile"
+    class="my-6 pa-0 main-container"
+  >
     <v-card
       class="text-center"
       color="transparent"
@@ -47,7 +50,13 @@
 </template>
 <script setup>
 const route = useRoute()
-const { data: profile } = await useFetch(`/api/profile/${route.params.id}`)
+const profile = await $fetch(`/api/profile/${route.params.username}`)
+if (!profile) {
+  showError({
+    statusCode: 404,
+    statusMessage: "User not found",
+  })
+}
 </script>
 <style>
 .profile-bio {

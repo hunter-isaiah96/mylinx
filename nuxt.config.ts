@@ -5,7 +5,13 @@ export default defineNuxtConfig({
   devServer: {
     port: 3000,
   },
-
+  vite: {
+    server: {
+      fs: {
+        strict: false,
+      },
+    },
+  },
   vuetify: {
     /* vuetify options */
     vuetifyOptions: {
