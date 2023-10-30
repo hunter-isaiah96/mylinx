@@ -15,10 +15,10 @@ export default defineEventHandler(async (event) => {
       userId: Number(newUserResult.insertId),
       displayName: body.username,
     }
-    await db.insert(profile).values(newUserProfile)
+    const insertNewUser = await db.insert(profile).values(newUserProfile)
+    console.log(insertNewUser)
     return {
-      success: true,
-      message: "User created!",
+      // token
     }
   } catch (e: any) {
     throw createError({
