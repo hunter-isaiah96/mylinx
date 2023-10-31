@@ -17,7 +17,9 @@ export const users = mysqlTable("users", {
 
 export const profile = mysqlTable("profile", {
   id: int("id").primaryKey().autoincrement().notNull(),
-  userId: int("user_id").notNull(),
+  userId: int("user_id")
+    .references(() => users.id, { onDelete: "cascade" })
+    .notNull(),
   displayName: varchar("display_name", { length: 255 }).unique().notNull(),
   bio: text("bio"),
   createdAt: timestamp("created_at")
@@ -43,19 +45,6 @@ export const blocks = mysqlTable("blocks", {
     .notNull(),
 })
 
-export const photos = mysqlTable("photos", {
-  id: int("id").primaryKey().autoincrement().notNull(),
-  url: text("url").notNull(),
-  userId: int("user_id").notNull(),
-  deleted: boolean("deleted").default(false),
-  createdAt: timestamp("created_at")
-    .default(sql`CURRENT_TIMESTAMP`)
-    .notNull(),
-  updatedAt: timestamp("updated_at")
-    .default(sql`CURRENT_TIMESTAMP`)
-    .notNull(),
-})
-
 // Relationships
 export const profileUserRelation = relations(profile, ({ one, many }) => ({
   user: one(users, {
@@ -72,13 +61,28 @@ export const blockToUserRelations = relations(blocks, ({ one }) => ({
   }),
 }))
 
-export const userPhotosRelationship = relations(users, ({ many }) => ({
-  photos: many(photos),
-}))
+// Photos Schema
 
-export const photosToUsersRelationship = relations(photos, ({ one }) => ({
-  user: one(users, {
-    fields: [photos.userId],
-    references: [users.id],
-  }),
-}))
+// export const photos = mysqlTable("photos", {
+//   id: int("id").primaryKey().autoincrement().notNull(),
+//   url: text("url").notNull(),
+//   userId: int("user_id").notNull(),
+//   deleted: boolean("deleted").default(false),
+//   createdAt: timestamp("created_at")
+//     .default(sql`CURRENT_TIMESTAMP`)
+//     .notNull(),
+//   updatedAt: timestamp("updated_at")
+//     .default(sql`CURRENT_TIMESTAMP`)
+//     .notNull(),
+// })
+
+// export const userPhotosRelationship = relations(users, ({ many }) => ({
+//   photos: many(photos),
+// }))
+
+// export const photosToUsersRelationship = relations(photos, ({ one }) => ({
+//   user: one(users, {
+//     fields: [photos.userId],
+//     references: [users.id],
+//   }),
+// }))
