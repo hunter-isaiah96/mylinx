@@ -1,5 +1,5 @@
 import { db } from "@/server/planetscale-service"
-import { eq, asc, sql } from "drizzle-orm"
+import { eq, asc } from "drizzle-orm"
 import { profile, blocks } from "~/drizzle/schema"
 
 export default defineEventHandler(async (event) => {

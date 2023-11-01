@@ -1,6 +1,7 @@
 import { db } from "@/server/planetscale-service"
 import * as argon2 from "argon2"
 import { users, profile } from "@/drizzle/schema"
+import jwt from "jsonwebtoken"
 
 export default defineEventHandler(async (event) => {
   try {
@@ -15,8 +16,10 @@ export default defineEventHandler(async (event) => {
       userId: Number(newUserResult.insertId),
       displayName: body.username,
     }
-    const insertNewUser = await db.insert(profile).values(newUserProfile)
-    console.log(insertNewUser)
+    const insertNewUserProfile = await db.insert(profile).values(newUserProfile)
+
+    const accessToken = jwt.sign({ user: newUserResult.insertId }, `${process.env.JWT_SECRET}`, { expiresIn: "15m" })
+    const refreshToken = jwt.sign({ user: newUserResult.insertId }, `${process.env.JWT_SECRET}`, { expiresIn: "1y" })
     return {
       // token
     }

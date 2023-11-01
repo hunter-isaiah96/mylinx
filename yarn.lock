@@ -1255,6 +1255,13 @@
   dependencies:
     "@types/node" "*"
 
+"@types/jsonwebtoken@^9.0.4":
+  version "9.0.4"
+  resolved "https://registry.yarnpkg.com/@types/jsonwebtoken/-/jsonwebtoken-9.0.4.tgz#8b74bbe87bde81a3469d4b32a80609bec62c23ec"
+  integrity sha512-8UYapdmR0QlxgvJmyE8lP7guxD0UGVMfknsdtCFZh4ovShdBl3iOI4zdvqBHrB/IS+xUj3PSx73Qkey1fhWz+g==
+  dependencies:
+    "@types/node" "*"
+
 "@types/mime@*":
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-3.0.3.tgz#886674659ce55fe7c6c06ec5ca7c0eb276a08f91"
@@ -1948,6 +1955,11 @@ chalk@^5.2.0, chalk@^5.3.0:
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-5.3.0.tgz#67c20a7ebef70e7f3970a01f90fa210cb6860385"
   integrity sha512-dLitG79d+GV1Nb/VYcCDFivJeK1hiukt9QjRNVOsUtTy1rR1YJsmpGGTZ3qJos+uw7WmWF4wUwBd9jxjocFC2w==
+
+check-password-strength@^2.0.7:
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/check-password-strength/-/check-password-strength-2.0.7.tgz#d8fd6c1a274267c7ddd9cd15c71a3cfb6ad35baa"
+  integrity sha512-VyklBkB6dOKnCIh63zdVr7QKVMN9/npwUqNAXxWrz8HabVZH/n/d+lyNm1O/vbXFJlT/Hytb5ouYKYGkoeZirQ==
 
 chokidar@^3.5.1, chokidar@^3.5.3:
   version "3.5.3"
