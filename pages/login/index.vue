@@ -12,6 +12,7 @@
       <v-card-title class="text-h3 mb-3 text-center"> {{ isLogin ? "Welcome back" : "Join MyLinx" }} </v-card-title>
       <v-card-subtitle class="text-center"> {{ isLogin ? "Login to MyLinx" : "Sign up for free!" }} </v-card-subtitle>
       <v-card-text>
+        <!-- Login / Register Form -->
         <v-form
           @submit.prevent="submitForm"
           :disabled="authenticating"
@@ -19,54 +20,73 @@
           ref="userForm"
           class="mt-12"
         >
-          <v-text-field
-            :rules="emailRules"
-            v-if="!isLogin"
-            v-model="formData.username"
-            label="Email"
-            required
-          ></v-text-field>
-          <v-text-field
-            :rules="isLogin ? usernameLoginRules : usernameRegisterRules"
-            :label="isLogin ? 'Email or username' : 'Username'"
-            v-model="formData.email"
-            required
-          ></v-text-field>
-          <v-text-field
-            v-model="formData.password"
-            label="Password"
-            type="password"
-            :hide-details="!isLogin"
-            required
-          >
-          </v-text-field>
-          <div
-            v-if="!isLogin"
-            class="mb-4 mt-2"
-            :class="{
-              'text-red-darken-2': passwordValidation.id == 0,
-              'text-yellow-darken-2': passwordValidation.id == 1,
-              'text-blue-darken-2': passwordValidation.id == 2,
-              'text-green-darken-2': passwordValidation.id == 3,
-            }"
-          >
-            {{ passwordValidation.value }}
+          <div v-if="isLogin">
+            <v-text-field
+              :rules="usernameLoginRules"
+              label="Email or username"
+              v-model="formData.username"
+              required
+            ></v-text-field>
+            <v-text-field
+              :rules="passwordRules"
+              v-model="formData.password"
+              label="Password"
+              type="password"
+              required
+            >
+            </v-text-field>
           </div>
-
-          <v-text-field
-            v-model="formData.confirmPassword"
-            label="Confirm Password"
-            type="password"
-            v-if="!isLogin"
-            required
-          ></v-text-field>
+          <!-- Register Fields -->
+          <div v-else>
+            <v-text-field
+              :rules="emailRules"
+              label="Email"
+              v-model="formData.email"
+              required
+            >
+            </v-text-field
+            ><v-text-field
+              :rules="usernameRegisterRules"
+              v-model="formData.username"
+              label="Username"
+              required
+            ></v-text-field>
+            <v-text-field
+              :hide-details="!!formData.password"
+              :rules="passwordRules"
+              v-model="formData.password"
+              label="Password"
+              type="password"
+              required
+            >
+            </v-text-field>
+            <div
+              v-if="formData.password"
+              class="mb-4 mt-2 text-transparent"
+              :class="{
+                'text-red-darken-1': passwordValidation.id == 0,
+                'text-yellow-darken-1': passwordValidation.id == 1,
+                'text-blue-darken-1': passwordValidation.id == 2,
+                'text-green-darken-1': passwordValidation.id == 3,
+              }"
+            >
+              {{ passwordValidation.value }}
+            </div>
+            <v-text-field
+              v-model="formData.confirmPassword"
+              label="Confirm Password"
+              type="password"
+              v-if="!isLogin"
+              required
+            ></v-text-field>
+          </div>
           <v-btn
             :disabled="authenticating"
             type="submit"
             size="large"
             block
           >
-            {{ isLogin ? "Login" : "Register" }}
+            {{ isLogin ? "Log in" : "Create Account" }}
           </v-btn>
         </v-form>
       </v-card-text>
@@ -76,8 +96,9 @@
           class="ml-2"
           @click="toggleLoginRegister()"
           :disabled="authenticating"
+          variant="plain"
         >
-          {{ isLogin ? "Register" : "Login" }}
+          {{ isLogin ? "Sign up" : "Log in" }}
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -102,10 +123,10 @@ const isLogin = ref(route.query.register ? false : true)
 const userForm = ref<any>(null)
 const formData = ref({
   valid: false,
+  email: "",
   username: "",
   password: "",
   confirmPassword: "",
-  email: "",
 })
 
 // Username Validation
@@ -117,7 +138,6 @@ const usernameLoginRules = [
     else return true
   },
 ]
-
 const usernameRegisterRules = [(v: string) => v.length >= 3 || "Username must be 3 characters or longer"]
 
 // Email Validation
@@ -127,6 +147,12 @@ const emailRules = [
   },
 ]
 
+// Password Validation
+const passwordRules = [
+  (v: string) => {
+    return !!v || "Please enter a password"
+  },
+]
 const passwordValidation = computed(() => passwordStrength(formData.value.password))
 
 // Login/Register

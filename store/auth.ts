@@ -4,7 +4,8 @@ export const useAuthStore = defineStore({
   id: "auth",
   state: () => ({
     authenticating: false,
-    token: null as string | null,
+    accessToken: null as string | null,
+    refreshToken: null as string | null,
   }),
   actions: {
     async login(username: string, password: string) {
@@ -17,8 +18,8 @@ export const useAuthStore = defineStore({
             password,
           },
         })
-        localStorage.setItem("jwtToken", accessToken)
-        localStorage.setItem("jwtToken", refreshToken)
+        this.accessToken = accessToken
+        this.refreshToken = refreshToken
         navigateTo({ path: "/admin", query: {}, replace: true })
       } catch (e) {
         console.log(e)
@@ -37,8 +38,8 @@ export const useAuthStore = defineStore({
             password,
           },
         })
-        localStorage.setItem("jwtToken", accessToken)
-        localStorage.setItem("jwtToken", refreshToken)
+        this.accessToken = accessToken
+        this.refreshToken = refreshToken
         navigateTo({ path: "/admin", query: {}, replace: true })
       } catch (e) {
         console.log(e)
@@ -47,7 +48,11 @@ export const useAuthStore = defineStore({
       }
     },
     logout() {
-      this.token = null
+      this.accessToken = null
     },
+  },
+  persist: {
+    storage: persistedState.localStorage,
+    paths: ["accessToken", "refreshToken"],
   },
 })

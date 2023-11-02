@@ -16,12 +16,14 @@ export default defineEventHandler(async (event) => {
       userId: Number(newUserResult.insertId),
       displayName: body.username,
     }
-    const insertNewUserProfile = await db.insert(profile).values(newUserProfile)
+    await db.insert(profile).values(newUserProfile)
 
     const accessToken = jwt.sign({ user: newUserResult.insertId }, `${process.env.JWT_SECRET}`, { expiresIn: "15m" })
     const refreshToken = jwt.sign({ user: newUserResult.insertId }, `${process.env.JWT_SECRET}`, { expiresIn: "1y" })
+
     return {
-      // token
+      accessToken,
+      refreshToken,
     }
   } catch (e: any) {
     throw createError({

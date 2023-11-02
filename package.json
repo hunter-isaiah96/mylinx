@@ -15,6 +15,7 @@
   "devDependencies": {
     "@invictus.codes/nuxt-vuetify": "^0.3.0",
     "@nuxt/devtools": "latest",
+    "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
     "@types/express": "^4.17.20",
     "drizzle-kit": "^0.19.13",
     "nuxt": "^3.8.0",
