@@ -8,6 +8,13 @@
       "when": 1698483875759,
       "tag": "0000_large_strong_guy",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1698922606148,
+      "tag": "0001_sturdy_rogue",
+      "breakpoints": true
     }
   ]
 }
