@@ -1,33 +1,45 @@
 import { db } from "@/server/planetscale-service"
 import { eq, asc } from "drizzle-orm"
-import { profile, blocks } from "~/drizzle/schema"
+import { profile, blocks } from "@/drizzle/schema"
 
 export default defineEventHandler(async (event) => {
-  try {
-    if (event.context.params) {
-      const username = event.context.params.username as string
-      const profileResult = await db.query.profile.findFirst({
-        where: eq(profile.displayName, username),
-        columns: {
-          createdAt: false,
-          updatedAt: false,
-        },
-        with: {
-          blocks: {
-            columns: {
-              createdAt: false,
-              updatedAt: false,
-            },
-            orderBy: [asc(blocks.position)],
-          },
-        },
-      })
-      return profileResult
-    }
-  } catch (e: any) {
+  // Check if the required parameters are present and valid
+  if (!event.context.params || typeof event.context.params.username !== "string") {
     throw createError({
       statusCode: 400,
-      statusMessage: e.message,
+      statusMessage: "Invalid request parameters",
+    })
+  }
+
+  // Extract the username from the request parameters
+  const username = event.context.params.username
+
+  try {
+    // Query the database for the profile matching the provided username
+    const profileResult = await db.query.profile.findFirst({
+      where: eq(profile.displayName, username),
+      columns: {
+        createdAt: false,
+        updatedAt: false,
+      },
+      with: {
+        blocks: {
+          columns: {
+            createdAt: false,
+            updatedAt: false,
+          },
+          orderBy: [asc(blocks.position)],
+        },
+      },
+    })
+
+    // Return the profile result
+    return profileResult
+  } catch (error) {
+    // Handle any errors that occur during the database query
+    throw createError({
+      statusCode: 500, // Use 500 for server error
+      statusMessage: "An error occurred while processing the request",
     })
   }
 })
