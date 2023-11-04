@@ -32,24 +32,35 @@
     </v-card>
   </v-container>
 </template>
+
 <script setup lang="ts">
+// Define page meta for authentication
+
 import { useAuthStore } from "@/store/auth"
 import { storeToRefs } from "pinia"
 
 // Get the current route using useRoute
 const route = useRoute()
 
-// Change Webpage Title
+// Set the webpage title
 useHead({
-  title: "MyLinx", // Set the webpage title
+  title: "MyLinx",
 })
 
-// Pinia Auth Store
+definePageMeta({
+  auth: {
+    unauthenticatedOnly: true,
+    navigateAuthenticatedTo: "/",
+  },
+})
+
+// Access the Pinia Auth Store
 const { authenticating } = storeToRefs(useAuthStore())
 
 // Determine if it's a login or registration form
 const isLogin = ref(route.query.register ? false : true)
 
+// Computed properties for dynamic text
 const title = computed(() => (isLogin.value ? "Welcome back" : "Join MyLinx"))
 const subtitle = computed(() => (isLogin.value ? "Login to MyLinx" : "Sign up for free!"))
 const actionPrompt = computed(() => (isLogin.value ? "Don't have an account?" : "Already have an account."))
@@ -59,6 +70,6 @@ const actionButtonText = computed(() => (isLogin.value ? "Sign up" : "Log in"))
 const toggleLoginRegister = async () => {
   isLogin.value = !isLogin.value // Toggle the isLogin flag
   const query = isLogin.value ? {} : { register: "true" }
-  navigateTo({ query, replace: true }) // Add or Remove register query
+  navigateTo({ query, replace: true }) // Add or remove the 'register' query
 }
 </script>

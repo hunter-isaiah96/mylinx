@@ -3,16 +3,20 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   // List of Nuxt.js modules to include
-  modules: ["@invictus.codes/nuxt-vuetify", "@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt"],
-
+  modules: ["@invictus.codes/nuxt-vuetify", "@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt", "@sidebase/nuxt-auth"],
+  plugins: ["@/plugins/vue3-toastify"],
   // Application configuration
+  auth: {
+    provider: {
+      type: "authjs",
+    },
+  },
   app: {
     head: {
       // Set the title for the application
       title: "MyLinx",
     },
   },
-
   // Development server configuration
   devServer: {
     // Specify the port for the development server
@@ -33,8 +37,5 @@ export default defineNuxtConfig({
       // Nuxt Vuetify module options
       treeshaking: true, // Enable treeshaking to optimize bundle size
     },
-
-    // Vite plugin Vuetify options
-    autoImport: true, // Automatically import Vuetify components
   },
 })

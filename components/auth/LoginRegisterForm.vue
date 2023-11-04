@@ -81,12 +81,9 @@
 <script setup lang="ts">
 import { passwordStrength } from "check-password-strength"
 import { useAuthStore } from "@/store/auth"
-import { storeToRefs } from "pinia"
-
 // Store setup
-const { login, register } = useAuthStore()
-const route = useRoute()
-
+const { setAuthenticating } = useAuthStore()
+const { signIn } = useAuth()
 // Store user input data
 const formData = ref({
   valid: false,
@@ -98,28 +95,28 @@ const formData = ref({
 
 // Common validation rules
 const commonRules = {
-  required: (v) => !!v || "This field is required",
+  required: (v: string) => !!v || "This field is required",
 }
 
 // Validation rules for the login form
 const loginRules = {
-  username: [commonRules.required, (v) => v.length > 2 || "Usernames must be 3 characters or longer"],
+  username: [commonRules.required, (v: string) => v.length > 2 || "Usernames must be 3 characters or longer"],
   password: [commonRules.required],
 }
 
 // Validation rules for the registration form
 const registrationRules = {
-  email: [commonRules.required, (v) => /\S+@\S+\.\S+/.test(v) || "That email doesn't look right. Try again"],
-  username: [commonRules.required, (v) => v.length >= 3 || "Username must be 3 characters or longer"],
+  email: [commonRules.required, (v: string) => /\S+@\S+\.\S+/.test(v) || "That email doesn't look right. Try again"],
+  username: [commonRules.required, (v: string) => v.length >= 3 || "Username must be 3 characters or longer"],
   password: [commonRules.required],
-  confirmPassword: [commonRules.required, (v) => v == formData.value.password || "Password does not match"],
+  confirmPassword: [commonRules.required, (v: string) => v == formData.value.password || "Password does not match"],
 }
 
 // Calculate password strength
 const passwordValidation = computed(() => passwordStrength(formData.value.password))
 
 // Props
-const props = defineProps({
+defineProps({
   isLogin: Boolean,
   authenticating: Boolean,
 })
@@ -127,12 +124,18 @@ const props = defineProps({
 // Function to submit the form (login or registration)
 const submitForm = async () => {
   if (!formData.value.valid) return // Check if the form is valid
-  if (props.isLogin) {
-    // If it's a login form, call the login function
-    login(formData.value.username, formData.value.password)
-  } else {
-    // If it's a registration form, call the register function
-    register(formData.value.email, formData.value.username, formData.value.password)
+  setAuthenticating(true)
+  const { error }: any = await signIn("credentials" as any, { username: formData.value.username, password: formData.value.password, redirect: false })
+  if (error) {
+    useNuxtApp().$toast.error(error, { theme: "colored" })
   }
+  setAuthenticating(false)
+  // if (props.isLogin) {
+  //   // If it's a login form, call the login function
+  //   login(formData.value.username, formData.value.password)
+  // } else {
+  //   // If it's a registration form, call the register function
+  //   register(formData.value.email, formData.value.username, formData.value.password)
+  // }
 }
 </script>

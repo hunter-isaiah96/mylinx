@@ -5,22 +5,18 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn @click="token ? adminAction() : loginAction()">
-        {{ token ? "Admin" : "Login" }}
+      <v-btn @click="loggedIn ? adminAction() : loginAction()">
+        {{ loggedIn ? "Admin" : "Login" }}
       </v-btn>
-      <v-btn @click="token ? logoutAction() : signupAction()">
-        {{ token ? "Log out" : "Sign Up for Free" }}
+      <v-btn @click="loggedIn ? logoutAction() : signupAction()">
+        {{ loggedIn ? "Log out" : "Sign Up for Free" }}
       </v-btn>
     </v-app-bar>
   </v-app>
 </template>
 <script setup lang="ts">
-import { useAuthStore } from "@/store/auth"
-import { storeToRefs } from "pinia"
-
-const { token } = storeToRefs(useAuthStore())
-const { logout } = useAuthStore()
-
+const { status, signOut } = useAuth()
+const loggedIn = status.value === "authenticated"
 const adminAction = () => {
   // Handle the admin action (e.g., navigate to admin dashboard)
   console.log("Admin action")
@@ -35,7 +31,8 @@ const loginAction = () => {
 
 const logoutAction = () => {
   // Handle the logout action
-  logout()
+  // logout()
+  signOut()
 }
 
 const signupAction = () => {

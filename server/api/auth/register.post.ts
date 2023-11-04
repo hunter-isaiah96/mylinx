@@ -1,7 +1,6 @@
 import { db } from "@/server/planetscale-service"
 import * as argon2 from "argon2"
 import { users, profile } from "@/drizzle/schema"
-import jwt from "jsonwebtoken"
 
 export default defineEventHandler(async (event) => {
   try {
@@ -31,12 +30,14 @@ export default defineEventHandler(async (event) => {
 
     // Generate access and refresh tokens for the new user
     const userId = newUserResult.insertId
-    const accessToken = jwt.sign({ user: userId }, process.env.JWT_SECRET as string, { expiresIn: "15m" })
-    const refreshToken = jwt.sign({ user: userId }, process.env.JWT_SECRET as string, { expiresIn: "1y" })
+    // const accessToken = createNewToken({ user: userId }, "15m")
+    // const refreshToken = createNewToken({ user: userId }, "1y")
+
+    // setCookie(event, "accessToken", accessToken, { httpOnly: true })
+    // setCookie(event, "refreshToken", refreshToken, { httpOnly: true })
 
     return {
-      accessToken,
-      refreshToken,
+      success: true,
     }
   } catch (error: any) {
     // Handle errors and return a standardized error response
