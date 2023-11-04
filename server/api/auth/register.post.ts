@@ -3,9 +3,20 @@ import * as argon2 from "argon2"
 import { users, profile } from "@/drizzle/schema"
 
 export default defineEventHandler(async (event) => {
+  // Function to validate an email address using a regex test
+  function validateEmail(email: string) {
+    const emailRegex = /^[\p{L}0-9._%+-]+@[\p{L}0-9.-]+\.[A-Za-z]{2,}(?:\.[A-Za-z]+)?$/
+    return emailRegex.test(email)
+  }
+
   try {
     // Read the request body
     const body = await readBody(event)
+
+    // Validate the email address
+    if (!validateEmail(body.email)) {
+      throw new Error("Invalid email address")
+    }
 
     // Hash the user's password using argon2
     const hashedPassword = await argon2.hash(body.password)
@@ -26,18 +37,10 @@ export default defineEventHandler(async (event) => {
     }
 
     // Insert the user profile into the database
-    await db.insert(profile).values(newUserProfile)
-
-    // Generate access and refresh tokens for the new user
-    const userId = newUserResult.insertId
-    // const accessToken = createNewToken({ user: userId }, "15m")
-    // const refreshToken = createNewToken({ user: userId }, "1y")
-
-    // setCookie(event, "accessToken", accessToken, { httpOnly: true })
-    // setCookie(event, "refreshToken", refreshToken, { httpOnly: true })
+    const result = await db.insert(profile).values(newUserProfile)
 
     return {
-      success: true,
+      newUser: result,
     }
   } catch (error: any) {
     // Handle errors and return a standardized error response

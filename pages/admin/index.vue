@@ -9,8 +9,9 @@
   </v-app>
 </template>
 <script setup lang="ts">
+definePageMeta({ middleware: "auth" })
 const route = useRoute()
-const headers = useRequestHeaders(["cookie"]) as HeadersInit
-const stuff = await useFetch("/api/auth/check", { headers })
+// const headers = useRequestHeaders(["cookie"]) as HeadersInit
+// await useFetch("/api/auth/check", { headers })
 // await useFetch("/api/auth/check")
 </script>

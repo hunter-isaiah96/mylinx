@@ -34,25 +34,20 @@
 </template>
 
 <script setup lang="ts">
-// Define page meta for authentication
-
+// Import statements
 import { useAuthStore } from "@/store/auth"
 import { storeToRefs } from "pinia"
 
-// Get the current route using useRoute
-const route = useRoute()
-
-// Set the webpage title
-useHead({
-  title: "MyLinx",
-})
-
+// Define page meta for authentication
 definePageMeta({
   auth: {
     unauthenticatedOnly: true,
     navigateAuthenticatedTo: "/",
   },
 })
+
+// Get the current route using useRoute
+const route = useRoute()
 
 // Access the Pinia Auth Store
 const { authenticating } = storeToRefs(useAuthStore())

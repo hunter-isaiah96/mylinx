@@ -106,7 +106,7 @@ const loginRules = {
 
 // Validation rules for the registration form
 const registrationRules = {
-  email: [commonRules.required, (v: string) => /\S+@\S+\.\S+/.test(v) || "That email doesn't look right. Try again"],
+  email: [commonRules.required, (v: string) => /^[\p{L}0-9._%+-]+@[\p{L}0-9.-]+\.[A-Za-z]{2,}(?:\.[A-Za-z]+)?$/.test(v) || "That email doesn't look right. Try again"],
   username: [commonRules.required, (v: string) => v.length >= 3 || "Username must be 3 characters or longer"],
   password: [commonRules.required],
   confirmPassword: [commonRules.required, (v: string) => v == formData.value.password || "Password does not match"],
@@ -116,26 +116,62 @@ const registrationRules = {
 const passwordValidation = computed(() => passwordStrength(formData.value.password))
 
 // Props
-defineProps({
+const props = defineProps({
   isLogin: Boolean,
   authenticating: Boolean,
 })
+
+// Function to perform login using credentials
+const loginWithCredentials = async (formData: any) => {
+  const { error }: any = await signIn("credentials", {
+    username: formData.username,
+    password: formData.password,
+    redirect: false,
+  })
+  return error
+}
+
+// Function to perform user registration
+const registerUser = async (formData: any) => {
+  try {
+    // Attempt to register the user
+    await $fetch("/api/auth/register", {
+      method: "POST",
+      body: {
+        email: formData.email,
+        username: formData.username,
+        password: formData.password,
+      },
+    })
+
+    // Log in the newly registered user
+    return loginWithCredentials(formData)
+  } catch (error) {
+    // Return a generic error message
+    return { error: "Registration failed. Please try again later." }
+  }
+}
 
 // Function to submit the form (login or registration)
 const submitForm = async () => {
   if (!formData.value.valid) return // Check if the form is valid
   setAuthenticating(true)
-  const { error }: any = await signIn("credentials" as any, { username: formData.value.username, password: formData.value.password, redirect: false })
+
+  const formDataValue = formData.value
+
+  let error = null
+
+  if (props.isLogin) {
+    error = await loginWithCredentials(formDataValue)
+  } else {
+    error = await registerUser(formDataValue)
+  }
+
   if (error) {
     useNuxtApp().$toast.error(error, { theme: "colored" })
   }
+
   setAuthenticating(false)
-  // if (props.isLogin) {
-  //   // If it's a login form, call the login function
-  //   login(formData.value.username, formData.value.password)
-  // } else {
-  //   // If it's a registration form, call the register function
-  //   register(formData.value.email, formData.value.username, formData.value.password)
-  // }
+  navigateTo({ path: "/" })
 }
 </script>

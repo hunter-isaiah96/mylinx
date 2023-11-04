@@ -14,14 +14,15 @@ export default NuxtAuthHandler({
     signIn: "/login",
   },
   callbacks: {
+    // JWT callback to customize the JWT token
     jwt: async ({ token, user }: any) => {
-      const isSignIn = user ? true : false
+      const isSignIn = !!user
       if (isSignIn) {
-        token.uid = user ? user.id || "" : ""
+        token.uid = user ? user.id : ""
       }
       return Promise.resolve(token)
     },
-    // Callback whenever session is checked, see https://next-auth.js.org/configuration/callbacks#session-callback
+    // Session callback to customize the session
     session: async ({ session, token }: any) => {
       ;(session as any).uid = token.id
       return Promise.resolve(session)
@@ -30,10 +31,10 @@ export default NuxtAuthHandler({
   providers: [
     // Configure the CredentialsProvider
     CredentialsProvider.default({
-      name: "Credentials",
-
+      name: "credentials",
       async authorize(credentials: any) {
         const { username, password } = credentials
+
         // Attempt to find a user based on username or email
         const user = await db.query.users.findFirst({
           where: or(eq(users.username, username), eq(users.email, username)),
@@ -42,6 +43,7 @@ export default NuxtAuthHandler({
             password: true,
           },
         })
+
         // If no user is found, throw a 401 Unauthorized error
         if (!user) {
           throw new Error("Login failed. Please check your username and password and try again.")
@@ -54,6 +56,7 @@ export default NuxtAuthHandler({
         if (!isPasswordValid) {
           throw new Error("Login failed. Please check your username and password and try again.")
         }
+
         // Return user information if the credentials are valid
         return user
       },

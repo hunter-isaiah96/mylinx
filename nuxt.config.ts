@@ -7,6 +7,7 @@ export default defineNuxtConfig({
   plugins: ["@/plugins/vue3-toastify"],
   // Application configuration
   auth: {
+    globalAppMiddleware: true,
     provider: {
       type: "authjs",
     },

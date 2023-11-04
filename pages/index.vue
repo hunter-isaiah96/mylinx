@@ -19,7 +19,9 @@ const { status, signOut } = useAuth()
 const loggedIn = status.value === "authenticated"
 const adminAction = () => {
   // Handle the admin action (e.g., navigate to admin dashboard)
-  console.log("Admin action")
+  navigateTo({
+    path: "/admin",
+  })
 }
 
 const loginAction = () => {
@@ -31,8 +33,7 @@ const loginAction = () => {
 
 const logoutAction = () => {
   // Handle the logout action
-  // logout()
-  signOut()
+  signOut({ callbackUrl: "/" })
 }
 
 const signupAction = () => {
