@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <!-- <v-app>
     <v-app-bar>
       <v-app-bar-title> MyLinx </v-app-bar-title>
 
@@ -12,37 +12,40 @@
         {{ loggedIn ? "Log out" : "Sign Up for Free" }}
       </v-btn>
     </v-app-bar>
-  </v-app>
+  </v-app> -->
 </template>
 <script setup lang="ts">
-const { status, signOut } = useAuth()
-const loggedIn = status.value === "authenticated"
-const adminAction = () => {
-  // Handle the admin action (e.g., navigate to admin dashboard)
-  navigateTo({
-    path: "/admin",
-  })
-}
+navigateTo({
+  path: "/login",
+})
+// const { status, signOut } = useAuth()
+// const loggedIn = status.value === "authenticated"
+// const adminAction = () => {
+//   // Handle the admin action (e.g., navigate to admin dashboard)
+//   navigateTo({
+//     path: "/admin",
+//   })
+// }
 
-const loginAction = () => {
-  // Handle the login action (e.g., open a login modal)
-  navigateTo({
-    path: "/login",
-  })
-}
+// const loginAction = () => {
+//   // Handle the login action (e.g., open a login modal)
+//   navigateTo({
+//     path: "/login",
+//   })
+// }
 
-const logoutAction = () => {
-  // Handle the logout action
-  signOut({ callbackUrl: "/" })
-}
+// const logoutAction = () => {
+//   // Handle the logout action
+//   signOut({ callbackUrl: "/" })
+// }
 
-const signupAction = () => {
-  // Handle the sign-up action (e.g., navigate to sign-up page)
-  navigateTo({
-    path: "/login",
-    query: {
-      register: "true",
-    },
-  })
-}
+// const signupAction = () => {
+//   // Handle the sign-up action (e.g., navigate to sign-up page)
+//   navigateTo({
+//     path: "/login",
+//     query: {
+//       register: "true",
+//     },
+//   })
+// }
 </script>

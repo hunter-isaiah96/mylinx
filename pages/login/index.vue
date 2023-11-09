@@ -1,36 +1,35 @@
 <template>
-  <v-container
-    class="d-flex align-center justify-center"
-    style="height: 100vh"
-  >
-    <v-card
-      :loading="authenticating"
-      color="transparent"
-      width="500"
-      flat
-    >
-      <v-card-title class="text-h3 mb-3 text-center"> {{ title }} </v-card-title>
-      <v-card-subtitle class="text-center"> {{ subtitle }} </v-card-subtitle>
-      <v-card-text>
-        <!-- Login / Register Form -->
-        <AuthLoginRegisterForm
-          :isLogin="isLogin"
-          :authenticating="authenticating"
-        />
-      </v-card-text>
-      <v-card-actions>
-        {{ actionPrompt }}
-        <v-btn
-          class="ml-2"
-          @click="toggleLoginRegister()"
-          :disabled="authenticating"
-          variant="plain"
-        >
-          {{ actionButtonText }}
-        </v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-container>
+  <v-app>
+    <v-main class="d-flex align-center justify-center">
+      <v-card
+        :loading="authenticating"
+        color="transparent"
+        width="500"
+        flat
+      >
+        <v-card-title class="text-h3 mb-3 text-center"> {{ title }} </v-card-title>
+        <v-card-subtitle class="text-center"> {{ subtitle }} </v-card-subtitle>
+        <v-card-text>
+          <!-- Login / Register Form -->
+          <AuthLoginRegisterForm
+            :isLogin="isLogin"
+            :authenticating="authenticating"
+          />
+        </v-card-text>
+        <v-card-actions>
+          {{ actionPrompt }}
+          <v-btn
+            class="ml-2"
+            @click="toggleLoginRegister()"
+            :disabled="authenticating"
+            variant="plain"
+          >
+            {{ actionButtonText }}
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-main>
+  </v-app>
 </template>
 
 <script setup lang="ts">
@@ -42,7 +41,7 @@ import { storeToRefs } from "pinia"
 definePageMeta({
   auth: {
     unauthenticatedOnly: true,
-    navigateAuthenticatedTo: "/",
+    navigateAuthenticatedTo: "/admin",
   },
 })
 

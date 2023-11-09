@@ -1,7 +1,7 @@
 export default defineNuxtConfig({
   // Enable Vue Devtools for better development experience
   devtools: { enabled: true },
-
+  ssr: false,
   // List of Nuxt.js modules to include
   modules: ["@invictus.codes/nuxt-vuetify", "@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt", "@sidebase/nuxt-auth"],
   plugins: ["@/plugins/vue3-toastify"],
@@ -30,7 +30,7 @@ export default defineNuxtConfig({
     vuetifyOptions: {
       // Set the default theme to dark
       theme: {
-        defaultTheme: "dark",
+        // defaultTheme: "dark",
       },
     },
 

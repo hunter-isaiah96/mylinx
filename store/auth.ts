@@ -1,20 +1,31 @@
 import { defineStore } from "pinia"
 
-// Define an interface for the response from the authentication API
-interface AuthResponse {
-  accessToken: string
-  refreshToken: string
+export interface User {
+  userId: number
+  displayName: string
+}
+
+interface AuthState {
+  authenticating: boolean
+  currentUser: null | User
 }
 
 export const useAuthStore = defineStore({
   id: "auth",
-  state: () => ({
+  state: (): AuthState => ({
     // State properties for authentication
     authenticating: false,
+    currentUser: null,
   }),
   actions: {
     setAuthenticating(bool: boolean) {
       this.authenticating = bool
+    },
+    async getCurrentUser() {
+      try {
+        const user: User = await $fetch("/api/auth/currentuser")
+        this.currentUser = user
+      } catch (error) {}
     },
   },
 })

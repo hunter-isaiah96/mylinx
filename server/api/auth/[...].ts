@@ -19,12 +19,14 @@ export default NuxtAuthHandler({
       const isSignIn = !!user
       if (isSignIn) {
         token.uid = user ? user.id : ""
+        token.username = user ? user.username : ""
       }
       return Promise.resolve(token)
     },
     // Session callback to customize the session
     session: async ({ session, token }: any) => {
       ;(session as any).uid = token.id
+      ;(session as any).username = token.username
       return Promise.resolve(session)
     },
   },
@@ -40,6 +42,7 @@ export default NuxtAuthHandler({
           where: or(eq(users.username, username), eq(users.email, username)),
           columns: {
             id: true,
+            username: true,
             password: true,
           },
         })
@@ -58,7 +61,10 @@ export default NuxtAuthHandler({
         }
 
         // Return user information if the credentials are valid
-        return user
+        return {
+          id: user.id,
+          username: user.username,
+        }
       },
     }),
   ],
