@@ -1,10 +1,10 @@
 export default defineNuxtConfig({
   // Enable Vue Devtools for better development experience
   devtools: { enabled: true },
-  ssr: false,
   // List of Nuxt.js modules to include
   modules: ["@invictus.codes/nuxt-vuetify", "@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt", "@sidebase/nuxt-auth"],
   plugins: ["@/plugins/vue3-toastify"],
+  css: ["@/assets/scss/global.scss"],
   // Application configuration
   auth: {
     globalAppMiddleware: true,

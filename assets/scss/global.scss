@@ -1,0 +1,13 @@
+.block-input {
+  width: 100%;
+  outline: none;
+}
+.block-editable-text {
+  max-width: 90%;
+}
+.ellipsis-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}

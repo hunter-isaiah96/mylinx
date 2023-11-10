@@ -12,6 +12,7 @@
         :rules="loginRules.username"
         label="Email or username"
         v-model="formData.username"
+        name="username"
         required
       ></v-text-field>
       <v-text-field
@@ -19,6 +20,7 @@
         v-model="formData.password"
         label="Password"
         type="password"
+        name="password"
         required
       >
       </v-text-field>
@@ -29,6 +31,7 @@
         :rules="registrationRules.email"
         label="Email"
         v-model="formData.email"
+        name="email"
         required
       >
       </v-text-field
@@ -36,6 +39,7 @@
         :rules="registrationRules.username"
         v-model="formData.username"
         label="Username"
+        name="username"
         required
       ></v-text-field>
       <v-text-field
@@ -44,6 +48,7 @@
         v-model="formData.password"
         label="Password"
         type="password"
+        name="password"
         required
       >
       </v-text-field>
@@ -64,7 +69,7 @@
         label="Confirm Password"
         type="password"
         :rules="registrationRules.confirmPassword"
-        v-if="!isLogin"
+        name="confirm password"
         required
       ></v-text-field>
     </div>
@@ -85,6 +90,7 @@ import { useAuthStore } from "@/store/auth"
 const { setAuthenticating } = useAuthStore()
 const { signIn } = useAuth()
 // Store user input data
+
 const formData = ref({
   valid: false,
   email: "",

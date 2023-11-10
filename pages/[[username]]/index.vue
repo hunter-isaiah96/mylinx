@@ -50,7 +50,7 @@
 </template>
 <script setup>
 const route = useRoute()
-const profile = await $fetch(`/api/profile/${route.params.username}`)
+const profile = await useFetch(`/api/profile/${route.params.username}`)
 if (!profile) {
   showError({
     statusCode: 404,

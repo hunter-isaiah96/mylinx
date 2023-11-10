@@ -2,6 +2,25 @@ import { db } from "@/server/planetscale-service"
 import { eq, asc } from "drizzle-orm"
 import { profile, blocks } from "@/drizzle/schema"
 
+const fetchProfileWithBlocks = async (username: string) => {
+  return await db.query.profile.findFirst({
+    where: eq(profile.displayName, username),
+    columns: {
+      createdAt: false,
+      updatedAt: false,
+    },
+    with: {
+      blocks: {
+        columns: {
+          createdAt: false,
+          updatedAt: false,
+        },
+        orderBy: [asc(blocks.position)],
+      },
+    },
+  })
+}
+
 export default defineEventHandler(async (event) => {
   // Check if the required parameters are present and valid
   if (!event.context.params || typeof event.context.params.username !== "string") {
@@ -16,30 +35,15 @@ export default defineEventHandler(async (event) => {
 
   try {
     // Query the database for the profile matching the provided username
-    const profileResult = await db.query.profile.findFirst({
-      where: eq(profile.displayName, username),
-      columns: {
-        createdAt: false,
-        updatedAt: false,
-      },
-      with: {
-        blocks: {
-          columns: {
-            createdAt: false,
-            updatedAt: false,
-          },
-          orderBy: [asc(blocks.position)],
-        },
-      },
-    })
-
+    const profileResult = await fetchProfileWithBlocks(username)
+    if (!profileResult) throw new Error("There was an n error occurred processing this request")
     // Return the profile result
     return profileResult
-  } catch (error) {
+  } catch (error: any) {
     // Handle any errors that occur during the database query
     throw createError({
       statusCode: 500, // Use 500 for server error
-      statusMessage: "An error occurred while processing the request",
+      statusMessage: error.message,
     })
   }
 })

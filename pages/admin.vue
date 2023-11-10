@@ -19,12 +19,15 @@
 definePageMeta({ middleware: "auth" })
 import AdminHeader from "@/components/admin/adminHeader.vue"
 import { useAuthStore } from "@/store/auth"
+import { useAdminStore } from "@/store/admin"
 
 const { getCurrentUser } = useAuthStore()
+const { getBlocks } = useAdminStore()
 const { currentUser } = storeToRefs(useAuthStore())
 
 // Load user data
 getCurrentUser()
+getBlocks()
 </script>
 
 <style>
