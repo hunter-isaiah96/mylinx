@@ -71,14 +71,3 @@ const addNewBlock = () => {
   url.value = ""
 }
 </script>
-<style>
-/* .fade-enter-active,
-.fade-leave-active {
-  transition: opacity 2s, transform 2s;
-}
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-  transform: scale(0);
-} */
-</style>

@@ -79,9 +79,11 @@
           cols="1"
         >
           <v-switch
+            v-model="data.active"
             color="green"
             density="compact"
             :disabled="!data.link"
+            @update:model-value="updateBlock(props.data)"
             hide-details
           ></v-switch>
           <v-btn

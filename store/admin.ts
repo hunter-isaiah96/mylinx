@@ -7,10 +7,11 @@ interface AdminState {
 }
 
 export interface Block {
-  id: string
+  id: number
   type: string
   name: string
   link: string
+  active: boolean
 }
 
 export const useAdminStore = defineStore({

@@ -4,12 +4,13 @@ import { getToken } from "#auth"
 import { and, eq } from "drizzle-orm"
 import { block } from "@/drizzle/schema"
 
-const updateBlock = async (profileId: number, blockId: number, updateBlock: { id: string; name: string; link: string }) => {
+const updateBlock = async (profileId: number, blockId: number, updateBlock: { id: string; name: string; link: string; active: boolean }) => {
   await db
     .update(block)
     .set({
       link: updateBlock.link,
       name: updateBlock.name,
+      active: updateBlock.active,
     })
     .where(and(eq(block.profileId, profileId), eq(block.id, blockId)))
 }

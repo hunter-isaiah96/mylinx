@@ -58,7 +58,7 @@ import type { mergeProps } from 'vue'; import type { mergeProps } from 'vue';
 const props = defineProps({
   delete: Function,
   toggle: Function,
-  id: String,
+  id: Number,
 })
 
 const deleteData = () => {
