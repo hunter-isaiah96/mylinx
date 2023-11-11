@@ -1,5 +1,8 @@
 <template>
-  <v-app-bar elevation="1">
+  <v-app-bar
+    elevation="1"
+    app
+  >
     <div class="d-flex align-center nav-item-spacing ml-4">
       <v-btn
         v-for="navItem in headerItems"

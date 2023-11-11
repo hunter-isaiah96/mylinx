@@ -88,29 +88,53 @@
             icon="mdi-trash-can-outline"
             size="small"
             density="comfortable"
-            variant="plain"
-            @click="deleteBlock(data.id)"
+            :variant="trashOpen.variant"
+            :color="trashOpen.color"
+            @click="toggleExpansion('delete')"
             flat
           ></v-btn>
         </v-col>
       </v-row>
     </v-card-text>
+    <v-expansion-panels
+      style="width: 100% !important"
+      v-model="panel"
+    >
+      <DeletePanel
+        :delete="deleteBlock"
+        :toggle="toggleExpansion"
+        :id="data.id"
+      />
+    </v-expansion-panels>
   </v-card>
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, nextTick } from "vue"
 import { type Block, useAdminStore } from "@/store/admin"
+import DeletePanel from "@/components/admin/expansionPanels/deletePanel.vue"
 const { deleteBlock, updateBlock } = useAdminStore()
 
 const editName = ref(false)
 const editURL = ref(false)
-const linkName = ref<HTMLInputElement | null>(null)
-const linkURL = ref<HTMLInputElement | null>(null)
+
+const panel: Ref<string[]> = ref([])
+const linkName: Ref<HTMLInputElement | null> = ref(null)
+const linkURL: Ref<HTMLInputElement | null> = ref(null)
 
 const props = defineProps<{
   data: Block
 }>()
+
+const trashOpen = computed(() => {
+  return panel.value.indexOf("delete") >= 0 ? { variant: "flat" as any, color: "primary" } : { variant: "plain" as any, color: "" }
+})
+
+const toggleExpansion = (name: string) => {
+  const index = panel.value.indexOf(name)
+  if (index >= 0) panel.value = []
+  else panel.value.push(name)
+  console.log(panel.value)
+}
 
 const toggleLinkName = async () => {
   editName.value = true
@@ -133,3 +157,8 @@ const updateURL = async () => {
   updateBlock(props.data)
 }
 </script>
+<style>
+.link-panel .v-expansion-panel-text__wrapper {
+  padding: 0 0 !important;
+}
+</style>

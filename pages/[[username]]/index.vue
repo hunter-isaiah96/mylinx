@@ -48,9 +48,9 @@
     </v-list>
   </v-container>
 </template>
-<script setup>
+<script setup lang="ts">
 const route = useRoute()
-const profile = await useFetch(`/api/profile/${route.params.username}`)
+const profile: any = await useFetch(`/api/profile/${route.params.username}`)
 if (!profile) {
   showError({
     statusCode: 404,

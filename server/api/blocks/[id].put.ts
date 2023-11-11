@@ -1,17 +1,17 @@
 import { db } from "@/server/planetscale-service"
 import { getUserProfileId, getAllBlocks } from "@/server/utils/commonQueries"
 import { getToken } from "#auth"
-import { blocks, profile } from "@/drizzle/schema"
-import { and, asc, eq, gt, sql } from "drizzle-orm"
+import { and, eq } from "drizzle-orm"
+import { block } from "@/drizzle/schema"
 
-const updateBlock = async (profileId: number, blockId: number, block: { id: string; name: string; link: string }) => {
+const updateBlock = async (profileId: number, blockId: number, updateBlock: { id: string; name: string; link: string }) => {
   await db
-    .update(blocks)
+    .update(block)
     .set({
-      link: block.link,
-      name: block.name,
+      link: updateBlock.link,
+      name: updateBlock.name,
     })
-    .where(and(eq(blocks.profileId, profileId), eq(blocks.id, blockId)))
+    .where(and(eq(block.profileId, profileId), eq(block.id, blockId)))
 }
 
 export default defineEventHandler(async (event) => {

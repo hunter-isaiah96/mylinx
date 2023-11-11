@@ -46,7 +46,7 @@ export const profile = mysqlTable(
   }
 )
 
-export const blocks = mysqlTable(
+export const block = mysqlTable(
   "blocks",
   {
     ...commonFields,
@@ -68,9 +68,9 @@ export const blocks = mysqlTable(
 // Relationships
 export const profileUserRelation = relations(profile, ({ one, many }) => ({
   user: one(users, { fields: [profile.userId], references: [users.id] }),
-  blocks: many(blocks),
+  blocks: many(block),
 }))
 
-export const blockToUserRelations = relations(blocks, ({ one }) => ({
-  profile: one(profile, { fields: [blocks.profileId], references: [profile.id] }),
+export const blockToUserRelations = relations(block, ({ one }) => ({
+  profile: one(profile, { fields: [block.profileId], references: [profile.id] }),
 }))

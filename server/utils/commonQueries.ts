@@ -1,5 +1,5 @@
 import { db } from "@/server/planetscale-service"
-import { blocks, profile } from "@/drizzle/schema"
+import { block, profile } from "@/drizzle/schema"
 import { asc, eq } from "drizzle-orm"
 
 export const getUserProfileId = async (token: any) => {
@@ -13,9 +13,9 @@ export const getUserProfileId = async (token: any) => {
 }
 
 export const getAllBlocks = async (profileId: number) => {
-  return await db.query.blocks.findMany({
-    orderBy: [asc(blocks.position)],
-    where: eq(blocks.profileId, profileId),
+  return await db.query.block.findMany({
+    orderBy: [asc(block.position)],
+    where: eq(block.profileId, profileId),
     columns: {
       createdAt: false,
       updatedAt: false,

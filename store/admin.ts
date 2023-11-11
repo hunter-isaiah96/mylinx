@@ -25,16 +25,19 @@ export const useAdminStore = defineStore({
       this.loading = loading
     },
 
-    async getBlocks() {
-      try {
-        this.setLoading(true)
-        const data: Block[] = await $fetch("/api/blocks")
-        this.blocks = data
-      } catch (e) {
-        this.handleError(e)
-      } finally {
-        this.setLoading(false)
-      }
+    // async getBlocks() {
+    //   try {
+    //     this.setLoading(true)
+    //     const data: Block[] = await $fetch("/api/blocks")
+    //     this.blocks = data
+    //   } catch (e) {
+    //     this.handleError(e)
+    //   } finally {
+    //     this.setLoading(false)
+    //   }
+    // },
+    setBlocks(blocks: Block[]) {
+      this.blocks = blocks
     },
     async addBlock(block: Block) {
       try {
@@ -64,7 +67,6 @@ export const useAdminStore = defineStore({
     },
     async updateBlock(block: Block) {
       try {
-        console.log(block)
         const blocks: Block[] = await $fetch(`/api/blocks/${block.id}`, {
           method: "PUT",
           body: block,

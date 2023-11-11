@@ -1,6 +1,6 @@
 import { db } from "@/server/planetscale-service"
 import { eq, asc } from "drizzle-orm"
-import { profile, blocks } from "@/drizzle/schema"
+import { profile, block } from "@/drizzle/schema"
 
 const fetchProfileWithBlocks = async (username: string) => {
   return await db.query.profile.findFirst({
@@ -15,7 +15,7 @@ const fetchProfileWithBlocks = async (username: string) => {
           createdAt: false,
           updatedAt: false,
         },
-        orderBy: [asc(blocks.position)],
+        orderBy: [asc(block.position)],
       },
     },
   })

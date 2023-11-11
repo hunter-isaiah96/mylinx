@@ -1,7 +1,7 @@
 import { db } from "@/server/planetscale-service"
 import { getToken } from "#auth"
-import { blocks, profile } from "~/drizzle/schema"
-import { asc, eq, sql } from "drizzle-orm"
+import { block } from "@/drizzle/schema"
+import { eq, sql } from "drizzle-orm"
 import { getAllBlocks, getUserProfileId } from "~/server/utils/commonQueries"
 
 const fetchLinkTitle = async (link: string): Promise<string> => {
@@ -16,7 +16,7 @@ const fetchLinkTitle = async (link: string): Promise<string> => {
 
 const addBlock = async (profileId: number, blockData: any) => {
   await db.transaction(async (tx) => {
-    await tx.insert(blocks).values({
+    await tx.insert(block).values({
       profileId,
       type: blockData.type,
       name: blockData.name,
@@ -25,11 +25,11 @@ const addBlock = async (profileId: number, blockData: any) => {
     })
 
     await tx
-      .update(blocks)
+      .update(block)
       .set({
-        position: sql`${blocks.position} + 1`,
+        position: sql`${block.position} + 1`,
       })
-      .where(eq(blocks.profileId, profileId))
+      .where(eq(block.profileId, profileId))
   })
 }
 

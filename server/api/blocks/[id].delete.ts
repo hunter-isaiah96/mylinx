@@ -1,23 +1,23 @@
 import { db } from "@/server/planetscale-service"
 import { getToken } from "#auth"
-import { blocks } from "@/drizzle/schema"
-import { and, asc, eq, gt, sql } from "drizzle-orm"
+import { block } from "@/drizzle/schema"
+import { and, eq, gt, sql } from "drizzle-orm"
 
 import { getAllBlocks, getUserProfileId } from "@/server/utils/commonQueries"
 
 const deleteBlock = async (profileId: number, blockId: number) => {
   await db.transaction(async (tx) => {
-    const currentBlock = await tx.query.blocks.findFirst({
-      where: and(eq(blocks.profileId, profileId), eq(blocks.id, blockId)),
+    const currentBlock = await tx.query.block.findFirst({
+      where: and(eq(block.profileId, profileId), eq(block.id, blockId)),
     })
     if (!deleteBlock) throw new Error("There was a problem deleting this block")
-    await tx.delete(blocks).where(and(eq(blocks.profileId, profileId), eq(blocks.id, blockId)))
+    await tx.delete(block).where(and(eq(block.profileId, profileId), eq(block.id, blockId)))
     await tx
-      .update(blocks)
+      .update(block)
       .set({
-        position: sql`${blocks.position} - 1`,
+        position: sql`${block.position} - 1`,
       })
-      .where(and(eq(blocks.profileId, profileId), gt(blocks.position, currentBlock?.position as number)))
+      .where(and(eq(block.profileId, profileId), gt(block.position, currentBlock?.position as number)))
   })
 }
 export default defineEventHandler(async (event) => {

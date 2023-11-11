@@ -10,21 +10,25 @@
           >
             <v-btn
               rounded
-              class="text-capitalize pointer"
+              class="text-capitalize"
               variant="outlined"
               prepend-icon="mdi-page-layout-header"
             >
               Add Header
             </v-btn>
-            <div class="mt-6">
+            <TransitionGroup
+              name="slide-fade"
+              tag="div"
+              class="mt-6 group"
+            >
               <component
                 :key="block.id"
                 v-for="block in blocks"
                 :is="getBlockComponent(block.type)"
                 :data="block"
-                class="mb-5 pointer"
+                class="mb-5"
               />
-            </div>
+            </TransitionGroup>
           </div>
         </div>
       </v-col>
@@ -44,8 +48,24 @@ const getBlockComponent = (type: string) => (type === "header" ? Header : type =
 </script>
 
 <style lang="scss" scoped>
+.group {
+  position: relative;
+}
 $blurtime: 0.07s;
+.slide-fade-move,
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+  transition: all 0.5s ease;
+}
+.slide-fade-enter-from, .slide-fade-leave-to /* .slide-fade-leave-active in <2.1.8 */ {
+  opacity: 0;
+  transform: translateX(30px);
+}
 
+.slide-fade-leave-active {
+  position: absolute;
+  width: 100%;
+}
 .blur {
   transition: $blurtime filter linear;
   -webkit-transition: $blurtime -webkit-filter linear;

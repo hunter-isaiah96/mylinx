@@ -2,10 +2,11 @@ export default defineNuxtConfig({
   // Enable Vue Devtools for better development experience
   devtools: { enabled: true },
   // List of Nuxt.js modules to include
-  modules: ["@invictus.codes/nuxt-vuetify", "@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt", "@sidebase/nuxt-auth"],
+  modules: ["vuetify-nuxt-module", "@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt", "@sidebase/nuxt-auth"],
   plugins: ["@/plugins/vue3-toastify"],
   css: ["@/assets/scss/global.scss"],
   // Application configuration
+  ssr: false,
   auth: {
     globalAppMiddleware: true,
     provider: {
@@ -32,11 +33,6 @@ export default defineNuxtConfig({
       theme: {
         // defaultTheme: "dark",
       },
-    },
-
-    moduleOptions: {
-      // Nuxt Vuetify module options
-      treeshaking: true, // Enable treeshaking to optimize bundle size
     },
   },
 })
