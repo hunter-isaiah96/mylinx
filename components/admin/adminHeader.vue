@@ -94,7 +94,7 @@
             class="mt-6"
             prepend-icon="mdi-logout"
             title="Sign out"
-            @click="signOut()"
+            @click="signOut({ callbackUrl: '/' })"
           ></v-list-item>
         </v-list>
       </v-menu>

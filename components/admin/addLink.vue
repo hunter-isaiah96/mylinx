@@ -3,7 +3,7 @@
     <v-btn
       v-if="!addLinkActive"
       @click="addLinkActive = true"
-      :loading="addingData"
+      :loading="loading"
       class="text-capitalize my-6"
       size="large"
       prepend-icon="mdi-plus"
@@ -50,9 +50,9 @@
 </template>
 <script setup lang="ts">
 import { storeToRefs } from "pinia"
-import { useAdminStore } from "@/store/admin"
+import { useAdminStore, type Block } from "@/store/admin"
 const { addBlock } = useAdminStore()
-const { addLinkActive, addingData } = storeToRefs(useAdminStore())
+const { addLinkActive, loading } = storeToRefs(useAdminStore())
 
 const url = ref("")
 
@@ -67,7 +67,8 @@ const addNewBlock = () => {
     type: "link",
     link: url.value,
     name: "",
-  })
+  } as Block)
+  url.value = ""
 }
 </script>
 <style>

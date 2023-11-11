@@ -1,4 +1,4 @@
-import type { mergeProps } from 'vue';
+import type { mergeProps } from 'vue'; import type { mergeProps } from 'vue';
 <template>
   <v-expansion-panel
     class="link-panel"
@@ -63,5 +63,6 @@ const props = defineProps({
 
 const deleteData = () => {
   props.delete(props.id)
+  props.toggle("delete")
 }
 </script>

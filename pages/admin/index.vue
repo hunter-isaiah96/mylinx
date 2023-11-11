@@ -55,11 +55,11 @@ $blurtime: 0.07s;
 .slide-fade-move,
 .slide-fade-enter-active,
 .slide-fade-leave-active {
-  transition: all 0.5s ease;
+  transition: all 0.2s ease;
 }
 .slide-fade-enter-from, .slide-fade-leave-to /* .slide-fade-leave-active in <2.1.8 */ {
   opacity: 0;
-  transform: translateX(30px);
+  transform: translateY(-30px);
 }
 
 .slide-fade-leave-active {
