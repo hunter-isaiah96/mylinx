@@ -1,5 +1,5 @@
 import { db } from "~/server/initial-services"
-import { eq, asc } from "drizzle-orm"
+import { eq, ne, or, asc } from "drizzle-orm"
 import { profile, block } from "@/drizzle/schema"
 
 const fetchProfileWithBlocks = async (username: string) => {
@@ -11,6 +11,7 @@ const fetchProfileWithBlocks = async (username: string) => {
     },
     with: {
       blocks: {
+        where: or(ne(block.name, ""), ne(block.link, "")),
         columns: {
           createdAt: false,
           updatedAt: false,

@@ -3,14 +3,15 @@ import { getToken } from "#auth"
 import { block } from "@/drizzle/schema"
 import { and, eq, gt, sql } from "drizzle-orm"
 
-import { getAllBlocks, getUserProfileId } from "@/server/utils/commonQueries"
+import { getUserProfileId, getAllBlocks } from "#imports"
+import { CloudinaryImage, deleteCloudinaryImage } from "~/server/utils/cloudinaryUpload"
 
 const deleteBlock = async (profileId: number, blockId: number) => {
+  const currentBlock = await db.query.block.findFirst({
+    where: and(eq(block.profileId, profileId), eq(block.id, blockId)),
+  })
+  if (!currentBlock) throw new Error("There was a problem deleting this block")
   await db.transaction(async (tx) => {
-    const currentBlock = await tx.query.block.findFirst({
-      where: and(eq(block.profileId, profileId), eq(block.id, blockId)),
-    })
-    if (!deleteBlock) throw new Error("There was a problem deleting this block")
     await tx.delete(block).where(and(eq(block.profileId, profileId), eq(block.id, blockId)))
     await tx
       .update(block)
@@ -19,15 +20,13 @@ const deleteBlock = async (profileId: number, blockId: number) => {
       })
       .where(and(eq(block.profileId, profileId), gt(block.position, currentBlock?.position as number)))
   })
+  if (currentBlock.thumbnail) await deleteCloudinaryImage(currentBlock.thumbnail as CloudinaryImage)
 }
 export default defineEventHandler(async (event) => {
   const { params } = event.context
 
   if (!params || typeof params.id !== "string") {
-    throw createError({
-      statusCode: 400,
-      statusMessage: "Invalid request parameters",
-    })
+    throw new Error("Invalid request parameters")
   }
 
   try {
@@ -42,10 +41,11 @@ export default defineEventHandler(async (event) => {
     await deleteBlock(currentUserProfileId, Number(params.id))
 
     return await getAllBlocks(currentUserProfileId)
-  } catch (error: any) {
-    throw createError({
-      statusCode: 400,
-      statusMessage: error.message,
-    })
+  } catch (error: unknown) {
+    if (error instanceof Error)
+      throw createError({
+        statusCode: 400,
+        statusMessage: error.message,
+      })
   }
 })

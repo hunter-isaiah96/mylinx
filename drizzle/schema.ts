@@ -36,7 +36,7 @@ export const profile = mysqlTable(
     userId: int("user_id").notNull(),
     displayName: varchar("display_name", { length: 255 }).unique().notNull(),
     bio: text("bio"),
-    profilePicture: varchar("profile_picture_url", { length: 255 }),
+    profilePicture: varchar("profile_picture", { length: 255 }),
   },
   (table) => {
     return {

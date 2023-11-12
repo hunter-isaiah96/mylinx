@@ -12,6 +12,7 @@ export interface Block {
   name: string
   link: string
   active: boolean
+  thumbnail: object
 }
 
 export const useAdminStore = defineStore({
@@ -25,18 +26,6 @@ export const useAdminStore = defineStore({
     setLoading(loading: boolean) {
       this.loading = loading
     },
-
-    // async getBlocks() {
-    //   try {
-    //     this.setLoading(true)
-    //     const data: Block[] = await $fetch("/api/blocks")
-    //     this.blocks = data
-    //   } catch (e) {
-    //     this.handleError(e)
-    //   } finally {
-    //     this.setLoading(false)
-    //   }
-    // },
     setBlocks(blocks: Block[]) {
       this.blocks = blocks
     },

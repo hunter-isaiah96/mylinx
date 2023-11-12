@@ -1,7 +1,11 @@
 <template>
-  <div v-bind="$attrs">
+  <div
+    v-bind="$attrs"
+    class="d-flex"
+    :class="{ 'justify-center': centered }"
+  >
     <button
-      class="block-editable-text mb-2 d-flex"
+      class="block-editable-text d-flex"
       v-if="!toggle"
       @click="toggleInput"
     >
@@ -9,21 +13,23 @@
         :class="{ 'text-disabled': !model }"
         class="ellipsis-text"
       >
-        {{ model || "Title" }}
+        {{ model || placeholder }}
       </p>
       <v-icon
-        class="ml-2"
+        class="ml-1"
         icon="mdi-pencil-outline"
         size="small"
       ></v-icon>
     </button>
     <input
-      class="block-input mb-2"
+      class="block-input"
+      :class="{ 'text-center pr-5': centered }"
       ref="textInput"
       type="text"
       :value="model"
       v-show="toggle"
       @blur="updateBlockValues"
+      @keydown.enter="updateBlockValues"
       @input="$emit('update:modelValue', (<HTMLTextAreaElement>$event.target).value)"
     />
   </div>
@@ -38,6 +44,11 @@ const props = defineProps({
   model: String,
   fontWeight: String,
   data: Object,
+  placeholder: {
+    type: String,
+    default: "Title",
+  },
+  centered: Boolean,
 })
 defineEmits(["update:modelValue"])
 

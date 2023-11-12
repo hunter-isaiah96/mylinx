@@ -17,11 +17,11 @@ export default defineEventHandler(async (event) => {
     })
     if (!userProfile) throw new Error("There was a problem getting the current user")
     return userProfile
-  } catch (e: any) {
-    throw createError({
-      statusCode: 404,
-      message: e.message,
-    })
+  } catch (error: any) {
+    if (error instanceof Error)
+      throw createError({
+        statusCode: 404,
+        message: error.message,
+      })
   }
-  // return token ? { userId: token.uid, username: token.username } : "no token present"
 })

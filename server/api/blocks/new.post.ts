@@ -1,51 +1,57 @@
+// Import necessary modules and services
 import { db } from "@/server/initial-services"
 import { getToken } from "#auth"
 import { block } from "@/drizzle/schema"
 import { eq, sql } from "drizzle-orm"
-import { getAllBlocks, getUserProfileId } from "@/server/utils/commonQueries"
+import { getUserProfileId, getAllBlocks } from "#imports"
 import { uploadCloudinaryImage } from "@/server/utils/cloudinaryUpload"
 import parser, { Metadata } from "html-metadata-parser"
 
-// Type Definition
+// Define the type of a block
 interface BlockType {
   profileId: number
   type: string
   name: string
   link: string
   position: number
-  thumbnail?: object | null
+  thumbnail?: string | object | null
 }
 
-// Utility Functions
+// Utility function to fetch metadata from a link
 const fetchLinkMetadata = async (link: string): Promise<Metadata> => {
+  // Parse the HTML metadata of the provided link
   // @ts-expect-error
   return await parser.parse(link)
 }
 
-const handleThumbnailUpload = async (blockData: BlockType): Promise<object | null> => {
-  if (blockData.thumbnail) {
-    return (await uploadCloudinaryImage(blockData.thumbnail)) as object | null
+// Utility function to handle the upload of a thumbnail to Cloudinary
+const handleThumbnailUpload = async (thumbnail: string): Promise<object | null> => {
+  // If a thumbnail is provided, upload it to Cloudinary
+  if (thumbnail) {
+    return (await uploadCloudinaryImage(thumbnail)) as object | null
   }
+  // If no thumbnail is provided, return null
   return null
 }
 
-// Main Functionality
+// Main functionality to add a block
 const addBlock = async (profileId: number, blockData: BlockType): Promise<void> => {
-  // Create a new block
+  // Create a new block with updated thumbnail (if available)
   const newBlock: BlockType = {
     profileId,
     type: blockData.type,
     name: blockData.name,
     link: blockData.type === "header" ? "" : blockData.link,
     position: 0,
-    thumbnail: await handleThumbnailUpload(blockData),
+    thumbnail: blockData.type === "header" ? "" : await handleThumbnailUpload(blockData.thumbnail as string),
   }
 
-  // Perform database transaction
-  await db.transaction(async (tx) => {
-    // Batch update: Add Block to Table and Update position of all blocks +1
-
+  // Perform a database transaction
+  await db.transaction(async (tx: any) => {
+    // Insert the new block into the 'block' table
     await tx.insert(block).values(newBlock as any)
+
+    // Update the position of all blocks for the current user by incrementing by 1
     await tx
       .update(block)
       .set({
@@ -55,19 +61,19 @@ const addBlock = async (profileId: number, blockData: BlockType): Promise<void> 
   })
 }
 
-// Event Handler
-export default defineEventHandler(async (event): Promise<object[]> => {
+// Event handler for processing incoming events
+export default defineEventHandler(async (event) => {
   try {
-    // Obtain token and request body
+    // Obtain token and request body from the event
     const token = await getToken({ event })
     const body = await readBody(event)
 
-    // Validate token and body
+    // Validate that both token and body are provided
     if (!token || !body) {
-      throw new Error("Token or body not provided")
+      throw new Error("Authentication token or request body not provided")
     }
 
-    // Get the user's profile ID
+    // Get the user's profile ID using the provided token
     const currentUserProfileId = await getUserProfileId(token)
 
     // Fetch link metadata if the type is "link" and name is not provided
@@ -77,16 +83,17 @@ export default defineEventHandler(async (event): Promise<object[]> => {
       body.thumbnail = metadata.og.image
     }
 
-    // Add a block and update positions
+    // Add a block and update positions in the database
     await addBlock(currentUserProfileId, body)
 
     // Return all blocks for the current user
     return await getAllBlocks(currentUserProfileId)
-  } catch (error: any) {
-    // Handle errors
-    throw createError({
-      statusCode: 400,
-      statusMessage: error.message || "An error occurred",
-    })
+  } catch (error: unknown) {
+    // Handle errors by throwing a custom error
+    if (error instanceof Error)
+      throw createError({
+        statusCode: 400,
+        statusMessage: error.message || "An error occurred",
+      })
   }
 })

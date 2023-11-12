@@ -1,13 +1,14 @@
 import { db } from "~/server/initial-services"
 import { block, profile } from "@/drizzle/schema"
 import { asc, eq } from "drizzle-orm"
+import { JWT } from "next-auth/jwt"
 
-export const getUserProfileId = async (token: any) => {
+export const getUserProfileId = async (token: JWT | null) => {
   const userProfile: any = await db.query.profile.findFirst({
-    where: eq(profile.userId, token.uid as number),
+    where: eq(profile.userId, token?.uid as number),
   })
 
-  if (!userProfile) throw new Error("There was a problem deleting this block")
+  if (!userProfile) throw new Error("There was retrieving the user")
 
   return userProfile.id
 }

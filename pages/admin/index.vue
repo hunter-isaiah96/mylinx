@@ -13,6 +13,7 @@
               class="text-capitalize"
               variant="outlined"
               prepend-icon="mdi-page-layout-header"
+              @click="addBlock({ name: '', type: 'header' } as Block)"
             >
               Add Header
             </v-btn>
@@ -40,8 +41,9 @@
 import AddLink from "@/components/admin/addLink.vue"
 import Header from "@/components/admin/blocks/header.vue"
 import Link from "@/components/admin/blocks/link.vue"
-import { useAdminStore } from "@/store/admin"
+import { useAdminStore, type Block } from "@/store/admin"
 
+const { addBlock } = useAdminStore()
 const { addLinkActive, blocks } = storeToRefs(useAdminStore())
 
 const getBlockComponent = (type: string) => (type === "header" ? Header : type === "link" ? Link : null)

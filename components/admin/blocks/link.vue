@@ -3,9 +3,13 @@
     class="rounded-xl"
     elevation="0"
   >
+    <!-- Card text with center alignment -->
     <v-card-text class="text-center">
+      <!-- Row to align content in the center -->
       <v-row align="center">
+        <!-- Column for the icon button -->
         <v-col cols="1">
+          <!-- Icon button for grid view -->
           <v-btn
             icon="mdi-dots-grid"
             size="small"
@@ -14,6 +18,7 @@
             flat
           ></v-btn>
         </v-col>
+        <!-- Column for the main content (name and link inputs) -->
         <v-col cols="10">
           <div>
             <!-- Name Input -->
@@ -21,7 +26,7 @@
               :data="data"
               :model="data.name"
               @update:model-value="(newValue) => (data.name = newValue)"
-              class="font-weight-bold"
+              class="font-weight-bold mb-2"
             />
             <!-- Link Input -->
             <ToggleInput
@@ -31,17 +36,20 @@
             />
           </div>
         </v-col>
+        <!-- Column for the switch and delete button -->
         <v-col
           class="d-flex flex-column justify-center"
           cols="1"
         >
+          <!-- Switch component to toggle the 'active' property -->
           <v-switch
             v-model="data.active"
             color="green"
             density="compact"
-            :disabled="!data.link"
+            :disabled="!data.link || !data.name"
             hide-details
           ></v-switch>
+          <!-- Button to trigger delete action -->
           <v-btn
             icon="mdi-trash-can-outline"
             size="small"
@@ -54,10 +62,13 @@
         </v-col>
       </v-row>
     </v-card-text>
+
+    <!-- Expansion panels section -->
     <v-expansion-panels
       style="width: 100% !important"
       v-model="panel"
     >
+      <!-- Include the DeletePanel component with necessary props -->
       <DeletePanel
         :delete="deleteBlock"
         :toggle="toggleExpansion"
@@ -72,50 +83,37 @@ import { type Block, useAdminStore } from "@/store/admin"
 import DeletePanel from "@/components/admin/blocks/expansionPanels/deletePanel.vue"
 import ToggleInput from "@/components/admin/blocks/toggleInput.vue"
 
-const { deleteBlock, updateBlock } = useAdminStore()
+// Define a type for the button variants that the computed property uses
+type ButtonVariant = "flat" | "plain" | "text" | "elevated" | "tonal" | "outlined" | undefined
 
-const editName = ref(false)
-const editURL = ref(false)
+// Destructure functions from the admin store
+const { deleteBlock } = useAdminStore()
 
+// Initialize a ref for managing expansion panel states
 const panel: Ref<string[]> = ref([])
-const linkName: Ref<HTMLInputElement | null> = ref(null)
-const linkURL: Ref<HTMLInputElement | null> = ref(null)
 
-const props = defineProps<{
+// Define props for the component, specifying the expected data type
+defineProps<{
   data: Block
 }>()
 
+// Computed property for styling the delete button based on panel state
 const trashOpen = computed(() => {
-  return panel.value.indexOf("delete") >= 0 ? { variant: "flat" as any, color: "primary" } : { variant: "plain" as any, color: "" }
+  // Determine the button styling based on whether the "delete" panel is open
+  return panel.value.includes("delete") ? { variant: "flat" as ButtonVariant, color: "primary" } : { variant: "plain" as ButtonVariant, color: "" }
 })
 
+// Function to toggle the expansion panels
 const toggleExpansion = (name: string) => {
-  const index = panel.value.indexOf(name)
-  if (index >= 0) panel.value = []
-  else panel.value.push(name)
-}
-
-const toggleLinkName = async () => {
-  editName.value = true
-  await nextTick()
-  linkName.value?.focus()
-}
-
-const toggleLinkURL = async () => {
-  editURL.value = true
-  await nextTick()
-  linkURL.value?.focus()
-}
-
-const updateName = async () => {
-  editName.value = false
-  updateBlock(props.data)
-}
-const updateURL = async () => {
-  editURL.value = false
-  updateBlock(props.data)
+  // Toggle the presence of the panel in the array
+  if (panel.value.includes(name)) {
+    panel.value = []
+  } else {
+    panel.value.push(name)
+  }
 }
 </script>
+
 <style>
 .link-panel .v-expansion-panel-text__wrapper {
   padding: 0 0 !important;

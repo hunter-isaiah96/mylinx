@@ -44,10 +44,11 @@ export default defineEventHandler(async (event) => {
     const result = await createUser(body)
 
     return result
-  } catch (error: any) {
-    throw createError({
-      statusCode: 400,
-      statusMessage: error.message,
-    })
+  } catch (error: unknown) {
+    if (error instanceof Error)
+      throw createError({
+        statusCode: 400,
+        statusMessage: error.message,
+      })
   }
 })
