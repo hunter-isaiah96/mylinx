@@ -121,7 +121,6 @@ setBlocks(data as Block[])
     width: 50px;
     height: 50px;
     border-radius: 50%;
-
     position: absolute;
     bottom: 12px;
     margin: auto;
