@@ -6,7 +6,7 @@ export default defineNuxtConfig({
   plugins: ["@/plugins/vue3-toastify"],
   css: ["@/assets/scss/global.scss", "@/assets/scss/themes.scss"],
   // Application configuration
-  ssr: true,
+  ssr: false,
   auth: {
     globalAppMiddleware: true,
     provider: {

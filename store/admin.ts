@@ -29,6 +29,22 @@ export const useAdminStore = defineStore({
     setBlocks(blocks: Block[]) {
       this.blocks = blocks
     },
+    async changePosition() {
+      try {
+        this.setLoading(true)
+        const blocks: Block[] = await $fetch(`/api/blocks/move`, {
+          method: "PUT",
+          body: {
+            blocks: this.blocks,
+          },
+        })
+        this.blocks = blocks
+      } catch (e) {
+        this.handleError(e)
+      } finally {
+        this.setLoading(false)
+      }
+    },
     async addBlock(block: Block) {
       try {
         this.setLoading(true)

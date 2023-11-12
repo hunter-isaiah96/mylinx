@@ -15,6 +15,7 @@
             size="small"
             density="comfortable"
             variant="plain"
+            class="handle"
             flat
           ></v-btn>
         </v-col>

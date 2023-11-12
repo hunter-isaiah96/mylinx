@@ -39,11 +39,11 @@
             </v-card-title>
             <v-card
               v-else-if="block.type == 'link'"
-              class="pa-1 mb-2 rounded-pill"
+              class="pa-1 mb-2 rounded-xl"
               target="_blank"
               :href="block.link"
             >
-              <v-card-title class="text-subtitle-1">{{ block.name }}</v-card-title>
+              <v-card-text class="text-subtitle-1">{{ block.name }}</v-card-text>
             </v-card>
           </v-list-item>
         </v-list>
