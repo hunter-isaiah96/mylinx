@@ -31,7 +31,6 @@ export const useAdminStore = defineStore({
     },
     async changePosition() {
       try {
-        this.setLoading(true)
         const blocks: Block[] = await $fetch(`/api/blocks/move`, {
           method: "PUT",
           body: {
@@ -39,10 +38,10 @@ export const useAdminStore = defineStore({
           },
         })
         this.blocks = blocks
+        const { $bus } = useNuxtApp()
+        $bus.$emit("someEvent", "Data to send")
       } catch (e) {
         this.handleError(e)
-      } finally {
-        this.setLoading(false)
       }
     },
     async addBlock(block: Block) {

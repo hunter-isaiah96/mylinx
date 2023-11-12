@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   // List of Nuxt.js modules to include
   modules: ["vuetify-nuxt-module", "@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt", "@sidebase/nuxt-auth"],
-  plugins: ["@/plugins/vue3-toastify"],
+  plugins: ["@/plugins/vue3-toastify", "@/plugins/event-bus.ts"],
   css: ["@/assets/scss/global.scss", "@/assets/scss/themes.scss"],
   // Application configuration
   ssr: false,

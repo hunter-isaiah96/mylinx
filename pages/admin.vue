@@ -43,6 +43,13 @@ const { currentUser } = storeToRefs(useAuthStore())
 getCurrentUser()
 const { data } = (await useFetch("/api/blocks")) as any
 setBlocks(data as Block[])
+
+const { $bus } = useNuxtApp()
+
+$bus.$on("someEvent", (data) => {
+  console.log(data)
+  //Some stuff to do..
+})
 </script>
 
 <style lang="scss">
