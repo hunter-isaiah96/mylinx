@@ -22,7 +22,7 @@
               {{ profile.displayName }}
             </span>
           </v-card-title>
-          <v-card-subtitle class="profile-bio"> {{ profile.bio }} </v-card-subtitle>
+          <v-card-text class="profile-bio"> {{ profile.bio }} </v-card-text>
         </v-card>
         <!-- Blocks -->
         <v-list bg-color="transparent">
@@ -39,7 +39,7 @@
             </v-card-title>
             <v-card
               v-else-if="block.type == 'link'"
-              class="pa-1 mb-2 rounded-xl"
+              class="pa-1 mb-2 rounded-lg"
               target="_blank"
               :href="block.link"
             >
