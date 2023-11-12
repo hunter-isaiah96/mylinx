@@ -1,5 +1,5 @@
 import { getToken } from "#auth"
-import { db } from "@/server/planetscale-service"
+import { db } from "~/server/initial-services"
 import { eq, asc } from "drizzle-orm"
 import { block, profile } from "~/drizzle/schema"
 

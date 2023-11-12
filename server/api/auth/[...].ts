@@ -1,7 +1,7 @@
 // Import necessary modules and dependencies
 import CredentialsProvider from "next-auth/providers/credentials"
 import { NuxtAuthHandler } from "#auth"
-import { db } from "@/server/planetscale-service"
+import { db } from "~/server/initial-services"
 import { eq, or } from "drizzle-orm"
 import { users } from "@/drizzle/schema"
 import argon2 from "argon2"

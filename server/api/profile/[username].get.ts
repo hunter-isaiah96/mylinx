@@ -1,4 +1,4 @@
-import { db } from "@/server/planetscale-service"
+import { db } from "~/server/initial-services"
 import { eq, asc } from "drizzle-orm"
 import { profile, block } from "@/drizzle/schema"
 

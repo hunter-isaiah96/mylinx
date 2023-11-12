@@ -1,4 +1,3 @@
-import type { mergeProps } from 'vue'; import type { mergeProps } from 'vue';
 <template>
   <v-expansion-panel
     class="link-panel"
@@ -11,7 +10,7 @@ import type { mergeProps } from 'vue'; import type { mergeProps } from 'vue';
         <div class="flex-1-1-100">Delete</div>
         <div class="d-flex justify-end flex-1-1-100">
           <v-btn
-            @click="toggle('delete')"
+            @click="toggle!('delete')"
             class="mr-1"
             size="x-small"
             variant="plain"
@@ -26,7 +25,7 @@ import type { mergeProps } from 'vue'; import type { mergeProps } from 'vue';
         <v-row>
           <v-col cols="6">
             <v-btn
-              @click="toggle('delete')"
+              @click="toggle!('delete')"
               class="text-capitalize"
               variant="outlined"
               size="large"
@@ -62,7 +61,7 @@ const props = defineProps({
 })
 
 const deleteData = () => {
-  props.delete(props.id)
-  props.toggle("delete")
+  props.delete!(props.id)
+  props.toggle!("delete")
 }
 </script>

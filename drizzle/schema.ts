@@ -1,4 +1,4 @@
-import { int, text, varchar, mysqlEnum, mysqlTable, timestamp, index, uniqueIndex, boolean } from "drizzle-orm/mysql-core"
+import { int, text, varchar, mysqlEnum, mysqlTable, timestamp, index, uniqueIndex, boolean, json } from "drizzle-orm/mysql-core"
 import { relations, sql } from "drizzle-orm"
 
 // Define common fields
@@ -55,7 +55,7 @@ export const block = mysqlTable(
     active: boolean("boolean").default(true).notNull(),
     name: varchar("name", { length: 255 }),
     link: text("link"),
-    thumbnail: varchar("thumbnail_url", { length: 255 }),
+    thumbnail: json("thumbnail"),
     position: int("position").default(1).notNull(),
   },
   (table) => {

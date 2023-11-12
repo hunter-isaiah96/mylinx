@@ -1,4 +1,4 @@
-import { db } from "@/server/planetscale-service"
+import { db } from "~/server/initial-services"
 import { getToken } from "#auth"
 import { block } from "@/drizzle/schema"
 import { and, eq, gt, sql } from "drizzle-orm"

@@ -1,4 +1,4 @@
-import { db } from "@/server/planetscale-service"
+import { db } from "~/server/initial-services"
 import * as argon2 from "argon2"
 import { users, profile } from "@/drizzle/schema"
 

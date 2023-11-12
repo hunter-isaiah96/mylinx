@@ -16,62 +16,19 @@
         </v-col>
         <v-col cols="10">
           <div>
-            <!-- Name Block -->
-            <div>
-              <button
-                class="block-editable-text mb-2 d-flex"
-                v-if="!editName"
-                @click="toggleLinkName"
-              >
-                <p
-                  :class="{ 'text-disabled': !data.name }"
-                  class="ellipsis-text font-weight-bold"
-                >
-                  {{ data.name || "Title" }}
-                </p>
-                <v-icon
-                  class="ml-2"
-                  icon="mdi-pencil-outline"
-                  size="small"
-                ></v-icon>
-              </button>
-              <input
-                class="font-weight-bold block-input mb-2"
-                ref="linkName"
-                type="text"
-                v-model="data.name"
-                v-show="editName"
-                @blur="updateName"
-              />
-            </div>
-            <!-- URL Block -->
-            <div>
-              <button
-                class="block-editable-text d-flex"
-                v-if="!editURL"
-                @click="toggleLinkURL"
-              >
-                <p
-                  :class="{ 'text-disabled': !data.link }"
-                  class="ellipsis-text"
-                >
-                  {{ data.link || "Url" }}
-                </p>
-                <v-icon
-                  class="ml-2"
-                  icon="mdi-pencil-outline"
-                  size="small"
-                ></v-icon>
-              </button>
-              <input
-                class="block-input"
-                ref="linkURL"
-                type="text"
-                v-model="data.link"
-                v-show="editURL"
-                @blur="updateURL"
-              />
-            </div>
+            <!-- Name Input -->
+            <ToggleInput
+              :data="data"
+              :model="data.name"
+              @update:model-value="(newValue) => (data.name = newValue)"
+              class="font-weight-bold"
+            />
+            <!-- Link Input -->
+            <ToggleInput
+              :data="data"
+              :model="data.link"
+              @update:model-value="(newValue) => (data.link = newValue)"
+            />
           </div>
         </v-col>
         <v-col
@@ -83,7 +40,6 @@
             color="green"
             density="compact"
             :disabled="!data.link"
-            @update:model-value="updateBlock(props.data)"
             hide-details
           ></v-switch>
           <v-btn
@@ -113,7 +69,9 @@
 
 <script setup lang="ts">
 import { type Block, useAdminStore } from "@/store/admin"
-import DeletePanel from "@/components/admin/expansionPanels/deletePanel.vue"
+import DeletePanel from "@/components/admin/blocks/expansionPanels/deletePanel.vue"
+import ToggleInput from "@/components/admin/blocks/toggleInput.vue"
+
 const { deleteBlock, updateBlock } = useAdminStore()
 
 const editName = ref(false)
@@ -135,7 +93,6 @@ const toggleExpansion = (name: string) => {
   const index = panel.value.indexOf(name)
   if (index >= 0) panel.value = []
   else panel.value.push(name)
-  console.log(panel.value)
 }
 
 const toggleLinkName = async () => {
