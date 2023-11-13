@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-main class="ocean-breeze">
+    <v-main class="lavender-fields">
       <v-container
         v-if="profile"
         class="my-6 pa-0 main-container"
@@ -12,38 +12,49 @@
         >
           <!-- Profile Information -->
           <v-avatar
-            class="mb-4"
-            size="100"
+            class="mb-2"
+            size="96"
+            color="primary"
           >
-            <v-img src="https://ugc.production.linktr.ee/ujkfVxAAS1m9wolLQU1e_p2Z6AT0Olr2Q933o?io=true&size=avatar"></v-img>
+            <div class="text-h4 text-capitalize">{{ profile.displayName[0] }}</div>
           </v-avatar>
-          <v-card-title class="font-weight-bold">
-            <span class="text-capitalize">
-              {{ profile.displayName }}
-            </span>
+          <v-card-title class="font-weight-bold px-2 multiline-text">
+            {{ profile.title || `@${profile.displayName}` }}
           </v-card-title>
-          <v-card-text class="profile-bio"> {{ profile.bio }} </v-card-text>
+          <v-card-subtitle class="text-subtitle-2 px-12 py-0 multiline-text"> {{ profile.bio }} </v-card-subtitle>
         </v-card>
         <!-- Blocks -->
         <v-list bg-color="transparent">
           <v-list-item
             v-for="block in profile.blocks"
             :key="block.id"
-            class="text-center"
+            class="text-center ma-0"
+            density="compact"
           >
-            <v-card-title
-              class="font-weight-bold text-subtitle-1 mt-2"
+            <v-card-text
+              class="font-weight-bold header pa-0 text-subtitle-1"
               v-if="block.type == 'header'"
             >
               {{ block.name }}
-            </v-card-title>
+            </v-card-text>
             <v-card
               v-else-if="block.type == 'link'"
-              class="pa-1 mb-2 rounded-lg"
+              class="pa-2 rounded-lg link"
               target="_blank"
               :href="block.link"
             >
-              <v-card-text class="text-subtitle-1">{{ block.name }}</v-card-text>
+              <template v-slot:prepend>
+                <v-img
+                  class="rounded-lg"
+                  width="48"
+                  aspect-ratio="1"
+                  cover
+                  :src="block.thumbnail.url"
+                ></v-img>
+              </template>
+              <template v-slot:title>
+                <span class="text-subtitle-2">{{ block.name }}</span>
+              </template>
             </v-card>
           </v-list-item>
         </v-list>
@@ -52,6 +63,9 @@
   </v-app>
 </template>
 <script setup lang="ts">
+definePageMeta({
+  auth: false,
+})
 const route = useRoute()
 const { data: profile }: any = await useFetch(`/api/profile/${route.params.username}`)
 if (!profile) {
@@ -62,9 +76,6 @@ if (!profile) {
 }
 </script>
 <style>
-.profile-bio {
-  font-size: 16px !important;
-}
 .main-container {
   max-width: 680px !important;
 }

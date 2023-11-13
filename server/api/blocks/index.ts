@@ -1,10 +1,8 @@
-import { getToken } from "#auth"
 import { getUserProfileId, getAllBlocks } from "#imports"
 
 export default defineEventHandler(async (event) => {
   try {
-    const token = await getToken({ event })
-    if (!token) throw new Error("A valid token was not supplied")
+    const token = event.context.auth
 
     const userProfileId = await getUserProfileId(token)
 

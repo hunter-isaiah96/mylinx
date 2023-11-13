@@ -1,4 +1,4 @@
-import { db } from "~/server/initial-services"
+import { db } from "@/server/initial-services"
 import * as argon2 from "argon2"
 import { users, profile } from "@/drizzle/schema"
 
@@ -24,6 +24,7 @@ const createUser = async (userData: any): Promise<any> => {
   const newUserProfile = {
     userId: Number(newUserResult.insertId),
     displayName: userData.username,
+    title: userData.username,
   }
 
   const profileResult = await db.insert(profile).values(newUserProfile)

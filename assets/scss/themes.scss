@@ -1,40 +1,68 @@
-// Ocean Breeze Gradient
+// Mixin for common styles
+@mixin v-card-styles($background, $avatar-color, $text-color: white, $hover-scale: 1.02) {
+  background: $background no-repeat !important;
+  color: $text-color;
+  // Custom styles for .v-avatar within .v-card
+  .v-card-item {
+    // padding: 0.4rem !important;
+  }
+  .v-avatar {
+    background-color: $avatar-color !important; // Set the background color of .v-avatar
+  }
+  // Custom styles for .v-card with .link class
+  .v-card.link {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    transition: transform 0.15s cubic-bezier(0, 0.2, 0.5, 3) 0s;
+
+    &:hover {
+      transform: scale($hover-scale);
+    }
+    &.tilt:hover {
+      transform: scale($hover-scale) rotate(-2deg);
+    }
+  }
+}
+
+// Ocean Breeze Theme
 .ocean-breeze {
-  background: linear-gradient(0deg, #00bcd4, #2196f3) no-repeat !important;
-  color: white;
+  @include v-card-styles(linear-gradient(0deg, #00bcd4, #2196f3), #ff9800, white);
 }
 
-// Sunset Horizon Gradient
+// Sunset Horizon Theme
 .sunset-horizon {
-  background: linear-gradient(0deg, #ff5722, #ff9800) no-repeat !important;
+  @include v-card-styles(linear-gradient(0deg, #ff5722, #ff9800), #4caf50, black);
 }
 
-// Forest Green Gradient
+// Forest Green Theme
 .forest-green {
-  background: linear-gradient(0deg, #4caf50, #8bc34a) no-repeat !important;
+  @include v-card-styles(linear-gradient(0deg, #4caf50, #8bc34a), #e91e63, white);
 }
 
-// Lavender Fields Gradient
+// Lavender Fields Theme
 .lavender-fields {
-  background: linear-gradient(0deg, #9c27b0, #e91e63) no-repeat !important;
+  @include v-card-styles(linear-gradient(0deg, #9c27b0, #e91e63), #ff9800, black);
 }
 
-// Golden Hour Gradient
+// Golden Hour Theme
 .golden-hour {
-  background: linear-gradient(0deg, #ffc107, #ff9800) no-repeat !important;
+  @include v-card-styles(linear-gradient(0deg, #ffc107, #ff9800), #e91e63, white);
 }
 
-// Dark Night Sky Gradient
+// Dark Night Sky Theme
 .dark-night-sky {
-  background: linear-gradient(0deg, #333333, #000000) no-repeat !important;
+  @include v-card-styles(linear-gradient(0deg, #333333, #000000), #00bcd4, white);
 }
 
-// Tropical Paradise Gradient
+// Tropical Paradise Theme
 .tropical-paradise {
-  background: linear-gradient(0deg, #ff5722, #00bcd4) no-repeat !important;
+  @include v-card-styles(linear-gradient(0deg, #ff5722, #00bcd4), #8bc34a, black);
 }
 
-// Desert Sands Gradient
+// Desert Sands Theme
 .desert-sands {
-  background: linear-gradient(0deg, #ff9800, #e91e63) no-repeat !important;
+  @include v-card-styles(linear-gradient(0deg, #ff9800, #e91e63), #2196f3, white);
 }

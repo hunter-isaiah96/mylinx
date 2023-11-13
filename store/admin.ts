@@ -38,11 +38,14 @@ export const useAdminStore = defineStore({
           },
         })
         this.blocks = blocks
-        const { $bus } = useNuxtApp()
-        $bus.$emit("someEvent", "Data to send")
-      } catch (e) {
-        this.handleError(e)
+        this.refreshPreview()
+      } catch (e: unknown) {
+        if (e instanceof Error) handleError(e.message)
       }
+    },
+    refreshPreview() {
+      const { $bus } = useNuxtApp()
+      $bus.$emit("refreshPreview", "")
     },
     async addBlock(block: Block) {
       try {
@@ -52,8 +55,8 @@ export const useAdminStore = defineStore({
           body: block,
         })
         this.blocks = blocks
-      } catch (e) {
-        this.handleError(e)
+      } catch (e: unknown) {
+        if (e instanceof Error) handleError(e.message)
       } finally {
         this.setLoading(false)
       }
@@ -64,8 +67,8 @@ export const useAdminStore = defineStore({
           method: "DELETE",
         })
         this.blocks = blocks
-      } catch (e) {
-        this.handleError(e)
+      } catch (e: unknown) {
+        if (e instanceof Error) handleError(e.message)
       } finally {
         this.setLoading(false)
       }
@@ -77,14 +80,11 @@ export const useAdminStore = defineStore({
           body: block,
         })
         this.blocks = blocks
-      } catch (e) {
-        this.handleError(e)
+      } catch (e: unknown) {
+        if (e instanceof Error) handleError(e.message)
       } finally {
         this.setLoading(false)
       }
-    },
-    handleError(error: any) {
-      useNuxtApp().$toast.error(error.message, { theme: "colored" })
     },
   },
 })

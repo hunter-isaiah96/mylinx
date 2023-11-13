@@ -65,13 +65,8 @@ const addBlock = async (profileId: number, blockData: BlockType): Promise<void> 
 export default defineEventHandler(async (event) => {
   try {
     // Obtain token and request body from the event
-    const token = await getToken({ event })
+    const token = event.context.auth
     const body = await readBody(event)
-
-    // Validate that both token and body are provided
-    if (!token || !body) {
-      throw new Error("Authentication token or request body not provided")
-    }
 
     // Get the user's profile ID using the provided token
     const currentUserProfileId = await getUserProfileId(token)

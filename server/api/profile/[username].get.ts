@@ -1,4 +1,4 @@
-import { db } from "~/server/initial-services"
+import { db } from "@/server/initial-services"
 import { eq, ne, or, asc } from "drizzle-orm"
 import { profile, block } from "@/drizzle/schema"
 

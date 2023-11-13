@@ -1,9 +1,7 @@
-import { db } from "~/server/initial-services"
+import { db } from "@/server/initial-services"
 import { getUserProfileId, getAllBlocks } from "#imports"
-import { getToken } from "#auth"
 import { and, eq } from "drizzle-orm"
 import { block } from "@/drizzle/schema"
-import { JWT } from "next-auth/jwt"
 
 const updateBlock = async (profileId: number, blockId: number, updateBlock: { id: string; name: string; link: string; active: boolean }) => {
   await db
@@ -27,7 +25,7 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const token: JWT | null = await getToken({ event })
+    const token = event.context.auth
     const body = await readBody(event)
     if (!token && !body) {
       throw new Error("There was a problem completing this request")

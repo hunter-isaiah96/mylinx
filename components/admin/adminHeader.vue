@@ -1,5 +1,7 @@
 <template>
   <v-app-bar
+    class="rounded-pill mt-2 mx-auto"
+    style="width: 98%; transform: translateX(-50%); left: 50%"
     elevation="1"
     app
   >

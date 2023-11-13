@@ -5,15 +5,19 @@ import { eq } from "drizzle-orm"
 export default defineEventHandler(async (event) => {
   try {
     const token = event.context.auth
-    const userProfile = await db.query.profile.findFirst({
-      where: eq(profile.userId, token.uid as number),
-      columns: {
-        createdAt: false,
-        updatedAt: false,
-      },
+    const body = await readBody(event)
+    if (!body) throw new Error("Body required")
+    // const currentUserProfileId = await getUserProfileId(token)
+    await db
+      .update(profile)
+      .set({
+        bio: body.bio,
+      })
+      .where(eq(profile.userId, token.uid))
+
+    return await db.query.profile.findFirst({
+      where: eq(profile.userId, token.uid),
     })
-    if (!userProfile) throw new Error("There was a problem getting the current user")
-    return userProfile
   } catch (error: any) {
     if (error instanceof Error)
       throw createError({

@@ -13,6 +13,7 @@
           <div class="phone">
             <div class="phone-screen">
               <iframe
+                ref="preview"
                 src="/rhynoboy2009"
                 title="mylinx"
                 height="60%"
@@ -38,6 +39,7 @@ import { useAdminStore, type Block } from "@/store/admin"
 const { getCurrentUser } = useAuthStore()
 const { setBlocks } = useAdminStore()
 const { currentUser } = storeToRefs(useAuthStore())
+const preview = ref<HTMLIFrameElement | null>(null)
 
 // Load user data
 getCurrentUser()
@@ -46,9 +48,9 @@ setBlocks(data as Block[])
 
 const { $bus } = useNuxtApp()
 
-$bus.$on("someEvent", (data) => {
-  console.log(data)
-  //Some stuff to do..
+$bus.$on("refreshPreview", () => {
+  console.log("preview")
+  if (preview.value) preview.value.src = preview.value?.src
 })
 </script>
 

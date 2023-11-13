@@ -11,3 +11,19 @@
   text-overflow: ellipsis;
   max-width: 100%;
 }
+
+.lowercase {
+  text-transform: lowercase;
+}
+
+.capitalize-first-letter {
+  text-transform: lowercase; /* change to lowercase */
+}
+
+.capitalize-first-letter:first-letter {
+  text-transform: uppercase;
+}
+
+.multiline-text {
+  white-space: unset !important;
+}

@@ -1,16 +1,11 @@
-import { getToken } from "#auth"
 import { eq } from "drizzle-orm"
-import { JWT } from "next-auth/jwt"
-import { block } from "~/drizzle/schema"
-import { db } from "~/server/initial-services"
+import { block } from "@/drizzle/schema"
+import { db } from "@/server/initial-services"
 
 export default defineEventHandler(async (event) => {
   try {
-    const token: JWT | null = await getToken({ event })
+    const token = event.context.auth
     const body = await readBody(event)
-    if (!token && !body) {
-      throw new Error("There was a problem completing this request")
-    }
     const blocks = body.blocks
 
     await db.transaction(async (tx) => {

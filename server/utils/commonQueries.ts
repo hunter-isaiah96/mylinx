@@ -1,4 +1,4 @@
-import { db } from "~/server/initial-services"
+import { db } from "@/server/initial-services"
 import { block, profile } from "@/drizzle/schema"
 import { asc, eq } from "drizzle-orm"
 import { JWT } from "next-auth/jwt"
