@@ -39,7 +39,15 @@
             v-bind="props"
             icon
           >
-            <v-avatar color="primary">{{ currentUser.displayName[0] }}</v-avatar>
+            <v-avatar :color="currentUser?.profilePicture ? '' : 'primary'">
+              <v-img
+                v-if="currentUser?.profilePicture"
+                :src="currentUser.profilePicture.url || ''"
+                alt="profile picture"
+                cover
+              />
+              <span v-else>{{ currentUser?.displayName[0] }}</span>
+            </v-avatar>
           </v-btn>
         </template>
         <v-list width="340">
@@ -49,12 +57,14 @@
             class="pb-5"
           >
             <template v-slot:prepend>
-              <v-avatar
-                size="48"
-                class="text-capitalize"
-                color="primary"
-              >
-                {{ currentUser.displayName[0] }}
+              <v-avatar :color="currentUser?.profilePicture ? '' : 'primary'">
+                <v-img
+                  v-if="currentUser?.profilePicture"
+                  :src="currentUser.profilePicture.url || ''"
+                  alt="profile picture"
+                  cover
+                />
+                <span v-else>{{ currentUser?.displayName[0] }}</span>
               </v-avatar>
             </template>
           </v-list-item>
@@ -105,12 +115,12 @@
 </template>
 <script setup lang="ts">
 import ShareButton from "@/components/admin/share.vue"
-import { type User } from "@/store/auth"
+import { type Profile } from "@/store/auth"
 const { signOut } = useAuth()
 const accountMenu = ref(false)
 
 const props = defineProps<{
-  currentUser: null | User
+  currentUser: null | Profile
 }>()
 
 const headerItems = [

@@ -2,7 +2,7 @@ import { defineStore } from "pinia"
 
 export interface Profile {
   title: string
-  bio: string | null
+  bio: string
   blocks: {
     type: "link" | "header"
     position: number
@@ -16,7 +16,7 @@ export interface Profile {
   id: number
   userId: number
   displayName: string
-  profilePicture: string | null
+  profilePicture: CloudinaryImage | null
 }
 
 interface AuthState {
@@ -45,7 +45,7 @@ export const useAuthStore = defineStore({
     },
     async updateProfileTitle(name: string) {
       try {
-        const profile: Profile = await $fetch(`/api/profile/update/title/${this.currentUser?.userId}`, {
+        const profile: Profile = await $fetch(`/api/profile/update/title`, {
           method: "PUT",
           body: {
             name,
@@ -56,15 +56,29 @@ export const useAuthStore = defineStore({
         if (e instanceof Error) handleError(e.message)
       }
     },
-    async updateBio(bio: string) {
+    async updateProfileBio(bio: string) {
       try {
-        const profile: Profile = await $fetch(`/api/profile/update/bio/${this.currentUser?.userId}`, {
+        const profile: Profile = await $fetch(`/api/profile/update/bio`, {
           method: "PUT",
           body: {
             bio,
           },
         })
         this.currentUser = profile
+      } catch (e: unknown) {
+        if (e instanceof Error) handleError(e.message)
+      }
+    },
+    async updateProfilePicture(image: string) {
+      console.log(image)
+      try {
+        const profilePicture: CloudinaryImage = await $fetch(`/api/profile/update/picture`, {
+          method: "PUT",
+          body: {
+            image,
+          },
+        })
+        this.currentUser!.profilePicture = profilePicture
       } catch (e: unknown) {
         if (e instanceof Error) handleError(e.message)
       }

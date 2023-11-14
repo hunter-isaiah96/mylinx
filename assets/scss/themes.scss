@@ -3,14 +3,17 @@
   background: $background no-repeat !important;
   color: $text-color;
   // Custom styles for .v-avatar within .v-card
-  .v-card-item {
-    // padding: 0.4rem !important;
+  .v-list-item {
+    padding: 0 !important;
+  }
+  .link-name {
+    line-height: 18px !important;
   }
   .v-avatar {
     background-color: $avatar-color !important; // Set the background color of .v-avatar
   }
   // Custom styles for .v-card with .link class
-  .v-card.link {
+  .v-card--link {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin: 10px;
@@ -27,42 +30,49 @@
   }
 }
 
-// Ocean Breeze Theme
-.ocean-breeze {
-  @include v-card-styles(linear-gradient(0deg, #00bcd4, #2196f3), #ff9800, white);
-}
+.profile-theme {
+  // Default Theme
+  &.default {
+    @include v-card-styles(#f2f3f0, none, black);
+  }
 
-// Sunset Horizon Theme
-.sunset-horizon {
-  @include v-card-styles(linear-gradient(0deg, #ff5722, #ff9800), #4caf50, black);
-}
+  // Ocean Breeze Theme
+  &.ocean-breeze {
+    @include v-card-styles(linear-gradient(0deg, #00bcd4, #2196f3), #ff9800, white);
+  }
 
-// Forest Green Theme
-.forest-green {
-  @include v-card-styles(linear-gradient(0deg, #4caf50, #8bc34a), #e91e63, white);
-}
+  // Sunset Horizon Theme
+  &.sunset-horizon {
+    @include v-card-styles(linear-gradient(0deg, #ff5722, #ff9800), #4caf50, black);
+  }
 
-// Lavender Fields Theme
-.lavender-fields {
-  @include v-card-styles(linear-gradient(0deg, #9c27b0, #e91e63), #ff9800, black);
-}
+  // Forest Green Theme
+  &.forest-green {
+    @include v-card-styles(linear-gradient(0deg, #4caf50, #8bc34a), #e91e63, white);
+  }
 
-// Golden Hour Theme
-.golden-hour {
-  @include v-card-styles(linear-gradient(0deg, #ffc107, #ff9800), #e91e63, white);
-}
+  // Lavender Fields Theme
+  &.lavender-fields {
+    @include v-card-styles(linear-gradient(0deg, #9c27b0, #e91e63), #ff9800, black);
+  }
 
-// Dark Night Sky Theme
-.dark-night-sky {
-  @include v-card-styles(linear-gradient(0deg, #333333, #000000), #00bcd4, white);
-}
+  // Golden Hour Theme
+  &.golden-hour {
+    @include v-card-styles(linear-gradient(0deg, #ffc107, #ff9800), #e91e63, white);
+  }
 
-// Tropical Paradise Theme
-.tropical-paradise {
-  @include v-card-styles(linear-gradient(0deg, #ff5722, #00bcd4), #8bc34a, black);
-}
+  // Dark Night Sky Theme
+  &.dark-night-sky {
+    @include v-card-styles(linear-gradient(0deg, #333333, #000000), #00bcd4, white);
+  }
 
-// Desert Sands Theme
-.desert-sands {
-  @include v-card-styles(linear-gradient(0deg, #ff9800, #e91e63), #2196f3, white);
+  // Tropical Paradise Theme
+  &.tropical-paradise {
+    @include v-card-styles(linear-gradient(0deg, #ff5722, #00bcd4), #8bc34a, black);
+  }
+
+  // Desert Sands Theme
+  &.desert-sands {
+    @include v-card-styles(linear-gradient(0deg, #ff9800, #e91e63), #2196f3, white);
+  }
 }

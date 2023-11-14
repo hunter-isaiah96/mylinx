@@ -1,18 +1,10 @@
 import { defineStore } from "pinia"
+import type { Block } from "@/drizzle/schema"
 
 interface AdminState {
   addLinkActive: boolean
   loading: boolean
   blocks: Block[]
-}
-
-export interface Block {
-  id: number
-  type: string
-  name: string
-  link: string
-  active: boolean
-  thumbnail: object
 }
 
 export const useAdminStore = defineStore({
@@ -45,9 +37,9 @@ export const useAdminStore = defineStore({
     },
     refreshPreview() {
       const { $bus } = useNuxtApp()
-      $bus.$emit("refreshPreview", "")
+      // $bus.$emit("refreshPreview", "")
     },
-    async addBlock(block: Block) {
+    async addBlock(block: any) {
       try {
         this.setLoading(true)
         const blocks: Block[] = await $fetch("/api/blocks/new", {

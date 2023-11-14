@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-main class="lavender-fields">
+    <v-main class="profile-theme default">
       <v-container
         v-if="profile"
         class="my-6 pa-0 main-container"
@@ -12,11 +12,16 @@
         >
           <!-- Profile Information -->
           <v-avatar
-            class="mb-2"
             size="96"
-            color="primary"
+            :color="profile.profilePicture ? '' : 'primary'"
           >
-            <div class="text-h4 text-capitalize">{{ profile.displayName[0] }}</div>
+            <v-img
+              v-if="profile.profilePicture"
+              :src="profile.profilePicture.url || ''"
+              alt="profile picture"
+              cover
+            />
+            <span v-else>{{ profile.displayName[0] }}</span>
           </v-avatar>
           <v-card-title class="font-weight-bold px-2 multiline-text">
             {{ profile.title || `@${profile.displayName}` }}
@@ -39,22 +44,44 @@
             </v-card-text>
             <v-card
               v-else-if="block.type == 'link'"
-              class="pa-2 rounded-lg link"
+              class="pa-2 rounded-lg"
               target="_blank"
-              :href="block.link"
+              :href="block.link || ''"
             >
-              <template v-slot:prepend>
-                <v-img
-                  class="rounded-lg"
-                  width="48"
-                  aspect-ratio="1"
-                  cover
-                  :src="block.thumbnail.url"
-                ></v-img>
-              </template>
-              <template v-slot:title>
-                <span class="text-subtitle-2">{{ block.name }}</span>
-              </template>
+              <v-row no-gutters>
+                <v-col
+                  class="d-flex align-center"
+                  cols="auto"
+                >
+                  <v-img
+                    v-if="block.thumbnail"
+                    class="rounded-lg"
+                    width="48"
+                    aspect-ratio="1"
+                    cover
+                    :src="block.thumbnail.url"
+                  ></v-img>
+                  <div
+                    v-else
+                    style="width: 48px"
+                  ></div>
+                </v-col>
+                <v-col class="pa-0 d-flex align-center justify-center">
+                  <span class="text-subtitle-2 link-name px-2">{{ block.name }}</span>
+                </v-col>
+                <v-col
+                  class="d-flex align-center"
+                  cols="auto"
+                >
+                  <v-btn
+                    size="48"
+                    icon="mdi-dots-horizontal"
+                    variant="plain"
+                    @click.stop=""
+                    flat
+                  ></v-btn>
+                </v-col>
+              </v-row>
             </v-card>
           </v-list-item>
         </v-list>
@@ -67,7 +94,7 @@ definePageMeta({
   auth: false,
 })
 const route = useRoute()
-const { data: profile }: any = await useFetch(`/api/profile/${route.params.username}`)
+const { data: profile } = await useFetch(`/api/profile/${route.params.username}`)
 if (!profile) {
   showError({
     statusCode: 404,

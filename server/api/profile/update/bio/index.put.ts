@@ -7,17 +7,14 @@ export default defineEventHandler(async (event) => {
     const token = event.context.auth
     const body = await readBody(event)
     if (!body) throw new Error("Body required")
-    // const currentUserProfileId = await getUserProfileId(token)
     await db
       .update(profile)
       .set({
-        title: body.name,
+        bio: body.bio,
       })
       .where(eq(profile.userId, token.uid))
 
-    return await db.query.profile.findFirst({
-      where: eq(profile.userId, token.uid),
-    })
+    return { success: true }
   } catch (error: any) {
     if (error instanceof Error)
       throw createError({

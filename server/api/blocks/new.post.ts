@@ -1,6 +1,5 @@
 // Import necessary modules and services
 import { db } from "@/server/initial-services"
-import { getToken } from "#auth"
 import { block } from "@/drizzle/schema"
 import { eq, sql } from "drizzle-orm"
 import { getUserProfileId, getAllBlocks } from "#imports"

@@ -1,14 +1,10 @@
 import { db } from "@/server/initial-services"
 import { eq, ne, or, asc } from "drizzle-orm"
-import { profile, block } from "@/drizzle/schema"
+import { profile, block, Profile, ProfileWithBlocks } from "@/drizzle/schema"
 
-const fetchProfileWithBlocks = async (username: string) => {
-  return await db.query.profile.findFirst({
+const fetchProfileWithBlocks = async (username: string): Promise<ProfileWithBlocks> => {
+  return (await db.query.profile.findFirst({
     where: eq(profile.displayName, username),
-    columns: {
-      createdAt: false,
-      updatedAt: false,
-    },
     with: {
       blocks: {
         where: or(ne(block.name, ""), ne(block.link, "")),
@@ -19,7 +15,7 @@ const fetchProfileWithBlocks = async (username: string) => {
         orderBy: [asc(block.position)],
       },
     },
-  })
+  })) as ProfileWithBlocks
 }
 
 export default defineEventHandler(async (event) => {
@@ -36,7 +32,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     // Query the database for the profile matching the provided username
-    const profileResult = await fetchProfileWithBlocks(username)
+    const profileResult: ProfileWithBlocks = await fetchProfileWithBlocks(username)
     if (!profileResult) throw new Error("There was an n error occurred processing this request")
     // Return the profile result
     return profileResult

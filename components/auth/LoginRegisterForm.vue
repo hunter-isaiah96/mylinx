@@ -112,7 +112,12 @@ const loginRules = {
 
 // Validation rules for the registration form
 const registrationRules = {
-  email: [commonRules.required, (v: string) => /^[\p{L}0-9._%+-]+@[\p{L}0-9.-]+\.[A-Za-z]{2,}(?:\.[A-Za-z]+)?$/.test(v) || "That email doesn't look right. Try again"],
+  email: [
+    commonRules.required,
+    (v: string) =>
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(v) ||
+      "That email doesn't look right. Try again",
+  ],
   username: [commonRules.required, (v: string) => v.length >= 3 || "Username must be 3 characters or longer"],
   password: [commonRules.required],
   confirmPassword: [commonRules.required, (v: string) => v == formData.value.password || "Password does not match"],
@@ -151,7 +156,7 @@ const registerUser = async (formData: any) => {
     })
 
     // Log in the newly registered user
-    return loginWithCredentials(formData)
+    return await loginWithCredentials(formData)
   } catch (error) {
     // Return a generic error message
     return { error: "Registration failed. Please try again later." }
@@ -175,9 +180,10 @@ const submitForm = async () => {
 
   if (error) {
     useNuxtApp().$toast.error(error, { theme: "colored" })
+  } else {
+    navigateTo({ path: "/" })
   }
 
   setAuthenticating(false)
-  navigateTo({ path: "/" })
 }
 </script>

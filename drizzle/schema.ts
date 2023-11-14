@@ -1,5 +1,34 @@
 import { int, text, varchar, mysqlEnum, mysqlTable, timestamp, index, uniqueIndex, boolean, json } from "drizzle-orm/mysql-core"
 import { relations, sql } from "drizzle-orm"
+import { type UploadApiResponse } from "cloudinary"
+
+type CloudinaryUploadResponse = {
+  public_id: string
+  version: number
+  signature: string
+  width: number
+  height: number
+  format: string
+  resource_type: "image" | "video" | "raw" | "auto"
+  created_at: string
+  tags: Array<string>
+  pages: number
+  bytes: number
+  type: string
+  etag: string
+  placeholder: boolean
+  url: string
+  secure_url: string
+  access_mode: string
+  original_filename: string
+  moderation: Array<string>
+  access_control: Array<string>
+  context: object //won't change since it's response, we need to discuss documentation team about it before implementing.
+  metadata: object //won't change since it's response, we need to discuss documentation team about it before implementing.
+  colors?: [string, number][]
+
+  // [futureKey: string]: any
+}
 
 // Define common fields
 const commonFields = {
@@ -36,7 +65,7 @@ export const profile = mysqlTable(
     userId: int("user_id").notNull(),
     displayName: varchar("display_name", { length: 255 }).unique().notNull(),
     bio: text("bio"),
-    profilePicture: varchar("profile_picture", { length: 255 }),
+    profilePicture: json("profile_picture").$type<CloudinaryUploadResponse>(),
     title: varchar("title", { length: 255 }).default("").notNull(),
   },
   (table) => {
@@ -56,7 +85,7 @@ export const block = mysqlTable(
     active: boolean("boolean").default(true).notNull(),
     name: varchar("name", { length: 255 }),
     link: text("link"),
-    thumbnail: json("thumbnail"),
+    thumbnail: json("thumbnail").$type<CloudinaryUploadResponse>(),
     position: int("position").default(1).notNull(),
   },
   (table) => {
@@ -76,3 +105,12 @@ export const profileUserRelation = relations(profile, ({ one, many }) => ({
 export const blockToUserRelations = relations(block, ({ one }) => ({
   profile: one(profile, { fields: [block.profileId], references: [profile.id] }),
 }))
+
+export type User = typeof users.$inferSelect
+export type NewUser = typeof users.$inferInsert
+export type Profile = typeof profile.$inferSelect
+export type NewProfile = typeof profile.$inferInsert
+export type Block = typeof block.$inferSelect
+export type NewBlock = typeof block.$inferInsert
+
+export type ProfileWithBlocks = Profile & { blocks: Block[] }

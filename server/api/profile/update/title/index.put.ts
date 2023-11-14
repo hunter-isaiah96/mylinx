@@ -11,13 +11,11 @@ export default defineEventHandler(async (event) => {
     await db
       .update(profile)
       .set({
-        bio: body.bio,
+        title: body.name,
       })
       .where(eq(profile.userId, token.uid))
 
-    return await db.query.profile.findFirst({
-      where: eq(profile.userId, token.uid),
-    })
+    return { success: true }
   } catch (error: any) {
     if (error instanceof Error)
       throw createError({

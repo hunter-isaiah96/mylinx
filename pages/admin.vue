@@ -14,14 +14,13 @@
             <div class="phone-screen">
               <iframe
                 ref="preview"
-                src="/rhynoboy2009"
+                :src="`/${currentUser?.displayName}`"
                 title="mylinx"
                 height="60%"
               ></iframe>
             </div>
             <div class="phone-button"></div>
           </div>
-          =
         </div>
       </v-navigation-drawer>
       <v-main>
@@ -34,23 +33,18 @@
 definePageMeta({ middleware: "auth" })
 import AdminHeader from "@/components/admin/adminHeader.vue"
 import { useAuthStore } from "@/store/auth"
-import { useAdminStore, type Block } from "@/store/admin"
 
 const { getCurrentUser } = useAuthStore()
-const { setBlocks } = useAdminStore()
 const { currentUser } = storeToRefs(useAuthStore())
 const preview = ref<HTMLIFrameElement | null>(null)
 
 // Load user data
 getCurrentUser()
-const { data } = (await useFetch("/api/blocks")) as any
-setBlocks(data as Block[])
 
 const { $bus } = useNuxtApp()
-
-$bus.$on("refreshPreview", () => {
-  console.log("preview")
-  if (preview.value) preview.value.src = preview.value?.src
+const bus: any = $bus
+bus.$on("refreshPreview", () => {
+  if (preview.value) preview.value.src += ""
 })
 </script>
 

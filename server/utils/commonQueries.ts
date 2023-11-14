@@ -1,5 +1,5 @@
 import { db } from "@/server/initial-services"
-import { block, profile } from "@/drizzle/schema"
+import { Block, block, profile } from "@/drizzle/schema"
 import { asc, eq } from "drizzle-orm"
 import { JWT } from "next-auth/jwt"
 
@@ -13,13 +13,13 @@ export const getUserProfileId = async (token: JWT | null) => {
   return userProfile.id
 }
 
-export const getAllBlocks = async (profileId: number) => {
-  return await db.query.block.findMany({
+export const getAllBlocks = async (profileId: number): Promise<Block[]> => {
+  return (await db.query.block.findMany({
     orderBy: [asc(block.position)],
     where: eq(block.profileId, profileId),
     columns: {
       createdAt: false,
       updatedAt: false,
     },
-  })
+  })) as Block[]
 }

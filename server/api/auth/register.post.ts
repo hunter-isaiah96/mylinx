@@ -1,9 +1,9 @@
 import { db } from "@/server/initial-services"
 import * as argon2 from "argon2"
-import { users, profile } from "@/drizzle/schema"
+import { users, profile, NewProfile, NewUser } from "@/drizzle/schema"
 
 const validateEmail = (email: string): boolean => {
-  const emailRegex = /^[\p{L}0-9._%+-]+@[\p{L}0-9.-]+\.[A-Za-z]{2,}(?:\.[A-Za-z]+)?$/
+  const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
   return emailRegex.test(email)
 }
 
@@ -11,17 +11,13 @@ const hashPassword = async (password: string): Promise<string> => {
   return await argon2.hash(password)
 }
 
-const createUser = async (userData: any): Promise<any> => {
+const createUser = async (userData: NewUser): Promise<any> => {
   const hashedPassword = await hashPassword(userData.password)
+  userData.password = hashedPassword
 
-  const newUser = {
-    ...userData,
-    password: hashedPassword,
-  }
+  const newUserResult = await db.insert(users).values(userData)
 
-  const newUserResult = await db.insert(users).values(newUser)
-
-  const newUserProfile = {
+  const newUserProfile: NewProfile = {
     userId: Number(newUserResult.insertId),
     displayName: userData.username,
     title: userData.username,
@@ -36,7 +32,7 @@ const createUser = async (userData: any): Promise<any> => {
 
 export default defineEventHandler(async (event) => {
   try {
-    const body = await readBody(event)
+    const body: NewUser = await readBody(event)
 
     if (!validateEmail(body.email)) {
       throw new Error("Invalid email address")
