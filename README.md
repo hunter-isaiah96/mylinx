@@ -77,10 +77,18 @@ bun run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Environment Variables
+Create a .env file with these variables
+DATABASE_URL=
+JWT_SECRET=
+JWT_REFRESH_SECRET=
+CLOUDINARY_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_SECRET=
 
 ## Database Connectivity
 
-You will need to create a .env file with your Planetscale database url the `DATABASE_URL` variable.
+Your DATABASE_URL variable should look like this
 ![image](https://github.com/hunter-isaiah96/mylinx/assets/8966201/6d681a6d-851e-43e1-a8c8-526502650c2f)
 
 If you get an SSL Version Number error, in your `DATABASE_URL` variable,
