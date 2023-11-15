@@ -37,6 +37,7 @@
         <template v-slot:activator="{ props }">
           <v-btn
             v-bind="props"
+            :loading="updatingProfilePicture"
             icon
           >
             <v-avatar :color="currentUser?.profilePicture ? '' : 'primary'">
@@ -116,6 +117,11 @@
 <script setup lang="ts">
 import ShareButton from "@/components/admin/share.vue"
 import { type Profile } from "@/store/auth"
+import { useAuthStore } from "@/store/auth"
+import { storeToRefs } from "pinia"
+
+const { updatingProfilePicture } = storeToRefs(useAuthStore())
+
 const { signOut } = useAuth()
 const accountMenu = ref(false)
 

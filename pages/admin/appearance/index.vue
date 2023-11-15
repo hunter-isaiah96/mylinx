@@ -13,6 +13,7 @@
                   size="96"
                   class="mr-3"
                   @click="handleProfilePictureUpload"
+                  :loading="updatingProfilePicture"
                   icon
                 >
                   <v-avatar
@@ -140,7 +141,7 @@ import { storeToRefs } from "pinia"
 
 import { Cropper } from "vue-advanced-cropper"
 import "vue-advanced-cropper/dist/style.css"
-const { currentUser } = storeToRefs(useAuthStore())
+const { currentUser, updatingProfilePicture } = storeToRefs(useAuthStore())
 const { updateProfileTitle, updateProfileBio, updateProfilePicture, deleteProfilePicture } = useAuthStore()
 
 const showCropper = ref<boolean>(false)

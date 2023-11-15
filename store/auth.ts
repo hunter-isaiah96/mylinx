@@ -22,6 +22,7 @@ export interface Profile {
 interface AuthState {
   authenticating: boolean
   currentUser: null | Profile
+  updatingProfilePicture: boolean
 }
 
 export const useAuthStore = defineStore({
@@ -30,6 +31,7 @@ export const useAuthStore = defineStore({
     // State properties for authentication
     authenticating: false,
     currentUser: null,
+    updatingProfilePicture: false,
   }),
   actions: {
     setAuthenticating(bool: boolean) {
@@ -58,6 +60,7 @@ export const useAuthStore = defineStore({
     },
     async updateProfileBio(bio: string) {
       try {
+        this.updatingProfilePicture = true
         await $fetch(`/api/profile/update/bio`, {
           method: "PUT",
           body: {
@@ -66,10 +69,13 @@ export const useAuthStore = defineStore({
         })
       } catch (e: unknown) {
         if (e instanceof Error) handleError(e.message)
+      } finally {
+        this.updatingProfilePicture = false
       }
     },
     async updateProfilePicture(image: string) {
       try {
+        this.updatingProfilePicture = true
         const profilePicture: CloudinaryImage = await $fetch(`/api/profile/update/picture`, {
           method: "PUT",
           body: {
@@ -79,16 +85,21 @@ export const useAuthStore = defineStore({
         this.currentUser!.profilePicture = profilePicture
       } catch (e: unknown) {
         if (e instanceof Error) handleError(e.message)
+      } finally {
+        this.updatingProfilePicture = false
       }
     },
     async deleteProfilePicture() {
       try {
+        this.updatingProfilePicture = true
         await $fetch(`/api/profile/update/picture/delete`, {
           method: "DELETE",
         })
         this.currentUser!.profilePicture = null
       } catch (e: unknown) {
         if (e instanceof Error) handleError(e.message)
+      } finally {
+        this.updatingProfilePicture = false
       }
     },
   },
