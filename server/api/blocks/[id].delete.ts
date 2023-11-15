@@ -1,8 +1,6 @@
 import { db } from "@/server/initial-services"
-import { block } from "@/drizzle/schema"
+import { Profile, block } from "@/drizzle/schema"
 import { and, eq, gt, sql } from "drizzle-orm"
-
-import { getUserProfileId, getAllBlocks } from "#imports"
 import { CloudinaryImage, deleteCloudinaryImage } from "@/server/utils/cloudinaryUpload"
 
 const deleteBlock = async (profileId: number, blockId: number) => {
@@ -43,12 +41,12 @@ export default defineEventHandler(async (event) => {
   try {
     // Authenticate user and get their profile ID
     const token = event.context.auth
-    const currentUserProfileId = await getUserProfileId(token)
+    const currentUserProfile: Profile = await getUserProfile(token)
 
     // Delete the block and return all blocks after deletion
-    await deleteBlock(currentUserProfileId, Number(params.id))
+    await deleteBlock(currentUserProfile.id, Number(params.id))
 
-    return await getAllBlocks(currentUserProfileId)
+    return await getAllBlocks(currentUserProfile.id)
   } catch (error: unknown) {
     // Handle errors and create an appropriate error response
     if (error instanceof Error)

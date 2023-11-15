@@ -1,5 +1,5 @@
 import { eq } from "drizzle-orm"
-import { block } from "@/drizzle/schema"
+import { Block, block } from "@/drizzle/schema"
 import { db } from "@/server/initial-services"
 
 export default defineEventHandler(async (event) => {
@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
       }
     })
 
-    const allBlocks = await getAllBlocks(await getUserProfileId(token))
+    const allBlocks: Block[] = await getAllBlocks((await getUserProfile(token)).id)
 
     return allBlocks
   } catch (error: unknown) {

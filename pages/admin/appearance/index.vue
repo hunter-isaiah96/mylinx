@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="pt-11">
     <v-row justify="center">
       <v-col cols="6">
         <v-card
@@ -25,7 +25,12 @@
                       alt="profile picture"
                       cover
                     />
-                    <span v-else>{{ currentUser?.displayName[0] }}</span>
+                    <h1
+                      class="text-uppercase"
+                      v-else
+                    >
+                      {{ currentUser?.displayName[0] }}
+                    </h1>
                   </v-avatar>
                 </v-btn>
               </template>
@@ -46,6 +51,7 @@
                 <v-btn
                   size="large"
                   variant="outlined"
+                  @click="deleteProfilePicture()"
                   rounded
                   block
                 >
@@ -120,7 +126,7 @@
               variant="flat"
               rounded
             >
-              Crop
+              Upload
             </v-btn>
           </div>
         </v-card-actions>
@@ -135,7 +141,7 @@ import { storeToRefs } from "pinia"
 import { Cropper } from "vue-advanced-cropper"
 import "vue-advanced-cropper/dist/style.css"
 const { currentUser } = storeToRefs(useAuthStore())
-const { updateProfileTitle, updateProfileBio, updateProfilePicture } = useAuthStore()
+const { updateProfileTitle, updateProfileBio, updateProfilePicture, deleteProfilePicture } = useAuthStore()
 
 const showCropper = ref<boolean>(false)
 const cropperTool = ref<any>(null)
@@ -148,7 +154,10 @@ const handleProfilePictureUpload = () => {
 }
 
 const closeCropperDialog = () => {
-  // profilePicture.value = ""
+  if (profilePictureUploader.value != null) {
+    profilePictureUploader.value.value = ""
+  }
+  profilePicture.value = ""
   showCropper.value = false
 }
 
@@ -156,6 +165,7 @@ const getResult = async () => {
   if (!cropperTool) return
   const { canvas } = cropperTool.value.getResult()
   updateProfilePicture(canvas.toDataURL())
+  profilePicture.value = ""
   showCropper.value = false
 }
 
@@ -179,18 +189,18 @@ const onFileChanged = (event: any) => {
     }
     // Start the reader job - read file as a data url (base64 format)
     reader.readAsArrayBuffer(files[0])
-    showCropper.value = true
   }
+  showCropper.value = true
 }
 </script>
 <style>
 .vue-advanced-cropper {
   height: 600px;
   width: 600px;
-  background: #ddd;
+  background: #7a7a7a;
 }
 .vue-advanced-cropper__background,
 .vue-advanced-cropper__foreground {
-  background: #ddd;
+  background: #7a7a7a;
 }
 </style>

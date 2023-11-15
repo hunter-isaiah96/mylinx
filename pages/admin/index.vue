@@ -47,22 +47,14 @@ import Header from "@/components/admin/blocks/header.vue"
 import Link from "@/components/admin/blocks/link.vue"
 import draggable from "vuedraggable"
 import { useAdminStore } from "@/store/admin"
-import type { Block } from "@/drizzle/schema"
 
 const { addBlock, changePosition, setBlocks } = useAdminStore()
 const { addLinkActive, blocks } = storeToRefs(useAdminStore())
-
-const data = await $fetch<Block[]>("/api/blocks")
-setBlocks(data)
 
 const getBlockComponent = (type: string) => (type === "header" ? Header : type === "link" ? Link : null)
 const finishedDragging = (drag: any) => {
   changePosition()
 }
-
-onUnmounted(() => {
-  setBlocks([])
-})
 </script>
 
 <style lang="scss" scoped>

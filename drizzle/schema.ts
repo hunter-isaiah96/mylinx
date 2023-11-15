@@ -1,34 +1,6 @@
 import { int, text, varchar, mysqlEnum, mysqlTable, timestamp, index, uniqueIndex, boolean, json } from "drizzle-orm/mysql-core"
 import { relations, sql } from "drizzle-orm"
-import { type UploadApiResponse } from "cloudinary"
-
-type CloudinaryUploadResponse = {
-  public_id: string
-  version: number
-  signature: string
-  width: number
-  height: number
-  format: string
-  resource_type: "image" | "video" | "raw" | "auto"
-  created_at: string
-  tags: Array<string>
-  pages: number
-  bytes: number
-  type: string
-  etag: string
-  placeholder: boolean
-  url: string
-  secure_url: string
-  access_mode: string
-  original_filename: string
-  moderation: Array<string>
-  access_control: Array<string>
-  context: object //won't change since it's response, we need to discuss documentation team about it before implementing.
-  metadata: object //won't change since it's response, we need to discuss documentation team about it before implementing.
-  colors?: [string, number][]
-
-  // [futureKey: string]: any
-}
+import { type CloudinaryImage } from "@/server/utils/cloudinaryUpload"
 
 // Define common fields
 const commonFields = {
@@ -65,7 +37,7 @@ export const profile = mysqlTable(
     userId: int("user_id").notNull(),
     displayName: varchar("display_name", { length: 255 }).unique().notNull(),
     bio: text("bio"),
-    profilePicture: json("profile_picture").$type<CloudinaryUploadResponse>(),
+    profilePicture: json("profile_picture").$type<CloudinaryImage>(),
     title: varchar("title", { length: 255 }).default("").notNull(),
   },
   (table) => {
@@ -85,7 +57,7 @@ export const block = mysqlTable(
     active: boolean("boolean").default(true).notNull(),
     name: varchar("name", { length: 255 }),
     link: text("link"),
-    thumbnail: json("thumbnail").$type<CloudinaryUploadResponse>(),
+    thumbnail: json("thumbnail").$type<CloudinaryImage>(),
     position: int("position").default(1).notNull(),
   },
   (table) => {

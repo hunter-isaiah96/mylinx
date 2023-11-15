@@ -1,8 +1,7 @@
 // Import necessary modules and services
 import { db } from "@/server/initial-services"
-import { block } from "@/drizzle/schema"
+import { Profile, block } from "@/drizzle/schema"
 import { eq, sql } from "drizzle-orm"
-import { getUserProfileId, getAllBlocks } from "#imports"
 import { uploadCloudinaryImage } from "@/server/utils/cloudinaryUpload"
 import parser, { Metadata } from "html-metadata-parser"
 
@@ -68,7 +67,7 @@ export default defineEventHandler(async (event) => {
     const body = await readBody(event)
 
     // Get the user's profile ID using the provided token
-    const currentUserProfileId = await getUserProfileId(token)
+    const currentUserProfile: Profile = await getUserProfile(token)
 
     // Fetch link metadata if the type is "link" and name is not provided
     if (body.type === "link" && !body.name) {
@@ -78,10 +77,10 @@ export default defineEventHandler(async (event) => {
     }
 
     // Add a block and update positions in the database
-    await addBlock(currentUserProfileId, body)
+    await addBlock(currentUserProfile.id, body)
 
     // Return all blocks for the current user
-    return await getAllBlocks(currentUserProfileId)
+    return await getAllBlocks(currentUserProfile.id)
   } catch (error: unknown) {
     // Handle errors by throwing a custom error
     if (error instanceof Error)

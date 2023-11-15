@@ -21,7 +21,12 @@
               alt="profile picture"
               cover
             />
-            <span v-else>{{ profile.displayName[0] }}</span>
+            <h1
+              class="text-uppercase"
+              v-else
+            >
+              {{ profile.displayName[0] }}
+            </h1>
           </v-avatar>
           <v-card-title class="font-weight-bold px-2 multiline-text">
             {{ profile.title || `@${profile.displayName}` }}

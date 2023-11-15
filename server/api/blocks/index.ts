@@ -1,13 +1,12 @@
-import { getUserProfileId, getAllBlocks } from "#imports"
-import { Block } from "~/drizzle/schema"
+import { Block, Profile } from "@/drizzle/schema"
 
 export default defineEventHandler(async (event) => {
   try {
     const token = event.context.auth
 
-    const userProfileId = await getUserProfileId(token)
+    const userProfile: Profile = await getUserProfile(token)
 
-    return (await getAllBlocks(userProfileId)) as Block[]
+    return (await getAllBlocks(userProfile.id)) as Block[]
   } catch (error: unknown) {
     if (error instanceof Error)
       throw createError({

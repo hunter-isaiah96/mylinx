@@ -31,13 +31,18 @@
 </template>
 <script setup lang="ts">
 definePageMeta({ middleware: "auth" })
+import type { Block } from "~/drizzle/schema"
 import AdminHeader from "@/components/admin/adminHeader.vue"
 import { useAuthStore } from "@/store/auth"
+import { useAdminStore } from "@/store/admin"
 
 const { getCurrentUser } = useAuthStore()
+const { setBlocks } = useAdminStore()
 const { currentUser } = storeToRefs(useAuthStore())
 const preview = ref<HTMLIFrameElement | null>(null)
 
+const { data } = await useFetch<Block[]>("/api/blocks")
+setBlocks(data.value as Block[])
 // Load user data
 getCurrentUser()
 

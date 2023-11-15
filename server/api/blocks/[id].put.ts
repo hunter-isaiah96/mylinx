@@ -1,7 +1,6 @@
 import { db } from "@/server/initial-services"
-import { getUserProfileId, getAllBlocks } from "#imports"
 import { and, eq } from "drizzle-orm"
-import { block } from "@/drizzle/schema"
+import { Profile, block } from "@/drizzle/schema"
 
 const updateBlock = async (profileId: number, blockId: number, updateBlock: { id: string; name: string; link: string; active: boolean }) => {
   await db
@@ -31,10 +30,10 @@ export default defineEventHandler(async (event) => {
       throw new Error("There was a problem completing this request")
     }
 
-    const currentUserProfileId = await getUserProfileId(token)
-    await updateBlock(currentUserProfileId, Number(params.id), body)
+    const currentUserProfile: Profile = await getUserProfile(token)
+    await updateBlock(currentUserProfile.id, Number(params.id), body)
 
-    return await getAllBlocks(currentUserProfileId)
+    return await getAllBlocks(currentUserProfile.id)
   } catch (error: unknown) {
     if (error instanceof Error)
       throw createError({

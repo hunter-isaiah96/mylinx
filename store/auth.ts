@@ -58,7 +58,7 @@ export const useAuthStore = defineStore({
     },
     async updateProfileBio(bio: string) {
       try {
-        const profile: Profile = await $fetch(`/api/profile/update/bio`, {
+        await $fetch(`/api/profile/update/bio`, {
           method: "PUT",
           body: {
             bio,
@@ -77,6 +77,16 @@ export const useAuthStore = defineStore({
           },
         })
         this.currentUser!.profilePicture = profilePicture
+      } catch (e: unknown) {
+        if (e instanceof Error) handleError(e.message)
+      }
+    },
+    async deleteProfilePicture() {
+      try {
+        await $fetch(`/api/profile/update/picture/delete`, {
+          method: "DELETE",
+        })
+        this.currentUser!.profilePicture = null
       } catch (e: unknown) {
         if (e instanceof Error) handleError(e.message)
       }
