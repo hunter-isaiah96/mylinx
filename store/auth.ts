@@ -64,13 +64,11 @@ export const useAuthStore = defineStore({
             bio,
           },
         })
-        this.currentUser = profile
       } catch (e: unknown) {
         if (e instanceof Error) handleError(e.message)
       }
     },
     async updateProfilePicture(image: string) {
-      console.log(image)
       try {
         const profilePicture: CloudinaryImage = await $fetch(`/api/profile/update/picture`, {
           method: "PUT",

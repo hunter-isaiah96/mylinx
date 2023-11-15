@@ -87,25 +87,17 @@
     </v-row>
 
     <v-dialog
-      width="90%"
+      width="600"
       v-model="showCropper"
     >
       <v-card>
-        <VuePictureCropper
-          v-if="showCropper"
-          :boxStyle="{
-            width: '100%',
-            height: '100%',
-            backgroundColor: '#FFF',
-            margin: 'auto',
+        <cropper
+          :stencil-props="{
+            aspectRatio: 1,
           }"
-          :img="profilePicture"
-          :options="{
-            viewMode: 1,
-            dragMode: 'crop',
-            aspectRatio: 1 / 1,
-          }"
-        ></VuePictureCropper>
+          :src="profilePicture"
+          ref="cropperTool"
+        />
         <v-card-actions style="width: 100%">
           <div
             class="d-flex"
@@ -139,12 +131,14 @@
 <script setup lang="ts">
 import { useAuthStore } from "@/store/auth"
 import { storeToRefs } from "pinia"
-import VuePictureCropper, { cropper } from "vue-picture-cropper"
 
+import { Cropper } from "vue-advanced-cropper"
+import "vue-advanced-cropper/dist/style.css"
 const { currentUser } = storeToRefs(useAuthStore())
 const { updateProfileTitle, updateProfileBio, updateProfilePicture } = useAuthStore()
 
 const showCropper = ref<boolean>(false)
+const cropperTool = ref<any>(null)
 const profilePictureUploader = ref<HTMLInputElement | null>(null)
 const profilePicture = ref<string>("")
 
@@ -153,42 +147,50 @@ const handleProfilePictureUpload = () => {
   if (profilePictureUploader.value) profilePictureUploader.value.click()
 }
 
-const checkCropperDialog = (e: any) => {
-  // if (e == false) profilePicture.value = ""
-}
-
 const closeCropperDialog = () => {
   // profilePicture.value = ""
   showCropper.value = false
 }
 
 const getResult = async () => {
-  if (!cropper) return
-  const base64 = cropper.getDataURL()
-  updateProfilePicture(base64)
-  // profilePicture.value = ""
+  if (!cropperTool) return
+  const { canvas } = cropperTool.value.getResult()
+  updateProfilePicture(canvas.toDataURL())
   showCropper.value = false
 }
 
-const onFileChanged = (e: any) => {
-  // profilePicture.value = ""
-  const { files } = e.target as HTMLInputElement
-  if (!files || !files.length) return
-  showCropper.value = true
-  // Convert to dataURL and pass to the cropper component
-  const file = files[0]
-  const reader = new FileReader()
-  reader.readAsDataURL(file)
-  reader.onload = () => {
-    // Update the picture source of the `img` prop
-    profilePicture.value = String(reader.result)
-
-    // Show the modal
+const onFileChanged = (event: any) => {
+  // Reference to the DOM input element
+  const { files } = event.target
+  // Ensure that you have a file before attempting to read it
+  if (files && files[0]) {
+    // 1. Revoke the object URL, to allow the garbage collector to destroy the uploaded before file
+    if (profilePicture.value) {
+      URL.revokeObjectURL(profilePicture.value)
+    }
+    // 2. Create the blob link to the file to optimize performance:
+    const blob = URL.createObjectURL(files[0])
+    // Create a new FileReader to read this image binary data
+    const reader = new FileReader()
+    // Define a callback function to run, when FileReader finishes its job
+    reader.onload = (e) => {
+      // Note: arrow function used here, so that "this.image" refers to the image of Vue component
+      profilePicture.value = blob
+    }
+    // Start the reader job - read file as a data url (base64 format)
+    reader.readAsArrayBuffer(files[0])
     showCropper.value = true
-
-    // Clear selected files of input element
-    if (!profilePictureUploader.value) return
-    profilePictureUploader.value.value = ""
   }
 }
 </script>
+<style>
+.vue-advanced-cropper {
+  height: 600px;
+  width: 600px;
+  background: #ddd;
+}
+.vue-advanced-cropper__background,
+.vue-advanced-cropper__foreground {
+  background: #ddd;
+}
+</style>
