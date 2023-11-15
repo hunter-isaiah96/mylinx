@@ -98,14 +98,20 @@
       v-model="showCropper"
       @update:model-value="clearAndHideCropper"
     >
-      <v-card>
-        <cropper
-          :stencil-props="{
-            aspectRatio: 1,
-          }"
-          :src="profilePicture"
-          ref="cropperTool"
-        />
+      <v-card rounded="xl">
+        <v-card-title class="text-center">Upload Image</v-card-title>
+        <v-card-text class="pt-0">
+          <cropper
+            class="mx-auto"
+            :stencil-props="{
+              aspectRatio: 1,
+            }"
+            :default-size="defaultSize"
+            :src="profilePicture"
+            ref="cropperTool"
+          />
+        </v-card-text>
+
         <v-card-actions style="width: 100%">
           <div
             class="d-flex"
@@ -115,7 +121,7 @@
               @click="clearAndHideCropper"
               class="flex-1-1"
               size="large"
-              variant="outlined"
+              variant="text"
               rounded
             >
               Cancel
@@ -155,6 +161,14 @@ const profilePicture = ref<string>("") // Reactive variable to store the profile
 
 // Functions
 
+// Fill default image size on cropper
+const defaultSize = ({ imageSize, visibleArea }: any) => {
+  return {
+    width: (visibleArea || imageSize).width,
+    height: (visibleArea || imageSize).height,
+  }
+}
+
 // Function to trigger profile picture upload
 const handleProfilePictureUpload = () => {
   if (profilePictureUploader.value) profilePictureUploader.value.click()
@@ -179,7 +193,7 @@ const getResult = async () => {
   if (!cropperTool.value) return
   const { canvas } = cropperTool.value.getResult()
   updateProfilePicture(canvas.toDataURL())
-  clearUploaderValue()
+  clearAndHideCropper()
 }
 
 // File Reader
@@ -218,11 +232,13 @@ const onFileChanged = (event: any) => {
 
 <style>
 .vue-advanced-cropper {
-  height: 600px;
-  width: 600px;
+  height: 475px;
+  width: 475px;
   background: #7a7a7a;
 }
-.vue-advanced-cropper__background,
+.vue-advanced-cropper__background {
+  background: #7a7a7a;
+}
 .vue-advanced-cropper__foreground {
   background: #7a7a7a;
 }
