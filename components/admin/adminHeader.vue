@@ -125,7 +125,7 @@ const { updatingProfilePicture } = storeToRefs(useAuthStore())
 const { signOut } = useAuth()
 const accountMenu = ref(false)
 
-const props = defineProps<{
+defineProps<{
   currentUser: null | Profile
 }>()
 
