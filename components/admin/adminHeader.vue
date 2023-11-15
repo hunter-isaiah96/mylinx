@@ -6,6 +6,7 @@
     app
   >
     <div class="d-flex align-center nav-item-spacing ml-4">
+      <v-icon size="x-large">mdi-link-box</v-icon>
       <v-btn
         v-for="navItem in headerItems"
         :key="navItem.title"
