@@ -96,6 +96,7 @@
     <v-dialog
       width="600"
       v-model="showCropper"
+      @update:model-value="clearAndHideCropper"
     >
       <v-card>
         <cropper
@@ -111,7 +112,7 @@
             style="width: 100%"
           >
             <v-btn
-              @click="closeCropperDialog"
+              @click="clearAndHideCropper"
               class="flex-1-1"
               size="large"
               variant="outlined"
@@ -138,62 +139,83 @@
 <script setup lang="ts">
 import { useAuthStore } from "@/store/auth"
 import { storeToRefs } from "pinia"
-
 import { Cropper } from "vue-advanced-cropper"
 import "vue-advanced-cropper/dist/style.css"
-const { currentUser, updatingProfilePicture } = storeToRefs(useAuthStore())
-const { updateProfileTitle, updateProfileBio, updateProfilePicture, deleteProfilePicture } = useAuthStore()
 
-const showCropper = ref<boolean>(false)
-const cropperTool = ref<any>(null)
-const profilePictureUploader = ref<HTMLInputElement | null>(null)
-const profilePicture = ref<string>("")
+// Store related variables
+const authStore = useAuthStore() // Accessing the authentication store
+const { currentUser, updatingProfilePicture } = storeToRefs(authStore) // Destructuring reactive references to store state
+const { updateProfileTitle, updateProfileBio, updateProfilePicture, deleteProfilePicture } = authStore // Destructuring store actions
 
+// State variables
+const showCropper = ref<boolean>(false) // Reactive variable to control the visibility of the cropper
+const cropperTool = ref<any>(null) // Reference to the Cropper tool instance
+const profilePictureUploader = ref<HTMLInputElement | null>(null) // Reference to the profile picture uploader element
+const profilePicture = ref<string>("") // Reactive variable to store the profile picture data URL
+
+// Functions
+
+// Function to trigger profile picture upload
 const handleProfilePictureUpload = () => {
-  // Trigger click on the FileInput
   if (profilePictureUploader.value) profilePictureUploader.value.click()
 }
 
-const closeCropperDialog = () => {
+// Function to clear the profile picture uploader value
+const clearUploaderValue = () => {
   if (profilePictureUploader.value != null) {
     profilePictureUploader.value.value = ""
   }
+}
+
+// Function to clear profile picture and hide the cropper
+const clearAndHideCropper = () => {
+  clearUploaderValue()
   profilePicture.value = ""
   showCropper.value = false
 }
 
+// Function to get the result of cropping and update profile picture
 const getResult = async () => {
-  if (!cropperTool) return
+  if (!cropperTool.value) return
   const { canvas } = cropperTool.value.getResult()
   updateProfilePicture(canvas.toDataURL())
-  profilePicture.value = ""
-  showCropper.value = false
+  clearUploaderValue()
 }
 
+// File Reader
+
+// Function to revoke the object URL for the profile picture
+const revokeObjectURL = () => {
+  if (profilePicture.value) {
+    URL.revokeObjectURL(profilePicture.value)
+  }
+}
+
+// Function to handle reading the file and setting the profile picture
+const handleFileRead = (blob: string) => {
+  profilePicture.value = blob
+}
+
+// Function to handle changes in the file input
 const onFileChanged = (event: any) => {
-  // Reference to the DOM input element
   const { files } = event.target
-  // Ensure that you have a file before attempting to read it
+
   if (files && files[0]) {
-    // 1. Revoke the object URL, to allow the garbage collector to destroy the uploaded before file
-    if (profilePicture.value) {
-      URL.revokeObjectURL(profilePicture.value)
-    }
-    // 2. Create the blob link to the file to optimize performance:
+    revokeObjectURL()
     const blob = URL.createObjectURL(files[0])
-    // Create a new FileReader to read this image binary data
     const reader = new FileReader()
-    // Define a callback function to run, when FileReader finishes its job
+
     reader.onload = (e) => {
-      // Note: arrow function used here, so that "this.image" refers to the image of Vue component
-      profilePicture.value = blob
+      handleFileRead(blob)
     }
-    // Start the reader job - read file as a data url (base64 format)
+
     reader.readAsArrayBuffer(files[0])
   }
+
   showCropper.value = true
 }
 </script>
+
 <style>
 .vue-advanced-cropper {
   height: 600px;
