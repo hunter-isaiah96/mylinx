@@ -5,7 +5,7 @@
     elevation="1"
     app
   >
-    <div class="d-flex align-center nav-item-spacing ml-4">
+    <div class="d-flex align-center nav-item-spacing ml-8">
       <v-icon size="x-large">mdi-link-box</v-icon>
       <v-btn
         v-for="navItem in headerItems"

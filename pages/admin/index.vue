@@ -48,11 +48,11 @@ import Link from "@/components/admin/blocks/link.vue"
 import draggable from "vuedraggable"
 import { useAdminStore } from "@/store/admin"
 
-const { addBlock, changePosition, setBlocks } = useAdminStore()
+const { addBlock, changePosition } = useAdminStore()
 const { addLinkActive, blocks } = storeToRefs(useAdminStore())
 
 const getBlockComponent = (type: string) => (type === "header" ? Header : type === "link" ? Link : null)
-const finishedDragging = (drag: any) => {
+const finishedDragging = () => {
   changePosition()
 }
 </script>

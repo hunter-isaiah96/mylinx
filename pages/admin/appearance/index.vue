@@ -12,7 +12,7 @@
                 <v-btn
                   size="96"
                   class="mr-3"
-                  @click="handleProfilePictureUpload"
+                  @click="profilePictureUploader?.click()"
                   :loading="updatingProfilePicture"
                   icon
                 >
@@ -41,7 +41,7 @@
                   size="large"
                   color="primary"
                   variant="flat"
-                  @click="handleProfilePictureUpload"
+                  @click="profilePictureUploader?.click()"
                   rounded
                   block
                 >
@@ -92,154 +92,44 @@
         </v-card>
       </v-col>
     </v-row>
-
-    <v-dialog
-      width="600"
+    <ImageCropper
       v-model="showCropper"
-      @update:model-value="clearAndHideCropper"
-    >
-      <v-card rounded="xl">
-        <v-card-title class="text-center">Upload Image</v-card-title>
-        <v-card-text class="pt-0">
-          <cropper
-            class="mx-auto"
-            :stencil-props="{
-              aspectRatio: 1,
-            }"
-            :default-size="defaultSize"
-            :src="profilePicture"
-            ref="cropperTool"
-          />
-        </v-card-text>
-
-        <v-card-actions style="width: 100%">
-          <div
-            class="d-flex"
-            style="width: 100%"
-          >
-            <v-btn
-              @click="clearAndHideCropper"
-              class="flex-1-1"
-              size="large"
-              variant="text"
-              rounded
-            >
-              Cancel
-            </v-btn>
-            <v-btn
-              color="primary"
-              @click="getResult"
-              class="flex-1-1"
-              size="large"
-              variant="flat"
-              rounded
-            >
-              Upload
-            </v-btn>
-          </div>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+      :picture="profilePicture"
+      :upload-image="uploadProfilePicture"
+      @clear-cropper="clearCropper"
+    />
   </v-container>
 </template>
 <script setup lang="ts">
+import ImageCropper from "@/components/admin/imageCropper.vue"
 import { useAuthStore } from "@/store/auth"
 import { storeToRefs } from "pinia"
-import { Cropper } from "vue-advanced-cropper"
-import "vue-advanced-cropper/dist/style.css"
+import { readFile } from "@/composables/helpers"
 
 // Store related variables
 const authStore = useAuthStore() // Accessing the authentication store
 const { currentUser, updatingProfilePicture } = storeToRefs(authStore) // Destructuring reactive references to store state
 const { updateProfileTitle, updateProfileBio, updateProfilePicture, deleteProfilePicture } = authStore // Destructuring store actions
-
 // State variables
 const showCropper = ref<boolean>(false) // Reactive variable to control the visibility of the cropper
-const cropperTool = ref<any>(null) // Reference to the Cropper tool instance
 const profilePictureUploader = ref<HTMLInputElement | null>(null) // Reference to the profile picture uploader element
 const profilePicture = ref<string>("") // Reactive variable to store the profile picture data URL
 
-// Functions
-
-// Fill default image size on cropper
-const defaultSize = ({ imageSize, visibleArea }: any) => {
-  return {
-    width: (visibleArea || imageSize).width,
-    height: (visibleArea || imageSize).height,
-  }
+// Function to handle changes in the file input
+const onFileChanged = async (event: Event) => {
+  profilePicture.value = await readFile(event)
+  showCropper.value = true
 }
 
-// Function to trigger profile picture upload
-const handleProfilePictureUpload = () => {
-  if (profilePictureUploader.value) profilePictureUploader.value.click()
+const uploadProfilePicture = (base64: string) => {
+  updateProfilePicture(base64)
 }
 
-// Function to clear the profile picture uploader value
-const clearUploaderValue = () => {
+const clearCropper = () => {
   if (profilePictureUploader.value != null) {
     profilePictureUploader.value.value = ""
   }
-}
-
-// Function to clear profile picture and hide the cropper
-const clearAndHideCropper = () => {
-  clearUploaderValue()
-  profilePicture.value = ""
   showCropper.value = false
-}
-
-// Function to get the result of cropping and update profile picture
-const getResult = async () => {
-  if (!cropperTool.value) return
-  const { canvas } = cropperTool.value.getResult()
-  updateProfilePicture(canvas.toDataURL())
-  clearAndHideCropper()
-}
-
-// File Reader
-
-// Function to revoke the object URL for the profile picture
-const revokeObjectURL = () => {
-  if (profilePicture.value) {
-    URL.revokeObjectURL(profilePicture.value)
-  }
-}
-
-// Function to handle reading the file and setting the profile picture
-const handleFileRead = (blob: string) => {
-  profilePicture.value = blob
-}
-
-// Function to handle changes in the file input
-const onFileChanged = (event: any) => {
-  const { files } = event.target
-
-  if (files && files[0]) {
-    revokeObjectURL()
-    const blob = URL.createObjectURL(files[0])
-    const reader = new FileReader()
-
-    reader.onload = (e) => {
-      handleFileRead(blob)
-    }
-
-    reader.readAsArrayBuffer(files[0])
-  }
-
-  showCropper.value = true
+  profilePicture.value = ""
 }
 </script>
-
-<style>
-.vue-advanced-cropper {
-  height: 475px;
-  width: 475px;
-  background: #7a7a7a;
-}
-.vue-advanced-cropper__background {
-  background: #7a7a7a;
-}
-.vue-advanced-cropper__foreground {
-  background: #7a7a7a;
-}
-</style>

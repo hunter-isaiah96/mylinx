@@ -27,12 +27,16 @@
               :data="data"
               :model="data.name"
               @update:model-value="(newValue) => (data.name = newValue)"
+              :centered="false"
+              placeholder="Title"
               class="font-weight-bold mb-2"
             />
             <!-- Link Input -->
             <ToggleInput
               :data="data"
               :model="data.link"
+              :centered="false"
+              placeholder="Url"
               @update:model-value="(newValue) => (data.link = newValue)"
             />
           </div>
@@ -80,7 +84,8 @@
 </template>
 
 <script setup lang="ts">
-import { type Block, useAdminStore } from "@/store/admin"
+import { useAdminStore } from "@/store/admin"
+import type { Block } from "@/drizzle/schema"
 import DeletePanel from "@/components/admin/blocks/expansionPanels/deletePanel.vue"
 import ToggleInput from "@/components/admin/blocks/toggleInput.vue"
 

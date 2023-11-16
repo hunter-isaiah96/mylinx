@@ -1,3 +1,8 @@
 export const handleError = (errorMessage: string) => {
-  useNuxtApp().$toast.error(errorMessage, { theme: "colored" })
+  if (process.client) {
+    const nuxtApp = useNuxtApp()
+    nuxtApp.runWithContext(() => {
+      nuxtApp.$toast.error(errorMessage, { theme: "colored" })
+    })
+  }
 }

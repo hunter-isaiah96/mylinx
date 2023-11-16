@@ -35,21 +35,28 @@
   </div>
 </template>
 <script setup lang="ts">
-import { type Block, useAdminStore } from "@/store/admin"
+import type { Block } from "@/drizzle/schema"
+import { useAdminStore } from "@/store/admin"
 const { updateBlock } = useAdminStore()
 
 const toggle = ref(false)
 const textInput: Ref<HTMLInputElement | null> = ref(null)
-const props = defineProps({
-  model: String,
-  fontWeight: String,
-  data: Object,
-  placeholder: {
-    type: String,
-    default: "Title",
-  },
-  centered: Boolean,
-})
+const props = defineProps<{
+  model: string | null
+  data: Block
+  placeholder: string
+  centered: boolean | null
+}>()
+// const props = defineProps({
+//   model: String || null || undefined,
+//   fontWeight: String,
+//   data: Object,
+//   placeholder: {
+//     type: String,
+//     default: "Title",
+//   },
+//   centered: Boolean,
+// })
 defineEmits(["update:modelValue"])
 
 const toggleInput = async () => {
