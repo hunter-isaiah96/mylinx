@@ -77,23 +77,6 @@
         </v-col>
       </v-row>
     </v-card-text>
-    <!-- <v-card-text class="pt-0">
-      <v-row>
-        <v-col cols="1"> </v-col>
-        <v-col cols="10">
-          <v-btn
-            icon="mdi-image"
-            size="small"
-            density="comfortable"
-            :variant="isExpansionOpen('thumbnail').variant"
-            :color="isExpansionOpen('thumbnail').color"
-            @click="toggleExpansion('thumbnail')"
-            flat
-          ></v-btn>
-        </v-col>
-        <v-col cols="1"> </v-col>
-      </v-row>
-    </v-card-text> -->
     <!-- Expansion panels section -->
     <v-expansion-panels
       style="width: 100% !important"
@@ -145,9 +128,9 @@ const isExpansionOpen = (panelName: string) => {
 const toggleExpansion = (name: string) => {
   // Toggle the presence of the panel in the array
   if (panel.value.includes(name)) {
-    panel.value = []
+    panel.value.length = 0
   } else {
-    panel.value = []
+    panel.value.length = 0
     panel.value.push(name)
   }
 }
