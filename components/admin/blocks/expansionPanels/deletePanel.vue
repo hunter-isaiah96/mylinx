@@ -1,6 +1,5 @@
 <template>
   <v-expansion-panel
-    class="link-panel"
     value="delete"
     elevation="0"
   >

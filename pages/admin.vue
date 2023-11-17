@@ -25,17 +25,19 @@
       </v-navigation-drawer>
       <v-main>
         <NuxtPage />
+        <ImageCropper />
       </v-main>
     </v-no-ssr>
   </v-app>
 </template>
 <script setup lang="ts">
-definePageMeta({ middleware: "auth" })
-import type { Block } from "~/drizzle/schema"
 import AdminHeader from "@/components/admin/adminHeader.vue"
+import ImageCropper from "@/components/admin/imageCropper.vue"
+import type { Block } from "~/drizzle/schema"
 import { useAuthStore } from "@/store/auth"
 import { useAdminStore } from "@/store/admin"
 
+definePageMeta({ middleware: "auth" })
 const { getCurrentUser } = useAuthStore()
 const { setBlocks } = useAdminStore()
 const { currentUser } = storeToRefs(useAuthStore())

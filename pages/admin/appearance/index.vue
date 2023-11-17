@@ -12,7 +12,7 @@
                 <v-btn
                   size="96"
                   class="mr-3"
-                  @click="profilePictureUploader?.click()"
+                  @click="selectPhoto('profilePicture', null)"
                   :loading="updatingProfilePicture"
                   icon
                 >
@@ -41,7 +41,7 @@
                   size="large"
                   color="primary"
                   variant="flat"
-                  @click="profilePictureUploader?.click()"
+                  @click="selectPhoto('profilePicture', null)"
                   rounded
                   block
                 >
@@ -81,55 +81,31 @@
                 @blur="updateProfileBio(currentUser.bio)"
               ></v-textarea>
             </v-form>
-            <input
-              ref="profilePictureUploader"
-              class="d-none"
-              type="file"
-              accept="image/jpg, image/jpeg, image/png, image/gif"
-              @change="onFileChanged"
-            />
           </v-card-text>
         </v-card>
       </v-col>
     </v-row>
-    <ImageCropper
+    <!-- <ImageCropper
       v-model="showCropper"
       :picture="profilePicture"
       :upload-image="uploadProfilePicture"
       @clear-cropper="clearCropper"
-    />
+    /> -->
   </v-container>
 </template>
 <script setup lang="ts">
-import ImageCropper from "@/components/admin/imageCropper.vue"
 import { useAuthStore } from "@/store/auth"
+import { useCropperStore } from "@/store/cropper"
 import { storeToRefs } from "pinia"
 import { readFile } from "@/composables/helpers"
 
 // Store related variables
 const authStore = useAuthStore() // Accessing the authentication store
+const { selectPhoto } = useCropperStore() // Accessing the authentication store
 const { currentUser, updatingProfilePicture } = storeToRefs(authStore) // Destructuring reactive references to store state
 const { updateProfileTitle, updateProfileBio, updateProfilePicture, deleteProfilePicture } = authStore // Destructuring store actions
-// State variables
-const showCropper = ref<boolean>(false) // Reactive variable to control the visibility of the cropper
-const profilePictureUploader = ref<HTMLInputElement | null>(null) // Reference to the profile picture uploader element
-const profilePicture = ref<string>("") // Reactive variable to store the profile picture data URL
-
-// Function to handle changes in the file input
-const onFileChanged = async (event: Event) => {
-  profilePicture.value = await readFile(event)
-  showCropper.value = true
-}
 
 const uploadProfilePicture = (base64: string) => {
   updateProfilePicture(base64)
-}
-
-const clearCropper = () => {
-  if (profilePictureUploader.value != null) {
-    profilePictureUploader.value.value = ""
-  }
-  showCropper.value = false
-  profilePicture.value = ""
 }
 </script>
