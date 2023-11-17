@@ -1,6 +1,6 @@
 <template>
   <v-expansion-panel
-    value="thumbnail"
+    value="blockThumbnail"
     elevation="0"
   >
     <template v-slot:text>
@@ -9,7 +9,7 @@
         <div class="flex-1-1-100">Add Thumbnail</div>
         <div class="d-flex justify-end flex-1-1-100">
           <v-btn
-            @click="toggle!('thumbnail')"
+            @click="toggle!('blockThumbnail')"
             class="mr-1"
             size="x-small"
             variant="plain"
@@ -25,9 +25,11 @@
             <v-list-item class="pa-0">
               <template v-slot:prepend>
                 <v-img
+                  :aspect-ratio="1"
                   class="rounded-lg mr-3"
                   width="100"
                   :src="image"
+                  cover
                 ></v-img>
               </template>
               <template v-slot:title>
@@ -36,7 +38,7 @@
                   size="large"
                   color="primary"
                   variant="flat"
-                  @click="thumbnailUploader?.click()"
+                  @click="selectPhoto('blockThumbnail', id!)"
                   rounded
                   block
                 >
@@ -47,7 +49,7 @@
                 <v-btn
                   size="large"
                   variant="outlined"
-                  @click="toggle!('thumbnail')"
+                  @click="toggle!('blockThumbnail')"
                   rounded
                   block
                 >
@@ -60,27 +62,16 @@
       </v-container>
     </template>
   </v-expansion-panel>
-  <input
-    ref="thumbnailUploader"
-    class="d-none"
-    type="file"
-    accept="image/jpg, image/jpeg, image/png, image/gif"
-  />
 </template>
 
 <script setup lang="ts">
-import { useAdminStore } from "@/store/admin"
-import { storeToRefs } from "pinia"
+import { useCropperStore } from "@/store/cropper"
 
-const thumbnailUploader = ref<HTMLInputElement | null>(null)
+const { selectPhoto } = useCropperStore() // Accessing the authentication store
 
 const props = defineProps({
   id: Number,
   image: String,
   toggle: Function,
 })
-
-const deleteData = () => {
-  props.toggle!("imageThumbnail")
-}
 </script>

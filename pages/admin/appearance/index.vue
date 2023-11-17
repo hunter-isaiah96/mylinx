@@ -101,7 +101,7 @@ import { readFile } from "@/composables/helpers"
 
 // Store related variables
 const authStore = useAuthStore() // Accessing the authentication store
-const { selectPhoto } = useCropperStore() // Accessing the authentication store
+const { selectPhoto } = useCropperStore() // Accessing the cropper store
 const { currentUser, updatingProfilePicture } = storeToRefs(authStore) // Destructuring reactive references to store state
 const { updateProfileTitle, updateProfileBio, updateProfilePicture, deleteProfilePicture } = authStore // Destructuring store actions
 

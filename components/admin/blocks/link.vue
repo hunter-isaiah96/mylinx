@@ -44,9 +44,9 @@
               icon="mdi-image"
               size="small"
               density="comfortable"
-              :variant="isExpansionOpen('thumbnail').variant"
-              :color="isExpansionOpen('thumbnail').color"
-              @click="toggleExpansion('thumbnail')"
+              :variant="isExpansionOpen('blockThumbnail').variant"
+              :color="isExpansionOpen('blockThumbnail').color"
+              @click="toggleExpansion('blockThumbnail')"
               flat
             ></v-btn>
           </div>
