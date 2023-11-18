@@ -2,6 +2,7 @@
   <v-expansion-panel
     value="blockThumbnail"
     elevation="0"
+    eager
   >
     <template v-slot:text>
       <div class="bg-grey-lighten-2 text-black text-center text-subtitle-2 d-flex align-center">
@@ -75,7 +76,7 @@ import { useAdminStore } from "~/store/admin"
 const { deleteBlockThumbnail } = useAdminStore()
 const { selectPhoto } = useCropperStore() // Accessing the authentication store
 
-const props = defineProps({
+defineProps({
   id: Number,
   image: String,
   toggle: Function,
