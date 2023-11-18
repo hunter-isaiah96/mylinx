@@ -4,8 +4,8 @@ import { eq } from "drizzle-orm"
 
 export default defineEventHandler(async (event) => {
   try {
-    const token = event.context.auth
-    const userProfile: Profile = await getUserProfile(token)
+    const { auth } = event.context
+    const userProfile: Profile = await getUserProfile(auth.pid)
     if (userProfile.profilePicture) {
       await deleteCloudinaryImage(userProfile.profilePicture)
       await db
@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
         .set({
           profilePicture: null,
         })
-        .where(eq(profile.id, userProfile.id))
+        .where(eq(profile.id, auth.pid))
     }
     return {
       success: true,

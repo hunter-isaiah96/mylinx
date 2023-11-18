@@ -4,7 +4,7 @@ import { db } from "@/server/initial-services"
 
 export default defineEventHandler(async (event) => {
   try {
-    const token = event.context.auth
+    const { auth } = event.context
     const body = await readBody(event)
     const blocks = body.blocks
 
@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
       }
     })
 
-    const allBlocks: Block[] = await getAllBlocks((await getUserProfile(token)).id)
+    const allBlocks: Block[] = await getAllBlocks(auth.pid)
 
     return allBlocks
   } catch (error: unknown) {

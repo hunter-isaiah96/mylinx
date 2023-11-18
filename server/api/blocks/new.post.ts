@@ -63,11 +63,8 @@ const addBlock = async (profileId: number, blockData: BlockType): Promise<void> 
 export default defineEventHandler(async (event) => {
   try {
     // Obtain token and request body from the event
-    const token = event.context.auth
+    const { auth } = event.context
     const body = await readBody(event)
-
-    // Get the user's profile ID using the provided token
-    const currentUserProfile: Profile = await getUserProfile(token)
 
     // Fetch link metadata if the type is "link" and name is not provided
     if (body.type === "link" && !body.name) {
@@ -77,10 +74,10 @@ export default defineEventHandler(async (event) => {
     }
 
     // Add a block and update positions in the database
-    await addBlock(currentUserProfile.id, body)
+    await addBlock(auth.pid, body)
 
     // Return all blocks for the current user
-    return await getAllBlocks(currentUserProfile.id)
+    return await getAllBlocks(auth.pid)
   } catch (error: unknown) {
     // Handle errors by throwing a custom error
     if (error instanceof Error)

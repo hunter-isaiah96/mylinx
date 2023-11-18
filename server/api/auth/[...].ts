@@ -3,7 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import { NuxtAuthHandler } from "#auth"
 import { db } from "@/server/initial-services"
 import { eq, or } from "drizzle-orm"
-import { users } from "@/drizzle/schema"
+import { profile, users } from "@/drizzle/schema"
 import argon2 from "argon2"
 
 // Create and export the NuxtAuthHandler configuration
@@ -19,6 +19,7 @@ export default NuxtAuthHandler({
       const isSignIn = !!user
       if (isSignIn) {
         token.uid = user ? user.id : ""
+        token.pid = user ? user.profileId : ""
         token.username = user ? user.username : ""
       }
       return Promise.resolve(token)
@@ -27,11 +28,13 @@ export default NuxtAuthHandler({
     session: async ({ session, token }: any) => {
       ;(session as any).uid = token.id
       ;(session as any).username = token.username
+      ;(session as any).pid = token.profileId
       return Promise.resolve(session)
     },
   },
   providers: [
     // Configure the CredentialsProvider
+    // @ts-expect-error
     CredentialsProvider.default({
       name: "credentials",
       async authorize(credentials: any) {
@@ -60,9 +63,17 @@ export default NuxtAuthHandler({
           throw new Error("Login failed. Please check your username and password and try again.")
         }
 
+        const userProfile = await db.query.profile.findFirst({
+          where: or(eq(profile.userId, user.id)),
+        })
+
+        if (!userProfile) {
+          throw new Error("Login failed. Please check your username and password and try again.")
+        }
         // Return user information if the credentials are valid
         return {
           id: user.id,
+          profileId: userProfile.id,
           username: user.username,
         }
       },

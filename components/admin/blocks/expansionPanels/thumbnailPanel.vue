@@ -19,12 +19,19 @@
           </v-btn>
         </div>
       </div>
-      <v-container class="pt-0">
+      <div
+        v-if="!image"
+        class="text-black text-center text-subtitle-2 pt-3"
+      >
+        Add a Thumbnail or Icon to this Link.
+      </div>
+      <v-container class="pt-3">
         <v-card flat>
-          <v-card-text class="px-0">
+          <v-card-text class="pa-0">
             <v-list-item class="pa-0">
               <template v-slot:prepend>
                 <v-img
+                  v-if="image"
                   :aspect-ratio="1"
                   class="rounded-lg mr-3"
                   width="100"
@@ -32,30 +39,27 @@
                   cover
                 ></v-img>
               </template>
-              <template v-slot:title>
-                <v-btn
-                  class="mb-2"
-                  size="large"
-                  color="primary"
-                  variant="flat"
-                  @click="selectPhoto('blockThumbnail', id!)"
-                  rounded
-                  block
-                >
-                  <span class="capitalize-first-letter">Change</span>
-                </v-btn>
-              </template>
-              <v-list-item-subtitle style="opacity: 1">
-                <v-btn
-                  size="large"
-                  variant="outlined"
-                  @click="toggle!('blockThumbnail')"
-                  rounded
-                  block
-                >
-                  <span class="capitalize-first-letter">Remove</span>
-                </v-btn>
-              </v-list-item-subtitle>
+              <v-btn
+                class="mb-2"
+                size="large"
+                color="primary"
+                variant="flat"
+                @click="selectPhoto('blockThumbnail', id!)"
+                rounded
+                block
+              >
+                <span class="capitalize-first-letter">{{ image ? "Change" : "Set Thumbnail" }}</span>
+              </v-btn>
+              <v-btn
+                v-if="image"
+                size="large"
+                variant="outlined"
+                @click="deleteBlockThumbnail(id!)"
+                rounded
+                block
+              >
+                <span class="capitalize-first-letter">Remove</span>
+              </v-btn>
             </v-list-item>
           </v-card-text>
         </v-card>
@@ -66,7 +70,9 @@
 
 <script setup lang="ts">
 import { useCropperStore } from "@/store/cropper"
+import { useAdminStore } from "~/store/admin"
 
+const { deleteBlockThumbnail } = useAdminStore()
 const { selectPhoto } = useCropperStore() // Accessing the authentication store
 
 const props = defineProps({

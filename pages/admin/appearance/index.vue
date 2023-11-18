@@ -85,27 +85,16 @@
         </v-card>
       </v-col>
     </v-row>
-    <!-- <ImageCropper
-      v-model="showCropper"
-      :picture="profilePicture"
-      :upload-image="uploadProfilePicture"
-      @clear-cropper="clearCropper"
-    /> -->
   </v-container>
 </template>
 <script setup lang="ts">
 import { useAuthStore } from "@/store/auth"
 import { useCropperStore } from "@/store/cropper"
 import { storeToRefs } from "pinia"
-import { readFile } from "@/composables/helpers"
 
 // Store related variables
 const authStore = useAuthStore() // Accessing the authentication store
 const { selectPhoto } = useCropperStore() // Accessing the cropper store
 const { currentUser, updatingProfilePicture } = storeToRefs(authStore) // Destructuring reactive references to store state
-const { updateProfileTitle, updateProfileBio, updateProfilePicture, deleteProfilePicture } = authStore // Destructuring store actions
-
-const uploadProfilePicture = (base64: string) => {
-  updateProfilePicture(base64)
-}
+const { updateProfileTitle, updateProfileBio, deleteProfilePicture } = authStore // Destructuring store actions
 </script>

@@ -78,5 +78,27 @@ export const useAdminStore = defineStore({
         this.setLoading(false)
       }
     },
+    async updateBlockThumbnail(image: string, id: number | null) {
+      try {
+        const thumbnail: CloudinaryImage = await $fetch(`/api/blocks/update/thumbnail/${id}`, {
+          method: "PUT",
+          body: {
+            image,
+          },
+        })
+        const imageIndex = this.blocks.findIndex((block) => block.id == id)
+        this.blocks[imageIndex].thumbnail! = thumbnail
+      } catch (e: unknown) {
+        if (e instanceof Error) handleError(e.message)
+      } finally {
+      }
+    },
+    async deleteBlockThumbnail(id: number) {
+      await $fetch(`/api/blocks/update/thumbnail/${id}`, {
+        method: "DELETE",
+      })
+      const imageIndex = this.blocks.findIndex((block) => block.id == id)
+      this.blocks[imageIndex].thumbnail = null
+    },
   },
 })

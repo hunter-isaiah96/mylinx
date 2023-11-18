@@ -1,5 +1,5 @@
 import { db } from "@/server/initial-services"
-import { Profile, block } from "@/drizzle/schema"
+import { block } from "@/drizzle/schema"
 import { and, eq, gt, sql } from "drizzle-orm"
 import { CloudinaryImage, deleteCloudinaryImage } from "@/server/utils/cloudinaryUpload"
 
@@ -13,7 +13,7 @@ const deleteBlock = async (profileId: number, blockId: number) => {
   if (!currentBlock) throw new Error("There was a problem deleting this block")
 
   // Start a Prisma transaction to delete the block and update positions
-  await db.transaction(async (tx) => {
+  await db.transaction(async (tx: typeof db) => {
     // Delete the block
     await tx.delete(block).where(and(eq(block.profileId, profileId), eq(block.id, blockId)))
 
@@ -31,22 +31,18 @@ const deleteBlock = async (profileId: number, blockId: number) => {
 }
 
 export default defineEventHandler(async (event) => {
-  const { params } = event.context
-
-  // Validate request parameters
-  if (!params || typeof params.id !== "string") {
-    throw new Error("Invalid request parameters")
-  }
-
   try {
-    // Authenticate user and get their profile ID
-    const token = event.context.auth
-    const currentUserProfile: Profile = await getUserProfile(token)
+    const { params, auth } = event.context
+
+    // Validate request parameters
+    if (!params || !params.id) {
+      throw new Error("Invalid request parameters")
+    }
 
     // Delete the block and return all blocks after deletion
-    await deleteBlock(currentUserProfile.id, Number(params.id))
+    await deleteBlock(auth.pid, Number(params.id))
 
-    return await getAllBlocks(currentUserProfile.id)
+    return await getAllBlocks(auth.pid)
   } catch (error: unknown) {
     // Handle errors and create an appropriate error response
     if (error instanceof Error)

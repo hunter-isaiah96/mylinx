@@ -1,12 +1,21 @@
 import { db } from "@/server/initial-services"
 import { Block, Profile, block, profile } from "@/drizzle/schema"
-import { asc, eq } from "drizzle-orm"
+import { asc, eq, and } from "drizzle-orm"
 import { JWT } from "next-auth/jwt"
 
-export const getUserProfile = async (token: JWT | null): Promise<Profile> => {
-  if (token == null) throw new Error("Token Required")
+export const getBlock = async (profileId: number, blockId: number): Promise<Block> => {
+  const newBlock: Block = (await db.query.block.findFirst({
+    where: and(eq(block.profileId, profileId), eq(block.id, blockId)),
+  })) as Block
+
+  if (!newBlock) throw new Error("There was an error retrieving the block")
+
+  return newBlock
+}
+
+export const getUserProfile = async (profileId: number): Promise<Profile> => {
   const userProfile: Profile = (await db.query.profile.findFirst({
-    where: eq(profile.userId, token?.uid as number),
+    where: eq(profile.id, profileId),
   })) as Profile
 
   if (!userProfile) throw new Error("There was an error retrieving the user")
@@ -15,11 +24,9 @@ export const getUserProfile = async (token: JWT | null): Promise<Profile> => {
 }
 
 export const getAllBlocks = async (profileId: number): Promise<Block[]> => {
-  if (profileId == null) throw new Error("Profile ID not supplied")
-
   return (await db.query.block.findMany({
     orderBy: [asc(block.position)],
-    where: eq(block.profileId, profileId),
+    where: and(eq(block.profileId, profileId)),
     columns: {
       createdAt: false,
       updatedAt: false,

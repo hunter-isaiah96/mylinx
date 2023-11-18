@@ -1,5 +1,6 @@
 import { defineStore } from "pinia"
 import { useAuthStore } from "./auth"
+import { useAdminStore } from "./admin"
 
 type CropperState = {
   open: boolean
@@ -29,7 +30,12 @@ export const useCropperStore = defineStore({
           }
           break
         case "blockThumbnail":
-          console.log("update block thumbnail", image)
+          try {
+            const { updateBlockThumbnail } = useAdminStore()
+            await updateBlockThumbnail(image, this.id)
+          } catch (e: unknown) {
+            if (e instanceof Error) handleError(e.message)
+          }
           break
       }
     },
