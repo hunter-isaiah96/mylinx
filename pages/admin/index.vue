@@ -1,7 +1,13 @@
 <template>
   <v-container>
     <v-row justify="center">
-      <v-col cols="6">
+      <v-col
+        sm="12"
+        md="12"
+        cols="12"
+        lg="10"
+        xl="6"
+      >
         <AddLink />
         <div :class="{ active: addLinkActive }">
           <div

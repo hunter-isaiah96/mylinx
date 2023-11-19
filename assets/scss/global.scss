@@ -34,3 +34,17 @@
 .outline-idle {
   outline: 1px solid rgb(211, 211, 211) !important;
 }
+
+.block-item-right,
+.block-item-left {
+  position: absolute !important;
+  transform: translate(-50%, -50%);
+  top: 50%;
+}
+.block-item-left {
+  left: 25px;
+}
+
+.block-item-right {
+  right: 25px;
+}

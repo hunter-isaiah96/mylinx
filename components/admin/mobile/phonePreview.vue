@@ -16,7 +16,7 @@ import { storeToRefs } from "pinia"
 const { currentUser } = storeToRefs(useAuthStore())
 </script>
 <style lang="scss" scoped>
-$phoneSize: 690px;
+$phoneSize: 600px;
 .phone {
   box-sizing: border-box;
   margin: 100px auto;

@@ -3,14 +3,18 @@
     <v-no-ssr>
       <AdminHeader />
       <v-navigation-drawer
-        width="570"
+        :width="drawerSize"
         name="drawer"
         location="end"
         color="transparent"
-        permanent
+        :permanent="$vuetify.display.mdAndUp.value"
       >
         <div class="d-flex justify-center align-center h-100">
-          <PhonePreview />
+          <PhonePreview
+            :style="{
+              transform: `scale(${mobilePreviewScale}) `,
+            }"
+          />
         </div>
       </v-navigation-drawer>
       <v-main>
@@ -31,19 +35,40 @@ import { useAdminStore } from "@/store/admin"
 definePageMeta({ middleware: "auth" })
 const { getCurrentUser } = useAuthStore()
 const { setBlocks } = useAdminStore()
-const { currentUser } = storeToRefs(useAuthStore())
+const { $bus, $vuetify } = useNuxtApp()
 const preview = ref<HTMLIFrameElement | null>(null)
 
 const { data } = await useFetch<Block[]>("/api/blocks")
 setBlocks(data.value as Block[])
 // Load user data
 getCurrentUser()
+const mobilePreviewScale = ref(1)
 
-const { $bus } = useNuxtApp()
+const { name } = useDisplay()
+
+const drawerSize = computed(() => {
+  switch (name.value) {
+    case "md":
+      mobilePreviewScale.value = 0.7
+      return 400
+    case "lg":
+      mobilePreviewScale.value = 1
+      return 570
+    case "xl":
+      mobilePreviewScale.value = 1
+      return 570
+    case "xxl":
+      mobilePreviewScale.value = 1
+      return 570
+  }
+})
+
 const bus: any = $bus
 bus.$on("refreshPreview", () => {
   if (preview.value) preview.value.src += ""
 })
+
+console.log($vuetify.display)
 </script>
 
 <style lang="scss">

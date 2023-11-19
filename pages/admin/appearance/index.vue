@@ -4,7 +4,11 @@
     v-if="currentUser"
   >
     <v-row justify="center">
-      <v-col cols="6">
+      <v-col
+        cols="6"
+        lg="12"
+        xl="6"
+      >
         <v-card
           class="rounded-xl pa-3"
           flat
