@@ -1,6 +1,6 @@
 <template>
   <v-expansion-panel
-    value="delete"
+    value="blockDelete"
     elevation="0"
   >
     <template v-slot:text>
@@ -9,7 +9,7 @@
         <div class="flex-1-1-100">Delete</div>
         <div class="d-flex justify-end flex-1-1-100">
           <v-btn
-            @click="toggle!('delete')"
+            @click="toggle!('blockDelete')"
             class="mr-1"
             size="x-small"
             variant="plain"
@@ -24,7 +24,7 @@
         <v-row>
           <v-col cols="6">
             <v-btn
-              @click="toggle!('delete')"
+              @click="toggle!('blockDelete')"
               class="text-capitalize"
               variant="outlined"
               size="large"

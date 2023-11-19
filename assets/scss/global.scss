@@ -27,3 +27,10 @@
 .multiline-text {
   white-space: unset !important;
 }
+
+.outline-active {
+  outline: 2px solid black !important;
+}
+.outline-idle {
+  outline: 1px solid rgb(211, 211, 211) !important;
+}

@@ -52,9 +52,9 @@
             icon="mdi-trash-can-outline"
             size="small"
             density="comfortable"
-            :variant="trashOpen.variant"
-            :color="trashOpen.color"
-            @click="toggleExpansion('delete')"
+            :variant="isExpansionOpen('blockDelete').variant"
+            :color="isExpansionOpen('blockDelete').color"
+            @click="toggleExpansion('blockDelete')"
             flat
           ></v-btn>
         </v-col>
@@ -97,10 +97,10 @@ defineProps<{
 }>()
 
 // Computed property for styling the delete button based on panel state
-const trashOpen = computed(() => {
+const isExpansionOpen = (panelName: string) => {
   // Determine the button styling based on whether the "delete" panel is open
-  return panel.value.includes("delete") ? { variant: "flat" as ButtonVariant, color: "primary" } : { variant: "plain" as ButtonVariant, color: "" }
-})
+  return panel.value.includes(panelName) ? { variant: "flat" as ButtonVariant, color: "primary" } : { variant: "plain" as ButtonVariant, color: "" }
+}
 
 // Function to toggle the expansion panels
 const toggleExpansion = (name: string) => {

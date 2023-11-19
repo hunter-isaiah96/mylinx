@@ -41,6 +41,16 @@
               class="mb-2"
             />
             <v-btn
+              icon="mdi-format-line-style"
+              size="small"
+              density="comfortable"
+              :variant="isExpansionOpen('blockLayout').variant"
+              :color="isExpansionOpen('blockLayout').color"
+              @click="toggleExpansion('blockLayout')"
+              flat
+            ></v-btn>
+            <v-btn
+              class="ml-2"
               icon="mdi-image"
               size="small"
               density="comfortable"
@@ -70,9 +80,9 @@
             icon="mdi-trash-can-outline"
             size="small"
             density="comfortable"
-            :variant="isExpansionOpen('delete').variant"
-            :color="isExpansionOpen('delete').color"
-            @click="toggleExpansion('delete')"
+            :variant="isExpansionOpen('blockDelete').variant"
+            :color="isExpansionOpen('blockDelete').color"
+            @click="toggleExpansion('blockDelete')"
             flat
           ></v-btn>
         </v-col>
@@ -86,6 +96,10 @@
       <!-- Include the DeletePanel component with necessary props -->
       <DeletePanel
         :delete="deleteBlock"
+        :toggle="toggleExpansion"
+        :id="data.id"
+      />
+      <LayoutPanel
         :toggle="toggleExpansion"
         :id="data.id"
       />
@@ -103,6 +117,7 @@ import { useAdminStore } from "@/store/admin"
 import type { Block } from "@/drizzle/schema"
 import DeletePanel from "@/components/admin/blocks/expansionPanels/deletePanel.vue"
 import ThumbnailPanel from "@/components/admin/blocks/expansionPanels/thumbnailPanel.vue"
+import LayoutPanel from "@/components/admin/blocks/expansionPanels/layoutPanel.vue"
 import ToggleInput from "@/components/admin/blocks/toggleInput.vue"
 
 // Define a type for the button variants that the computed property uses

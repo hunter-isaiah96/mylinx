@@ -113,7 +113,7 @@
                     >
                       <v-list-item
                         class="theme profile-theme py-12"
-                        :class="[{ active: isSelected }, theme.class]"
+                        :class="[{ 'outline-active': isSelected }, theme.class]"
                         @click="toggle"
                       >
                         <v-card
@@ -168,8 +168,5 @@ const { updateProfileTitle, updateProfileBio, deleteProfilePicture, updateProfil
 <style lang="scss">
 .theme {
   border-radius: 6px;
-  &.active {
-    outline: 4px solid black;
-  }
 }
 </style>

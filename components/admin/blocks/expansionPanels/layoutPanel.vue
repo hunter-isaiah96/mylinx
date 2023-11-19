@@ -7,7 +7,7 @@
     <template v-slot:text>
       <div class="bg-grey-lighten-2 text-black text-center text-subtitle-2 d-flex align-center">
         <div class="flex-1-1-100"></div>
-        <div class="flex-1-1-100">Add Thumbnail</div>
+        <div class="flex-1-1-100">Layout</div>
         <div class="d-flex justify-end flex-1-1-100">
           <v-btn
             @click="toggle!('blockLayout')"
@@ -20,57 +20,84 @@
           </v-btn>
         </div>
       </div>
-      <div
-        v-if="!image"
-        class="text-black text-center text-subtitle-2 pt-3"
-      >
-        Add a Thumbnail or Icon to this Link.
-      </div>
-      <v-container class="pt-3">
-        <v-card flat>
-          <v-card-text class="pa-0">
-            <v-list-item class="pa-0">
-              <template v-slot:prepend>
-                <v-img
-                  v-if="image"
-                  :aspect-ratio="1"
-                  class="rounded-lg mr-3"
-                  width="100"
-                  :src="image"
-                  cover
-                ></v-img>
-              </template>
-              <v-btn
-                class="mb-2"
-                size="large"
-                color="primary"
-                variant="flat"
-                rounded
-                block
+      <div class="font-weight-light text-subtitle-2 py-6 px-6">Choose a layout for your link.</div>
+      <v-container class="pt-0">
+        <v-item-group
+          v-model="selectedLayout"
+          mandatory
+        >
+          <v-item
+            v-slot:default="{ isSelected, toggle }"
+            value="classic"
+          >
+            <v-card
+              :class="{ 'outline-active': isSelected, 'outline-idle': !isSelected }"
+              class="mb-3"
+              @click="toggle"
+              rounded="xl"
+            >
+              <v-list-item
+                title="Classic"
+                subtitle="Efficient, direct and compact"
+                class="py-6"
               >
-                <span class="capitalize-first-letter">{{ image ? "Change" : "Set Thumbnail" }}</span>
-              </v-btn>
-              <v-btn
-                v-if="image"
-                size="large"
-                variant="outlined"
-                rounded
-                block
+                <template v-slot:prepend>
+                  <v-radio :model-value="isSelected"></v-radio>
+                </template>
+                <template v-slot:append>
+                  <v-card> </v-card>
+                </template>
+              </v-list-item>
+            </v-card>
+          </v-item>
+          <v-item
+            v-slot:default="{ isSelected, toggle }"
+            value="featured"
+          >
+            <v-card
+              :class="{ 'outline-active': isSelected, 'outline-idle': !isSelected }"
+              @click="toggle"
+              rounded="xl"
+              flat
+            >
+              <v-list-item
+                title="Featured"
+                subtitle="Make your link standout with a larger, more attractive display."
+                class="py-4"
               >
-                <span class="capitalize-first-letter">Remove</span>
-              </v-btn>
-            </v-list-item>
-          </v-card-text>
-        </v-card>
+                <template v-slot:prepend>
+                  <v-radio :model-value="isSelected"></v-radio>
+                </template>
+                <template v-slot:append>
+                  <v-card
+                    class="mx-auto"
+                    rounded="lg"
+                    flat
+                  >
+                    <v-img
+                      src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+                      class="align-end"
+                      width="175"
+                      height="100"
+                      cover
+                    >
+                      <v-card-title class="text-white text-subtitle-2"> Example Title </v-card-title>
+                    </v-img>
+                  </v-card>
+                </template>
+              </v-list-item>
+            </v-card>
+          </v-item>
+        </v-item-group>
       </v-container>
     </template>
   </v-expansion-panel>
 </template>
 
 <script setup lang="ts">
-defineProps({
+const selectedLayout = ref("classic")
+const props = defineProps({
   id: Number,
-  image: String,
   toggle: Function,
 })
 </script>
