@@ -93,7 +93,6 @@
       style="width: 100% !important"
       v-model="panel"
     >
-      <!-- Include the DeletePanel component with necessary props -->
       <DeletePanel
         :delete="deleteBlock"
         :toggle="toggleExpansion"
