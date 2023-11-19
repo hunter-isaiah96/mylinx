@@ -1,6 +1,6 @@
 <template>
   <v-container
-    class="pt-11"
+    class="pt-7"
     v-if="currentUser"
   >
     <v-row justify="center">

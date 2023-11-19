@@ -7,7 +7,10 @@ const fetchProfileWithBlocks = async (username: string): Promise<ProfileWithBloc
     where: eq(profile.displayName, username),
     with: {
       blocks: {
-        where: or(and(eq(block.type, "link"), ne(block.name, ""), ne(block.link, "")), and(eq(block.type, "header"), ne(block.name, ""))),
+        where: or(
+          and(eq(block.type, "link"), ne(block.name, ""), ne(block.link, ""), eq(block.active, true)),
+          and(eq(block.type, "header"), ne(block.name, ""), eq(block.active, true))
+        ),
         columns: {
           createdAt: false,
           updatedAt: false,

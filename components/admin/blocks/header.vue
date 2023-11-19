@@ -44,6 +44,7 @@
             color="green"
             density="compact"
             :disabled="!data.name"
+            @update:model-value="updateBlock(data)"
             hide-details
           ></v-switch>
           <!-- Button to trigger delete action -->
@@ -85,7 +86,7 @@ import ToggleInput from "@/components/admin/blocks/toggleInput.vue"
 type ButtonVariant = "flat" | "plain" | "text" | "elevated" | "tonal" | "outlined" | undefined
 
 // Destructure functions from the admin store
-const { deleteBlock } = useAdminStore()
+const { deleteBlock, updateBlock } = useAdminStore()
 
 // Initialize a ref for managing expansion panel states
 const panel: Ref<string[]> = ref([])

@@ -64,7 +64,7 @@ export const block = mysqlTable(
     ...commonFields,
     profileId: int("profile_id").notNull(),
     type: mysqlEnum("type", ["link", "header"]).notNull(),
-    active: boolean("boolean").default(true).notNull(),
+    active: boolean("active").default(true).notNull(),
     name: varchar("name", { length: 255 }),
     link: text("link"),
     thumbnail: json("thumbnail").$type<CloudinaryImage>(),
