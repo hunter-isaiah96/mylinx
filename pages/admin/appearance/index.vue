@@ -102,35 +102,38 @@
                 <v-col
                   cols="3"
                   v-for="theme in themes"
-                  :key="theme"
+                  :key="theme.display"
                   class="pb-2 mb-3"
                 >
-                  <v-item
-                    v-slot="{ isSelected, toggle }"
-                    :value="theme"
-                  >
-                    <v-list-item
-                      class="theme profile-theme py-12"
-                      :class="[{ active: isSelected }, theme]"
-                      @click="toggle"
+                  <div>
+                    <v-item
+                      v-slot="{ isSelected, toggle }"
+                      :value="theme.class"
                     >
-                      <v-card
-                        class="pa-2 v-card item mx-0"
-                        flat
+                      <v-list-item
+                        class="theme profile-theme py-12"
+                        :class="[{ active: isSelected }, theme.class]"
+                        @click="toggle"
                       >
-                      </v-card>
-                      <v-card
-                        class="pa-2 my-2 v-card item mx-0"
-                        flat
-                      >
-                      </v-card>
-                      <v-card
-                        class="pa-2 v-card item mx-0"
-                        flat
-                      >
-                      </v-card>
-                    </v-list-item>
-                  </v-item>
+                        <v-card
+                          class="pa-2 v-card item mx-0"
+                          flat
+                        >
+                        </v-card>
+                        <v-card
+                          class="pa-2 my-2 v-card item mx-0"
+                          flat
+                        >
+                        </v-card>
+                        <v-card
+                          class="pa-2 v-card item mx-0"
+                          flat
+                        >
+                        </v-card>
+                      </v-list-item>
+                      <h3 class="text-capitalize text-center mt-2">{{ theme.display }}</h3>
+                    </v-item>
+                  </div>
                 </v-col>
               </v-row>
             </v-item-group>
@@ -144,7 +147,17 @@
 import { useAuthStore } from "@/store/auth"
 import { useCropperStore } from "@/store/cropper"
 import { storeToRefs } from "pinia"
-const themes = ["default", "ocean-breeze", "sunset-horizon", "forest-green", "lavender-fields", "golden-hour", "dark-night-sky", "tropical-paradise", "desert-sands"]
+const themes = [
+  { class: "default", display: "default" },
+  { class: "ocean-breeze", display: "ocean breeze" },
+  { class: "sunset-horizon", display: "sunset horizon" },
+  { class: "forest-green", display: "forest green" },
+  { class: "lavender-fields", display: "lavender fields" },
+  { class: "golden-hour", display: "golden hour" },
+  { class: "dark-night-sky", display: "dark night sky" },
+  { class: "tropical-paradise", display: "tropical paradise" },
+  { class: "desert-sands", display: "desert sands" },
+]
 // Store related variables
 const authStore = useAuthStore() // Accessing the authentication store
 const { selectPhoto } = useCropperStore() // Accessing the cropper store
@@ -155,7 +168,7 @@ const { updateProfileTitle, updateProfileBio, deleteProfilePicture, updateProfil
 .theme {
   border-radius: 6px;
   &.active {
-    outline: 2px solid black;
+    outline: 4px solid black;
   }
 }
 </style>
