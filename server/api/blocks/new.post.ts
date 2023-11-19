@@ -22,9 +22,8 @@ const fetchLinkMetadata = async (link: string): Promise<Metadata | null> => {
     const parsed = await parser.parse(link)
     return parsed
   } catch (e) {
-    console.log(e)
+    return null
   }
-  return null
 }
 
 // Utility function to handle the upload of a thumbnail to Cloudinary

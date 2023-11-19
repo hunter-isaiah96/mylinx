@@ -572,16 +572,6 @@
   resolved "https://registry.yarnpkg.com/@fastify/busboy/-/busboy-2.0.0.tgz#f22824caff3ae506b18207bad4126dbc6ccdb6b8"
   integrity sha512-JUFJad5lv7jxj926GPgymrWQxxjPYuJNiNjNMzqT+HiuP6Vl3dk5xzG+8sTX96np0ZAluvaMzPsjhHZ5rNuNQQ==
 
-"@invictus.codes/nuxt-vuetify@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@invictus.codes/nuxt-vuetify/-/nuxt-vuetify-0.3.0.tgz#f473081a90464fff177cce99b3311b6a2bd414a9"
-  integrity sha512-Rc2fIzq4CFUlmUHudQBBjyy+yVTlZeevsqh4cuGqPcIdUNWYJRrWFHl5bsp/lfNS5iDYElSBxefWJOD4wFc4gA==
-  dependencies:
-    "@nuxt/kit" "^3.6.2"
-    defu "^6.1.2"
-    vite-plugin-vuetify "^1.0.2"
-    vuetify "^3.3.7"
-
 "@ioredis/commands@^1.1.1":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@ioredis/commands/-/commands-1.2.0.tgz#6d61b3097470af1fdbbe622795b8921d42018e11"
@@ -4612,11 +4602,6 @@ minizlib@^2.1.1, minizlib@^2.1.2:
     minipass "^3.0.0"
     yallist "^4.0.0"
 
-mitt@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/mitt/-/mitt-3.0.1.tgz#ea36cf0cc30403601ae074c8f77b7092cdab36d1"
-  integrity sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==
-
 mkdirp-classic@^0.5.2, mkdirp-classic@^0.5.3:
   version "0.5.3"
   resolved "https://registry.yarnpkg.com/mkdirp-classic/-/mkdirp-classic-0.5.3.tgz#fa10c9115cc6d8865be221ba47ee9bed78601113"
@@ -7063,10 +7048,10 @@ vuedraggable@^4.1.0:
   dependencies:
     sortablejs "1.14.0"
 
-vuetify-nuxt-module@^0.6.6:
-  version "0.6.6"
-  resolved "https://registry.yarnpkg.com/vuetify-nuxt-module/-/vuetify-nuxt-module-0.6.6.tgz#ed5efbd211ebfc3e03360523530ee5db97d4b843"
-  integrity sha512-TEZZhWqff1XgwomxxposujgNwvWqwvVkqHz+Fw1uQM4n65yIk+tWg5ONkkDiviHRHOWzQbqgdAwGWIylXoHKJA==
+vuetify-nuxt-module@^0.6.7:
+  version "0.6.7"
+  resolved "https://registry.yarnpkg.com/vuetify-nuxt-module/-/vuetify-nuxt-module-0.6.7.tgz#b16962f775d4da67e1d230f7a6a895a7218da153"
+  integrity sha512-O8RHYPgqc8VGEm1K+GYwBv+aveo77V2p1G09bDlJq5Tn0mfJpZAKz3hSJPDmoDLy9UHQQMTaoohO4ovwYPmexg==
   dependencies:
     "@nuxt/kit" "^3.6.2"
     defu "^6.1.2"
@@ -7083,11 +7068,6 @@ vuetify@^3.3.23:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-3.4.0.tgz#8530fe0b169ed907383d102953da82aea54717f6"
   integrity sha512-aW3bJGCUN3fhl62yvsb+Hv6TtMWDqiadN0PTbEB8jd9z46/X1ddzQ/fhMjkqBX69sMFtZvENl3YFGU5c88/8qw==
-
-vuetify@^3.3.7:
-  version "3.3.23"
-  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-3.3.23.tgz#b456ac20ea945fa746f2a056f8157e38ee2756e6"
-  integrity sha512-EVEFvDyKr/HK2+hQJyhQSjIDULDaBi9vfgAAB0ekm+2Tvc8AkaDwb7VK44R2eilGFGpju6iN52FV7Uasj8SmIg==
 
 webidl-conversions@^3.0.0:
   version "3.0.1"

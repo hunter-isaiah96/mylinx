@@ -1,5 +1,4 @@
 export const readFile = (event: Event): Promise<string> => {
-  console.log(event)
   const files = (event.target as HTMLInputElement)?.files
 
   if (!files || files.length === 0) {

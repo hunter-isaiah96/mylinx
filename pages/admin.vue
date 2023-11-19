@@ -9,7 +9,10 @@
         color="transparent"
         :permanent="$vuetify.display.mdAndUp.value"
       >
-        <div class="d-flex justify-center align-center h-100">
+        <div
+          class="d-flex justify-center align-center h-100"
+          v-if="$vuetify.display.mdAndUp.value"
+        >
           <PhonePreview
             :style="{
               transform: `scale(${mobilePreviewScale}) `,
@@ -32,6 +35,15 @@
             </v-col>
           </v-row>
         </v-container>
+        <!-- <v-bottom-sheet
+          v-model="sheet"
+          height="100%"
+        >
+          <v-card
+            title="Bottom Sheet"
+            text="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ut, eos? Nulla aspernatur odio rem, culpa voluptatibus eius debitis."
+          ></v-card>
+        </v-bottom-sheet> -->
         <ImageCropper />
       </v-main>
     </v-no-ssr>
@@ -49,13 +61,13 @@ definePageMeta({ middleware: "auth" })
 const { getCurrentUser } = useAuthStore()
 const { setBlocks } = useAdminStore()
 const { $vuetify } = useNuxtApp()
-const preview = ref<HTMLIFrameElement | null>(null)
 
 const { data } = await useFetch<Block[]>("/api/blocks")
 setBlocks(data.value as Block[])
 // Load user data
 getCurrentUser()
 const mobilePreviewScale = ref(1)
+// const sheet = ref(true)
 
 const { name } = useDisplay()
 
@@ -75,6 +87,4 @@ const drawerSize = computed(() => {
       return 570
   }
 })
-
-console.log($vuetify.display)
 </script>
