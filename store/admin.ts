@@ -1,6 +1,5 @@
 import { defineStore } from "pinia"
 import type { Block } from "@/drizzle/schema"
-
 interface AdminState {
   addLinkActive: boolean
   loading: boolean
@@ -30,14 +29,9 @@ export const useAdminStore = defineStore({
           },
         })
         this.blocks = blocks
-        this.refreshPreview()
       } catch (e: unknown) {
         if (e instanceof Error) handleError(e.message)
       }
-    },
-    refreshPreview() {
-      const { $bus } = useNuxtApp()
-      // $bus.$emit("refreshPreview", "")
     },
     async addBlock(block: any) {
       try {

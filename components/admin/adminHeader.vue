@@ -117,18 +117,13 @@
 </template>
 <script setup lang="ts">
 import ShareButton from "@/components/admin/share.vue"
-import { type Profile } from "@/store/auth"
 import { useAuthStore } from "@/store/auth"
 import { storeToRefs } from "pinia"
 
-const { updatingProfilePicture } = storeToRefs(useAuthStore())
+const { updatingProfilePicture, currentUser } = storeToRefs(useAuthStore())
 
 const { signOut } = useAuth()
 const accountMenu = ref(false)
-
-defineProps<{
-  currentUser: null | Profile
-}>()
 
 const headerItems = [
   {

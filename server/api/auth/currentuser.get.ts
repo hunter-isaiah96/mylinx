@@ -1,16 +1,19 @@
 import { db } from "@/server/initial-services"
-import { Profile, profile } from "@/drizzle/schema"
+import { ProfileWithBlocks, profile } from "@/drizzle/schema"
 import { eq } from "drizzle-orm"
 
 export default defineEventHandler(async (event) => {
   try {
     const token = event.context.auth
-    const userProfile: Profile = (await db.query.profile.findFirst({
+    const userProfile: ProfileWithBlocks = (await db.query.profile.findFirst({
       where: eq(profile.userId, token.uid as number),
+      with: {
+        blocks: true,
+      },
       columns: {
         createdAt: false,
       },
-    })) as Profile
+    })) as ProfileWithBlocks
 
     if (!userProfile) throw new Error("There was a problem getting the current user")
     return userProfile

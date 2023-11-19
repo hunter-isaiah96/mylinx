@@ -1,4 +1,5 @@
 import { defineStore } from "pinia"
+import type { Block } from "@/drizzle/schema"
 
 export interface Profile {
   title: string
@@ -44,6 +45,9 @@ export const useAuthStore = defineStore({
       } catch (e: unknown) {
         if (e instanceof Error) handleError(e.message)
       }
+    },
+    updateUserBlocks(blocks: Block[]) {
+      this.currentUser!.blocks = blocks
     },
     async updateProfileTitle(name: string) {
       try {

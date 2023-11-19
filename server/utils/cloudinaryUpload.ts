@@ -23,20 +23,7 @@ export interface CloudinaryImage {
   original_filename: string
 }
 
-// Function to upload an image to Cloudinary
-export const uploadCloudinaryImage = (thumbnail: string) =>
-  new Promise<CloudinaryImage>((resolve, reject) => {
-    // Use Cloudinary's uploader to upload the provided thumbnail
-    cloudinary.uploader.upload(thumbnail, (err: any, url: any) => {
-      // If there's an error during the upload, reject the promise with the error
-      if (err) {
-        throw new Error(err)
-      }
-      // If successful, resolve the promise with the uploaded image URL
-      return resolve(url)
-    })
-  })
-export const uploadCloudinaryImageBuffer = (thumbnail: Buffer) =>
+export const uploadCloudinaryImage = (thumbnail: Buffer) =>
   new Promise<CloudinaryImage>((resolve, reject) => {
     // Use Cloudinary's uploader to upload the provided thumbnail
     cloudinary.uploader

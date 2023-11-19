@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
     // }
     const imgBuffer = Buffer.from(body.image.split(";base64").pop(), "base64")
     const compressedImage: Buffer = await sharp(imgBuffer).toFormat("png").png({ quality: 90 }).resize(375).toBuffer()
-    const image: CloudinaryImage = await uploadCloudinaryImageBuffer(compressedImage)
+    const image: CloudinaryImage = await uploadCloudinaryImage(compressedImage)
     // Upload the new image to Cloudinary
     // Update the block's thumbnail with the new image
     await db

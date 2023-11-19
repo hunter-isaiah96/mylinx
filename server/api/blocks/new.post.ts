@@ -34,7 +34,7 @@ const handleThumbnailUpload = async (thumbnail: string): Promise<CloudinaryImage
     const thumbnailImage: Response = await fetch(thumbnail)
     const thumbnailBuffer = await thumbnailImage.arrayBuffer()
     const compressedImage: Buffer = await sharp(thumbnailBuffer).toFormat("png").png({ quality: 90 }).resize(375, 375, { fit: sharp.fit.cover }).toBuffer()
-    const image: CloudinaryImage = await uploadCloudinaryImageBuffer(compressedImage)
+    const image: CloudinaryImage = await uploadCloudinaryImage(compressedImage)
     return image
   }
   // If no thumbnail is provided, return null

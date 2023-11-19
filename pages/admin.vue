@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-no-ssr>
-      <AdminHeader :currentUser="currentUser" />
+      <AdminHeader />
       <v-navigation-drawer
         width="570"
         name="drawer"
@@ -10,17 +10,7 @@
         permanent
       >
         <div class="d-flex justify-center align-center h-100">
-          <div class="phone">
-            <div class="phone-screen">
-              <iframe
-                ref="preview"
-                :src="`/${currentUser?.displayName}`"
-                title="mylinx"
-                height="60%"
-              ></iframe>
-            </div>
-            <div class="phone-button"></div>
-          </div>
+          <PhonePreview />
         </div>
       </v-navigation-drawer>
       <v-main>
@@ -32,6 +22,7 @@
 </template>
 <script setup lang="ts">
 import AdminHeader from "@/components/admin/adminHeader.vue"
+import PhonePreview from "@/components/admin/mobile/phonePreview.vue"
 import ImageCropper from "@/components/admin/imageCropper.vue"
 import type { Block } from "~/drizzle/schema"
 import { useAuthStore } from "@/store/auth"
