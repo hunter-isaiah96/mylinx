@@ -74,15 +74,20 @@
                     rounded="lg"
                     flat
                   >
-                    <v-img
-                      src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-                      class="align-end"
-                      width="175"
-                      height="100"
-                      cover
+                    <v-responsive
+                      :aspect-ratio="16 / 9"
+                      width="150"
                     >
-                      <v-card-title class="text-white text-subtitle-2"> Example Title </v-card-title>
-                    </v-img>
+                      <v-img
+                        src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+                        class="align-end"
+                        height="100%"
+                        width="100%"
+                        cover
+                      >
+                        <v-card-title class="text-white text-subtitle-2"> Example Title </v-card-title>
+                      </v-img>
+                    </v-responsive>
                   </v-card>
                 </template>
               </v-list-item>

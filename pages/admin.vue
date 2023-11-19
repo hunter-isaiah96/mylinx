@@ -18,7 +18,20 @@
         </div>
       </v-navigation-drawer>
       <v-main>
-        <NuxtPage />
+        <v-container>
+          <v-row justify="center">
+            <v-col
+              cols="12"
+              sm="11"
+              md="12"
+              lg="8"
+              xl="6"
+              xxl="5"
+            >
+              <NuxtPage />
+            </v-col>
+          </v-row>
+        </v-container>
         <ImageCropper />
       </v-main>
     </v-no-ssr>
@@ -35,7 +48,7 @@ import { useAdminStore } from "@/store/admin"
 definePageMeta({ middleware: "auth" })
 const { getCurrentUser } = useAuthStore()
 const { setBlocks } = useAdminStore()
-const { $bus, $vuetify } = useNuxtApp()
+const { $vuetify } = useNuxtApp()
 const preview = ref<HTMLIFrameElement | null>(null)
 
 const { data } = await useFetch<Block[]>("/api/blocks")
@@ -63,16 +76,5 @@ const drawerSize = computed(() => {
   }
 })
 
-const bus: any = $bus
-bus.$on("refreshPreview", () => {
-  if (preview.value) preview.value.src += ""
-})
-
 console.log($vuetify.display)
 </script>
-
-<style lang="scss">
-.nav-item-spacing {
-  gap: 0.5rem;
-}
-</style>

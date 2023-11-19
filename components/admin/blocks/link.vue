@@ -4,73 +4,89 @@
     elevation="0"
   >
     <!-- Card text with center alignment -->
-    <v-card-text>
-      <v-btn
-        icon="mdi-dots-grid"
-        size="small"
-        density="comfortable"
-        variant="plain"
-        class="handle block-item-left"
-        flat
-      ></v-btn>
-      <div class="px-12">
-        <!-- Name Input -->
-        <ToggleInput
-          :data="data"
-          :model="data.name!"
-          @update:model-value="(newValue) => (data.name = newValue)"
-          placeholder="Title"
-          class="font-weight-bold mb-2"
-        />
-        <!-- Link Input -->
-        <ToggleInput
-          :data="data"
-          :model="data.link!"
-          @update:model-value="(newValue) => (data.link = newValue)"
-          class="mb-2"
-        />
-        <v-btn
-          icon="mdi-format-line-style"
-          size="small"
-          density="comfortable"
-          :variant="isExpansionOpen('blockLayout').variant"
-          :color="isExpansionOpen('blockLayout').color"
-          @click="toggleExpansion('blockLayout')"
-          flat
-        ></v-btn>
-        <v-btn
-          class="ml-2"
-          icon="mdi-image"
-          size="small"
-          density="comfortable"
-          :variant="isExpansionOpen('blockThumbnail').variant"
-          :color="isExpansionOpen('blockThumbnail').color"
-          @click="toggleExpansion('blockThumbnail')"
-          flat
-        ></v-btn>
-      </div>
-      <!-- Switch component to toggle the 'active' property -->
-      <div class="block-item-right">
-        <v-switch
-          v-model="data.active"
-          color="green"
-          density="compact"
-          :disabled="!data.link || !data.name"
-          @update:model-value="updateBlock(data)"
-          class="justify-self-center"
-          hide-details
-        ></v-switch>
-        <!-- Button to trigger delete action -->
-        <v-btn
-          icon="mdi-trash-can-outline"
-          size="small"
-          density="comfortable"
-          :variant="isExpansionOpen('blockDelete').variant"
-          :color="isExpansionOpen('blockDelete').color"
-          @click="toggleExpansion('blockDelete')"
-          flat
-        ></v-btn>
-      </div>
+    <v-card-text class="py-6">
+      <!-- Name Input -->
+      <v-container class="pa-0">
+        <v-row align="center">
+          <v-col cols="auto">
+            <v-btn
+              icon="mdi-dots-grid"
+              size="small"
+              density="comfortable"
+              variant="plain"
+              class="handle"
+              flat
+            ></v-btn>
+          </v-col>
+          <v-col>
+            <v-row align="center">
+              <v-col>
+                <ToggleInput
+                  :data="data"
+                  :model="data.name!"
+                  @update:model-value="(newValue) => (data.name = newValue)"
+                  placeholder="Title"
+                  class="font-weight-bold mb-2"
+                />
+                <!-- Link Input -->
+                <ToggleInput
+                  :data="data"
+                  :model="data.link!"
+                  @update:model-value="(newValue) => (data.link = newValue)"
+                  class="mb-2"
+                />
+              </v-col>
+              <v-col cols="auto">
+                <v-switch
+                  v-model="data.active"
+                  color="green"
+                  density="compact"
+                  :disabled="!data.link || !data.name"
+                  @update:model-value="updateBlock(data)"
+                  class="justify-self-center"
+                  hide-details
+                ></v-switch>
+              </v-col>
+            </v-row>
+            <v-row no-gutters>
+              <v-col>
+                <div class="d-flex">
+                  <v-btn
+                    icon="mdi-format-line-style"
+                    size="small"
+                    density="comfortable"
+                    :variant="isExpansionOpen('blockLayout').variant"
+                    :color="isExpansionOpen('blockLayout').color"
+                    @click="toggleExpansion('blockLayout')"
+                    flat
+                  ></v-btn>
+                  <v-btn
+                    class="ml-2"
+                    icon="mdi-image"
+                    size="small"
+                    density="comfortable"
+                    :variant="isExpansionOpen('blockThumbnail').variant"
+                    :color="isExpansionOpen('blockThumbnail').color"
+                    @click="toggleExpansion('blockThumbnail')"
+                    flat
+                  ></v-btn>
+                  <v-spacer></v-spacer>
+                  <!-- Button to trigger delete action -->
+                  <v-btn
+                    icon="mdi-trash-can-outline"
+                    size="small"
+                    density="comfortable"
+                    :variant="isExpansionOpen('blockDelete').variant"
+                    :color="isExpansionOpen('blockDelete').color"
+                    @click="toggleExpansion('blockDelete')"
+                    flat
+                  ></v-btn>
+                </div>
+              </v-col>
+            </v-row>
+          </v-col>
+        </v-row>
+      </v-container>
     </v-card-text>
     <!-- Expansion panels section -->
     <v-expansion-panels

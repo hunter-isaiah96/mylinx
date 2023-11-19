@@ -1,3 +1,5 @@
+$block-control-space: 17px;
+
 .block-input {
   width: 100%;
   outline: none;
@@ -42,9 +44,17 @@
   top: 50%;
 }
 .block-item-left {
-  left: 25px;
+  left: $block-control-space;
 }
 
 .block-item-right {
-  right: 25px;
+  right: $block-control-space;
+}
+
+.nav-item-spacing {
+  gap: 0.5rem;
+}
+
+.nav-items {
+  overflow: auto;
 }

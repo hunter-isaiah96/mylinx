@@ -1,50 +1,38 @@
 <template>
-  <v-container>
-    <v-row justify="center">
-      <v-col
-        sm="12"
-        md="12"
-        cols="12"
-        lg="10"
-        xl="6"
+  <AddLink />
+  <div :class="{ active: addLinkActive }">
+    <div
+      :class="{ active: addLinkActive }"
+      class="blur"
+    >
+      <v-btn
+        rounded
+        class="text-capitalize"
+        variant="outlined"
+        prepend-icon="mdi-page-layout-header"
+        @click="addBlock({ name: '', type: 'header' })"
       >
-        <AddLink />
-        <div :class="{ active: addLinkActive }">
-          <div
-            :class="{ active: addLinkActive }"
-            class="blur"
-          >
-            <v-btn
-              rounded
-              class="text-capitalize"
-              variant="outlined"
-              prepend-icon="mdi-page-layout-header"
-              @click="addBlock({ name: '', type: 'header' })"
-            >
-              Add Header
-            </v-btn>
-            <draggable
-              v-model="blocks"
-              handle=".handle"
-              group="people"
-              item-key="id"
-              animation="200"
-              class="mt-8"
-              @change="finishedDragging"
-            >
-              <template #item="{ element }">
-                <component
-                  :is="getBlockComponent(element.type)"
-                  :data="element"
-                  class="mb-5"
-                />
-              </template>
-            </draggable>
-          </div>
-        </div>
-      </v-col>
-    </v-row>
-  </v-container>
+        Add Header
+      </v-btn>
+      <draggable
+        v-model="blocks"
+        handle=".handle"
+        group="people"
+        item-key="id"
+        animation="200"
+        class="mt-8"
+        @change="finishedDragging"
+      >
+        <template #item="{ element }">
+          <component
+            :is="getBlockComponent(element.type)"
+            :data="element"
+            class="mb-5"
+          />
+        </template>
+      </draggable>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
