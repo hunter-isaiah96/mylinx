@@ -42,6 +42,7 @@ export const useCropperStore = defineStore({
     async selectPhoto(uploadAction: string, id: number | null) {
       const input = document.createElement("input")
       input.setAttribute("type", "file")
+      input.setAttribute("accept", "image/png, image/jpeg")
       input.onchange = async (event) => {
         this.open = true
         this.img = await readFile(event)

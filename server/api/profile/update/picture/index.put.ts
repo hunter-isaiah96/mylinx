@@ -1,6 +1,7 @@
 import { db } from "@/server/initial-services"
 import { Profile, profile } from "@/drizzle/schema"
 import { eq } from "drizzle-orm"
+import sharp from "sharp"
 
 export default defineEventHandler(async (event) => {
   try {
@@ -12,7 +13,10 @@ export default defineEventHandler(async (event) => {
       if (userProfile.profilePicture) {
         await deleteCloudinaryImage(userProfile.profilePicture)
       }
-      const image = (await uploadCloudinaryImage(body.image)) as CloudinaryImage
+
+      const imgBuffer = Buffer.from(body.image.split(";base64").pop(), "base64")
+      const compressedImage: Buffer = await sharp(imgBuffer).toFormat("png").png({ quality: 90 }).resize(375).toBuffer()
+      const image: CloudinaryImage = await uploadCloudinaryImageBuffer(compressedImage)
 
       await db
         .update(profile)

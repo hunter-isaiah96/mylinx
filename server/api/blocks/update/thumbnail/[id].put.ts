@@ -1,7 +1,7 @@
 import { db } from "@/server/initial-services"
-import { Profile, block } from "@/drizzle/schema"
+import { block } from "@/drizzle/schema"
 import { eq, and } from "drizzle-orm"
-import { getBlock } from "~/server/utils/commonQueries"
+import sharp from "sharp"
 
 export default defineEventHandler(async (event) => {
   try {
@@ -19,12 +19,14 @@ export default defineEventHandler(async (event) => {
       throw new Error("No Image")
     }
 
-    const userBlock = await getBlock(auth.pid, Number(params.id)) // Get a specific block associated with the user
-    if (userBlock.thumbnail) {
-      await deleteCloudinaryImage(userBlock.thumbnail) // Delete the existing thumbnail associated with the block
-    }
-    const image: CloudinaryImage = await uploadCloudinaryImage(body.image) // Upload the new image to Cloudinary
-
+    // const userBlock = await getBlock(auth.pid, Number(params.id)) // Get a specific block associated with the user
+    // if (userBlock.thumbnail) {
+    //   await deleteCloudinaryImage(userBlock.thumbnail) // Delete the existing thumbnail associated with the block
+    // }
+    const imgBuffer = Buffer.from(body.image.split(";base64").pop(), "base64")
+    const compressedImage: Buffer = await sharp(imgBuffer).toFormat("png").png({ quality: 90 }).resize(375).toBuffer()
+    const image: CloudinaryImage = await uploadCloudinaryImageBuffer(compressedImage)
+    // Upload the new image to Cloudinary
     // Update the block's thumbnail with the new image
     await db
       .update(block)

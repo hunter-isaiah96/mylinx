@@ -1,7 +1,6 @@
 import { db } from "@/server/initial-services"
 import { Block, Profile, block, profile } from "@/drizzle/schema"
 import { asc, eq, and } from "drizzle-orm"
-import { JWT } from "next-auth/jwt"
 
 export const getBlock = async (profileId: number, blockId: number): Promise<Block> => {
   const newBlock: Block = (await db.query.block.findFirst({

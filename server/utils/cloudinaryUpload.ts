@@ -36,6 +36,20 @@ export const uploadCloudinaryImage = (thumbnail: string) =>
       return resolve(url)
     })
   })
+export const uploadCloudinaryImageBuffer = (thumbnail: Buffer) =>
+  new Promise<CloudinaryImage>((resolve, reject) => {
+    // Use Cloudinary's uploader to upload the provided thumbnail
+    cloudinary.uploader
+      .upload_stream({}, (err: any, url: any) => {
+        // If there's an error during the upload, reject the promise with the error
+        if (err) {
+          throw new Error(err)
+        }
+        // If successful, resolve the promise with the uploaded image URL
+        return resolve(url)
+      })
+      .end(thumbnail)
+  })
 
 export const deleteCloudinaryImage = (thumbnail: CloudinaryImage) =>
   new Promise((resolve, reject) => {

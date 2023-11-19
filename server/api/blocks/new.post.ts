@@ -1,10 +1,9 @@
 // Import necessary modules and services
 import { db } from "@/server/initial-services"
-import { Profile, block } from "@/drizzle/schema"
+import { block } from "@/drizzle/schema"
 import { eq, sql } from "drizzle-orm"
-import { uploadCloudinaryImage } from "@/server/utils/cloudinaryUpload"
 import parser, { Metadata } from "html-metadata-parser"
-
+import sharp from "sharp"
 // Define the type of a block
 interface BlockType {
   profileId: number
@@ -16,17 +15,27 @@ interface BlockType {
 }
 
 // Utility function to fetch metadata from a link
-const fetchLinkMetadata = async (link: string): Promise<Metadata> => {
+const fetchLinkMetadata = async (link: string): Promise<Metadata | null> => {
   // Parse the HTML metadata of the provided link
-  // @ts-expect-error
-  return await parser.parse(link)
+  try {
+    // @ts-expect-error
+    const parsed = await parser.parse(link)
+    return parsed
+  } catch (e) {
+    console.log(e)
+  }
+  return null
 }
 
 // Utility function to handle the upload of a thumbnail to Cloudinary
-const handleThumbnailUpload = async (thumbnail: string): Promise<object | null> => {
+const handleThumbnailUpload = async (thumbnail: string): Promise<CloudinaryImage | null> => {
   // If a thumbnail is provided, upload it to Cloudinary
   if (thumbnail) {
-    return (await uploadCloudinaryImage(thumbnail)) as object | null
+    const thumbnailImage: Response = await fetch(thumbnail)
+    const thumbnailBuffer = await thumbnailImage.arrayBuffer()
+    const compressedImage: Buffer = await sharp(thumbnailBuffer).toFormat("png").png({ quality: 90 }).resize(375, 375, { fit: sharp.fit.cover }).toBuffer()
+    const image: CloudinaryImage = await uploadCloudinaryImageBuffer(compressedImage)
+    return image
   }
   // If no thumbnail is provided, return null
   return null
@@ -67,10 +76,12 @@ export default defineEventHandler(async (event) => {
     const body = await readBody(event)
 
     // Fetch link metadata if the type is "link" and name is not provided
-    if (body.type === "link" && !body.name) {
+    if (body.type === "link") {
       const metadata = await fetchLinkMetadata(body.link)
-      body.name = metadata.meta.title
-      body.thumbnail = metadata.og.image
+      if (metadata) {
+        body.name = metadata.meta.title
+        body.thumbnail = metadata.og.image
+      }
     }
 
     // Add a block and update positions in the database

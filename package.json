@@ -45,6 +45,7 @@
     "pinia": "^2.1.7",
     "qrcode.vue": "^3.4.1",
     "sass": "^1.69.5",
+    "sharp": "^0.32.6",
     "vue-advanced-cropper": "^2.8.8",
     "vue3-toastify": "^0.1.14",
     "vuedraggable": "^4.1.0"
