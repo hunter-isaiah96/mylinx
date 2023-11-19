@@ -9,6 +9,7 @@
           class="rounded-xl pa-3"
           flat
         >
+          <v-card-title>Profile</v-card-title>
           <v-card-text>
             <v-list-item class="pa-0">
               <template v-slot:prepend>
@@ -131,7 +132,7 @@
                         >
                         </v-card>
                       </v-list-item>
-                      <h3 class="text-capitalize text-center mt-2">{{ theme.display }}</h3>
+                      <div class="text-capitalize text-center mt-2 text-subtitle-2">{{ theme.display }}</div>
                     </v-item>
                   </div>
                 </v-col>
