@@ -1,5 +1,5 @@
 import { defineStore } from "pinia"
-import type { Block } from "@/drizzle/schema"
+import type { Block, Theme } from "@/drizzle/schema"
 
 export interface Profile {
   title: string
@@ -14,6 +14,7 @@ export interface Profile {
     profileId: number
     thumbnail: unknown
   }[]
+  theme: Theme
   id: number
   userId: number
   displayName: string
@@ -46,8 +47,20 @@ export const useAuthStore = defineStore({
         if (e instanceof Error) handleError(e.message)
       }
     },
-    updateUserBlocks(blocks: Block[]) {
+    async setProfileBlocks(blocks: Block[]) {
       this.currentUser!.blocks = blocks
+    },
+    async updateProfileTheme(theme: string) {
+      try {
+        const profile: Profile = await $fetch(`/api/profile/update/theme`, {
+          method: "PUT",
+          body: {
+            theme,
+          },
+        })
+      } catch (e: unknown) {
+        if (e instanceof Error) handleError(e.message)
+      }
     },
     async updateProfileTitle(name: string) {
       try {

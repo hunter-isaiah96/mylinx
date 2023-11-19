@@ -1,7 +1,7 @@
 import { db } from "@/server/initial-services"
 import { block } from "@/drizzle/schema"
 import { eq, and } from "drizzle-orm"
-import { getBlock } from "~/server/utils/commonQueries"
+import { getBlock } from "@/server/utils/commonQueries"
 
 export default defineEventHandler(async (event) => {
   try {

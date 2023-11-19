@@ -13,25 +13,24 @@
     background-color: $avatar-color !important; // Set the background color of .v-avatar
   }
   // Custom styles for .v-card with .link class
-  .v-card--link {
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 10px;
-    padding: 20px;
-    background-color: rgba(255, 255, 255, 0.9);
-    transition: transform 0.15s cubic-bezier(0, 0.2, 0.5, 3) 0s;
-
-    &:hover {
-      transform: scale($hover-scale);
+  .v-card {
+    &.item {
+      border-radius: 10px;
+      margin: 10px;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.9);
+      transition: transform 0.15s cubic-bezier(0, 0.2, 0.5, 3) 0s;
     }
-    &.tilt:hover {
-      transform: scale($hover-scale) rotate(-2deg);
+
+    &--link:hover {
+      transform: scale($hover-scale);
     }
   }
 }
 
 .profile-theme {
   // Default Theme
+  overflow: auto;
   &.default {
     @include v-card-styles(#f2f3f0, none, black);
   }

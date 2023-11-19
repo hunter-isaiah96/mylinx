@@ -1,6 +1,15 @@
 import { int, text, varchar, mysqlEnum, mysqlTable, timestamp, index, uniqueIndex, boolean, json } from "drizzle-orm/mysql-core"
 import { relations, sql } from "drizzle-orm"
 import { type CloudinaryImage } from "@/server/utils/cloudinaryUpload"
+type BackgroundStyle = "flat" | "gradient"
+
+export type Theme = {
+  selectedTheme: string | null
+  backgroundColor?: string | null
+  backgroundStyle?: BackgroundStyle | null
+  buttonStyle?: string | null
+  buttonColor?: string | null
+}
 
 // Define common fields
 const commonFields = {
@@ -39,6 +48,7 @@ export const profile = mysqlTable(
     bio: text("bio"),
     profilePicture: json("profile_picture").$type<CloudinaryImage>(),
     title: varchar("title", { length: 255 }).default("").notNull(),
+    theme: json("theme").default({ selectedTheme: "default" }).notNull().$type<Theme>(),
   },
   (table) => {
     return {

@@ -1,6 +1,6 @@
 import { db } from "@/server/initial-services"
-import { ProfileWithBlocks, profile } from "@/drizzle/schema"
-import { eq } from "drizzle-orm"
+import { ProfileWithBlocks, profile, block } from "@/drizzle/schema"
+import { or, eq, ne, and } from "drizzle-orm"
 
 export default defineEventHandler(async (event) => {
   try {
@@ -8,7 +8,10 @@ export default defineEventHandler(async (event) => {
     const userProfile: ProfileWithBlocks = (await db.query.profile.findFirst({
       where: eq(profile.userId, token.uid as number),
       with: {
-        blocks: true,
+        blocks: {
+          orderBy: block.position,
+          where: or(and(eq(block.type, "link"), ne(block.name, ""), ne(block.link, "")), and(eq(block.type, "header"), ne(block.name, ""))),
+        },
       },
       columns: {
         createdAt: false,

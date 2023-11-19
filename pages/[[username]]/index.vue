@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-main class="profile-theme default">
+    <v-main>
       <ProfileViewer
         :profile="profile"
         :blocks="profile!.blocks"

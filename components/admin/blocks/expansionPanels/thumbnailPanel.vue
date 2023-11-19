@@ -71,7 +71,7 @@
 
 <script setup lang="ts">
 import { useCropperStore } from "@/store/cropper"
-import { useAdminStore } from "~/store/admin"
+import { useAdminStore } from "@/store/admin"
 
 const { deleteBlockThumbnail } = useAdminStore()
 const { selectPhoto } = useCropperStore() // Accessing the authentication store

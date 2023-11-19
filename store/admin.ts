@@ -1,5 +1,6 @@
 import { defineStore } from "pinia"
 import type { Block } from "@/drizzle/schema"
+import { useAuthStore } from "./auth"
 interface AdminState {
   addLinkActive: boolean
   loading: boolean
@@ -29,6 +30,7 @@ export const useAdminStore = defineStore({
           },
         })
         this.blocks = blocks
+        useAuthStore().getCurrentUser()
       } catch (e: unknown) {
         if (e instanceof Error) handleError(e.message)
       }
@@ -41,6 +43,7 @@ export const useAdminStore = defineStore({
           body: block,
         })
         this.blocks = blocks
+        useAuthStore().getCurrentUser()
       } catch (e: unknown) {
         if (e instanceof Error) handleError(e.message)
       } finally {
@@ -53,6 +56,7 @@ export const useAdminStore = defineStore({
           method: "DELETE",
         })
         this.blocks = blocks
+        useAuthStore().getCurrentUser()
       } catch (e: unknown) {
         if (e instanceof Error) handleError(e.message)
       } finally {
@@ -66,6 +70,7 @@ export const useAdminStore = defineStore({
           body: block,
         })
         this.blocks = blocks
+        useAuthStore().getCurrentUser()
       } catch (e: unknown) {
         if (e instanceof Error) handleError(e.message)
       } finally {
@@ -82,6 +87,7 @@ export const useAdminStore = defineStore({
         })
         const imageIndex = this.blocks.findIndex((block) => block.id == id)
         this.blocks[imageIndex].thumbnail! = thumbnail
+        useAuthStore().getCurrentUser()
       } catch (e: unknown) {
         if (e instanceof Error) handleError(e.message)
       } finally {
@@ -93,6 +99,7 @@ export const useAdminStore = defineStore({
       })
       const imageIndex = this.blocks.findIndex((block) => block.id == id)
       this.blocks[imageIndex].thumbnail = null
+      useAuthStore().getCurrentUser()
     },
   },
 })

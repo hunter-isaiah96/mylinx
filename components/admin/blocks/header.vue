@@ -25,7 +25,7 @@
             <!-- Name Input -->
             <ToggleInput
               :data="data"
-              :model="data.name"
+              :model="data.name!"
               @update:model-value="(newValue) => (data.name = newValue)"
               placeholder="Headline title"
               class="font-weight-bold"
@@ -76,7 +76,8 @@
 </template>
 
 <script setup lang="ts">
-import { type Block, useAdminStore } from "@/store/admin"
+import { useAdminStore } from "@/store/admin"
+import { type Block } from "@/drizzle/schema"
 import DeletePanel from "@/components/admin/blocks/expansionPanels/deletePanel.vue"
 import ToggleInput from "@/components/admin/blocks/toggleInput.vue"
 
