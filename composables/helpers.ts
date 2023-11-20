@@ -21,3 +21,26 @@ export const readFile = (event: Event): Promise<string> => {
     reader.readAsDataURL(file) // Read the file as a data URL (blob)
   })
 }
+
+export const headerItems = [
+  {
+    title: "Links",
+    icon: "mdi-view-list-outline",
+    to: "/admin",
+  },
+  {
+    title: "Appearance",
+    icon: "mdi-shape-outline",
+    to: "/admin/appearance",
+  },
+  {
+    title: "Analytics",
+    icon: "mdi-chart-box-outline",
+    to: "/admin/analytics",
+  },
+  {
+    title: "Settings",
+    icon: "mdi-octagon-outline",
+    to: "/admin/settings",
+  },
+]

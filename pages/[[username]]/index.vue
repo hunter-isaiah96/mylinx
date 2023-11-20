@@ -2,7 +2,7 @@
   <v-app>
     <v-main>
       <ProfileViewer
-        :profile="profile"
+        :profile="profile!"
         :blocks="profile!.blocks"
       ></ProfileViewer>
     </v-main>
@@ -23,8 +23,3 @@ if (!profile) {
   })
 }
 </script>
-<style>
-.main-container {
-  max-width: 680px !important;
-}
-</style>

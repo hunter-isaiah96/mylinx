@@ -18,10 +18,10 @@
           v-for="navItem in headerItems"
           :key="navItem.title"
           :to="navItem.to"
-          active-class="text-primary"
           :prepend-icon="navItem.icon"
           class="text-capitalize"
           :exact="true"
+          :active="false"
         >
           {{ navItem.title }}
         </v-btn>
@@ -217,7 +217,13 @@
           </v-menu>
         </div>
       </v-app-bar>
+
       <v-bottom-navigation>
+        <v-btn
+          class="preview-profile-button"
+          append-icon="mdi-eye"
+          >Preview</v-btn
+        >
         <v-btn
           v-for="navItem in headerItems"
           :key="navItem.title"
@@ -243,27 +249,10 @@ const { updatingProfilePicture, currentUser } = storeToRefs(useAuthStore())
 
 const { signOut } = useAuth()
 const accountMenu = ref(false)
-
-const headerItems = [
-  {
-    title: "Links",
-    icon: "mdi-view-list-outline",
-    to: "/admin",
-  },
-  {
-    title: "Appearance",
-    icon: "mdi-shape-outline",
-    to: "/admin/appearance",
-  },
-  {
-    title: "Analytics",
-    icon: "mdi-chart-box-outline",
-    to: "/admin/analytics",
-  },
-  {
-    title: "Settings",
-    icon: "mdi-octagon-outline",
-    to: "/admin/settings",
-  },
-]
 </script>
+<style lang="scss">
+.preview-profile-button {
+  position: absolute;
+  top: -px;
+}
+</style>

@@ -104,3 +104,8 @@ const props = defineProps({
   profile: Object,
 })
 </script>
+<style>
+.main-container {
+  max-width: 680px !important;
+}
+</style>
