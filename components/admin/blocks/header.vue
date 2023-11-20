@@ -19,7 +19,7 @@
           </v-col>
           <v-col>
             <v-row align="center">
-              <v-col>
+              <v-col class="overflow-hidden">
                 <ToggleInput
                   :data="data"
                   :model="data.name!"

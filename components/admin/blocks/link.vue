@@ -18,9 +18,9 @@
               flat
             ></v-btn>
           </v-col>
-          <v-col>
+          <v-col class="overflow-hidden">
             <v-row align="center">
-              <v-col>
+              <v-col class="overflow-hidden">
                 <ToggleInput
                   :data="data"
                   :model="data.name!"
@@ -28,7 +28,6 @@
                   placeholder="Title"
                   class="font-weight-bold mb-2"
                 />
-                <!-- Link Input -->
                 <ToggleInput
                   :data="data"
                   :model="data.link!"
@@ -71,7 +70,6 @@
                     flat
                   ></v-btn>
                   <v-spacer></v-spacer>
-                  <!-- Button to trigger delete action -->
                   <v-btn
                     icon="mdi-trash-can-outline"
                     size="small"

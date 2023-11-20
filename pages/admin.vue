@@ -98,7 +98,7 @@ const drawerSize = computed(() => {
 </script>
 <style>
 .preview-profile-button {
-  position: absolute;
+  position: fixed;
   z-index: 10001;
   bottom: 50px;
   transform: translate(-50%, -50%);
