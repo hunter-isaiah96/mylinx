@@ -11,6 +11,7 @@
       </v-btn>
       <AdminHeader />
       <v-navigation-drawer
+        v-if="$vuetify.display.mdAndUp.value"
         :model-value="false"
         :width="drawerSize"
         name="drawer"
@@ -18,10 +19,7 @@
         color="transparent"
         :permanent="$vuetify.display.mdAndUp.value"
       >
-        <div
-          class="d-flex justify-center align-center h-100"
-          v-if="$vuetify.display.mdAndUp.value"
-        >
+        <div class="d-flex justify-center align-center h-100">
           <PhonePreview
             :style="{
               transform: `scale(${mobilePreviewScale}) `,
