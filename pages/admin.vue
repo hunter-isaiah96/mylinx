@@ -11,7 +11,6 @@
       </v-btn>
       <AdminHeader />
       <v-navigation-drawer
-        v-if="$vuetify.display.mdAndUp.value"
         :model-value="false"
         :width="drawerSize"
         name="drawer"

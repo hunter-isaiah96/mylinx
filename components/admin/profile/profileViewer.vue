@@ -58,10 +58,13 @@
               target="_blank"
               :href="block.link || ''"
             >
-              <v-row no-gutters>
+              <v-row
+                no-gutters
+                align="center"
+              >
                 <v-col
-                  class="d-flex align-center"
                   cols="auto"
+                  class="d-flex align-center"
                 >
                   <v-img
                     v-if="block.thumbnail"
@@ -76,12 +79,12 @@
                     style="width: 48px"
                   ></div>
                 </v-col>
-                <v-col class="pa-0 d-flex align-center justify-center">
-                  <span class="text-subtitle-2 link-name px-2">{{ block.name }}</span>
+                <v-col class="px-1 overflow-hidden text-caption font-weight-medium">
+                  {{ block.name }}
                 </v-col>
                 <v-col
-                  class="d-flex align-center"
                   cols="auto"
+                  class="d-flex align-center"
                 >
                   <v-btn
                     size="48"
