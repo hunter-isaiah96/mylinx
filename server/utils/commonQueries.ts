@@ -1,5 +1,5 @@
 import { db } from "@/server/initial-services"
-import { Block, Profile, block, profile } from "@/drizzle/schema"
+import { type Block, type Profile, block, profile } from "@/drizzle/schema"
 import { asc, eq, and } from "drizzle-orm"
 
 export const getUserProfile = async (profileId: number): Promise<Profile> => {

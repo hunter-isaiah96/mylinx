@@ -2,7 +2,7 @@
   <v-app>
     <v-no-ssr>
       <v-btn
-        v-if="$vuetify.display.smAndDown.value"
+        v-if="smAndDown"
         class="preview-profile-button rounded-pill"
         :prepend-icon="profilePreview ? 'mdi-close' : 'mdi-eye'"
         @click="profilePreview = !profilePreview"
@@ -11,12 +11,11 @@
       </v-btn>
       <AdminHeader />
       <v-navigation-drawer
-        :model-value="false"
+        v-if="mdAndUp"
         :width="drawerSize"
         name="drawer"
         location="end"
         color="transparent"
-        :permanent="$vuetify.display.mdAndUp.value"
       >
         <div class="d-flex justify-center align-center h-100">
           <PhonePreview
@@ -44,7 +43,7 @@
         <ImageCropper />
       </v-main>
       <v-overlay
-        v-if="$vuetify.display.smAndDown.value"
+        v-if="smAndDown"
         width="100%"
         height="100%"
         v-model="profilePreview"
@@ -65,17 +64,16 @@ import { useAuthStore } from "@/store/auth"
 import { useAdminStore } from "@/store/admin"
 
 definePageMeta({ middleware: "auth" })
+
+const { data } = await useFetch<Block[]>("/api/blocks")
 const { getCurrentUser } = useAuthStore()
 const { currentUser } = storeToRefs(useAuthStore())
 const { setBlocks } = useAdminStore()
-const { $vuetify } = useNuxtApp()
-const { data } = await useFetch<Block[]>("/api/blocks")
-setBlocks(data.value as Block[])
-getCurrentUser()
+const { name, mdAndUp, smAndDown } = useDisplay()
+// Local Admin Variables
 const mobilePreviewScale = ref(1)
 const profilePreview = ref(false)
 
-const { name } = useDisplay()
 const drawerSize = computed(() => {
   switch (name.value) {
     case "md":
@@ -90,8 +88,13 @@ const drawerSize = computed(() => {
     case "xxl":
       mobilePreviewScale.value = 1
       return 570
+    default:
+      return 570
   }
 })
+
+setBlocks(data.value as Block[])
+getCurrentUser()
 </script>
 <style>
 .preview-profile-button {

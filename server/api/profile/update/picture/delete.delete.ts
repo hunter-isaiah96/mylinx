@@ -1,5 +1,5 @@
 import { db } from "@/server/initial-services"
-import { Profile, profile } from "@/drizzle/schema"
+import { type Profile, profile } from "@/drizzle/schema"
 import { eq } from "drizzle-orm"
 
 export default defineEventHandler(async (event) => {

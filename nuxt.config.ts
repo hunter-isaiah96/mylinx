@@ -24,7 +24,9 @@ export default defineNuxtConfig({
     // Specify the port for the development server
     port: 3000,
   },
-
+  typescript: {
+    typeCheck: true,
+  },
   // Vuetify configuration
   vuetify: {
     // Vuetify options

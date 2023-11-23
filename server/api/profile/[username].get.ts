@@ -1,6 +1,6 @@
 import { db } from "@/server/initial-services"
 import { and, eq, ne, or, asc } from "drizzle-orm"
-import { profile, block, Profile, ProfileWithBlocks } from "@/drizzle/schema"
+import { profile, block, type ProfileWithBlocks } from "@/drizzle/schema"
 
 const fetchProfileWithBlocks = async (username: string): Promise<ProfileWithBlocks> => {
   return (await db.query.profile.findFirst({

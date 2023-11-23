@@ -1,6 +1,6 @@
 import { db } from "@/server/initial-services"
 import * as argon2 from "argon2"
-import { users, profile, NewProfile, NewUser } from "@/drizzle/schema"
+import { users, profile, type NewProfile, type NewUser } from "@/drizzle/schema"
 
 const validateEmail = (email: string): boolean => {
   const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/

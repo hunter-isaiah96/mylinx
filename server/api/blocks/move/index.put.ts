@@ -1,5 +1,5 @@
 import { eq } from "drizzle-orm"
-import { Block, block } from "@/drizzle/schema"
+import { type Block, block } from "@/drizzle/schema"
 import { db } from "@/server/initial-services"
 
 export default defineEventHandler(async (event) => {

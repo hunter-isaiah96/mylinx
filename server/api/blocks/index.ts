@@ -1,4 +1,4 @@
-import { Block } from "@/drizzle/schema"
+import { type Block } from "@/drizzle/schema"
 
 export default defineEventHandler(async (event) => {
   try {

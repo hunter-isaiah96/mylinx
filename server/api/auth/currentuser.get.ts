@@ -1,5 +1,5 @@
 import { db } from "@/server/initial-services"
-import { ProfileWithBlocks, profile, block } from "@/drizzle/schema"
+import { type ProfileWithBlocks, profile, block } from "@/drizzle/schema"
 import { or, eq, ne, and } from "drizzle-orm"
 
 export default defineEventHandler(async (event) => {

@@ -1,7 +1,7 @@
 import { db } from "@/server/initial-services"
 import { block } from "@/drizzle/schema"
 import { and, eq, gt, sql } from "drizzle-orm"
-import { CloudinaryImage, deleteCloudinaryImage } from "@/server/utils/cloudinaryUpload"
+import { type CloudinaryImage, deleteCloudinaryImage } from "@/server/utils/cloudinaryUpload"
 
 const deleteBlock = async (profileId: number, blockId: number) => {
   // Fetch the current block to be deleted

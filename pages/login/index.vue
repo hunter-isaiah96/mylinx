@@ -7,7 +7,12 @@
           justify="center"
           align="center"
         >
-          <v-col>
+          <v-col
+            cols="12"
+            md="6"
+            lg="5"
+            xl="4"
+          >
             <v-card
               :loading="authenticating"
               elevation="5"

@@ -50,7 +50,8 @@
 </template>
 <script setup lang="ts">
 import { storeToRefs } from "pinia"
-import { useAdminStore, type Block } from "@/store/admin"
+import { useAdminStore } from "@/store/admin"
+import type { Block } from "~/drizzle/schema"
 const { addBlock } = useAdminStore()
 const { addLinkActive, loading } = storeToRefs(useAdminStore())
 
