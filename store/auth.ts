@@ -52,7 +52,7 @@ export const useAuthStore = defineStore({
     },
     async updateProfileTheme(theme: string) {
       try {
-        const profile: Profile = await $fetch(`/api/profile/update/theme`, {
+        await $fetch(`/api/profile/update/theme`, {
           method: "PUT",
           body: {
             theme,
@@ -64,20 +64,18 @@ export const useAuthStore = defineStore({
     },
     async updateProfileTitle(name: string) {
       try {
-        const profile: Profile = await $fetch(`/api/profile/update/title`, {
+        await $fetch(`/api/profile/update/title`, {
           method: "PUT",
           body: {
             name,
           },
         })
-        this.currentUser = profile
       } catch (e: unknown) {
         if (e instanceof Error) handleError(e.message)
       }
     },
     async updateProfileBio(bio: string) {
       try {
-        this.updatingProfilePicture = true
         await $fetch(`/api/profile/update/bio`, {
           method: "PUT",
           body: {
@@ -86,8 +84,6 @@ export const useAuthStore = defineStore({
         })
       } catch (e: unknown) {
         if (e instanceof Error) handleError(e.message)
-      } finally {
-        this.updatingProfilePicture = false
       }
     },
     async updateProfilePicture(image: string) {

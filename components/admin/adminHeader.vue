@@ -217,25 +217,6 @@
           </v-menu>
         </div>
       </v-app-bar>
-
-      <v-bottom-navigation>
-        <v-btn
-          class="preview-profile-button"
-          append-icon="mdi-eye"
-          >Preview</v-btn
-        >
-        <v-btn
-          v-for="navItem in headerItems"
-          :key="navItem.title"
-          :to="navItem.to"
-          :active="false"
-          :prepend-icon="navItem.icon"
-          class="text-capitalize"
-          exact
-        >
-          {{ navItem.title }}
-        </v-btn>
-      </v-bottom-navigation>
     </div>
   </div>
 </template>
