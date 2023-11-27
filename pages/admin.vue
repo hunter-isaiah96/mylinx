@@ -89,6 +89,8 @@ const { getCurrentUser } = useAuthStore()
 const { currentUser } = storeToRefs(useAuthStore())
 const { setBlocks } = useAdminStore()
 const { name, mdAndUp, smAndDown } = useDisplay()
+const { status } = useAuth()
+console.log(status)
 // Local Admin Variables
 const mobilePreviewScale = ref(1)
 const profilePreview = ref(false)
