@@ -13,6 +13,10 @@ export default NuxtAuthHandler({
     // Change the default behavior to use `/login` as the path for the sign-in page
     signIn: "/login",
   },
+  session: {
+    strategy: "jwt",
+    maxAge: 10,
+  },
   callbacks: {
     // JWT callback to customize the JWT token
     jwt: async ({ token, user }: any) => {
