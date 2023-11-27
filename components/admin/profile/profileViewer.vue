@@ -21,7 +21,7 @@
         >
           <v-img
             v-if="profile.profilePicture"
-            :src="profile.profilePicture.url || ''"
+            :src="profile.profilePicture.secure_url || ''"
             alt="profile picture"
             cover
           />
@@ -71,7 +71,7 @@
                   width="48"
                   aspect-ratio="1"
                   cover
-                  :src="block.thumbnail.url"
+                  :src="block.thumbnail.secure_url"
                 ></v-img>
                 <div
                   v-else

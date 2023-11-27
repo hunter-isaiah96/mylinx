@@ -21,7 +21,7 @@
               >
                 <v-img
                   v-if="currentUser.profilePicture"
-                  :src="currentUser.profilePicture.url || ''"
+                  :src="currentUser.profilePicture.secure_url || ''"
                   alt="profile picture"
                   cover
                 />

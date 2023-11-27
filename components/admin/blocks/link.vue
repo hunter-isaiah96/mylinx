@@ -101,7 +101,7 @@
         :id="data.id"
       />
       <ThumbnailPanel
-        :image="data.thumbnail?.url"
+        :image="data.thumbnail?.secure_url"
         :toggle="toggleExpansion"
         :id="data.id"
       />
