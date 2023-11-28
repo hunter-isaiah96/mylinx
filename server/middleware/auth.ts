@@ -5,11 +5,12 @@ export default defineEventHandler(async (event) => {
   const isProtected = protectedRoutes.some((route) => url.pathname.includes(route))
   if (isProtected) {
     const token = await getToken({ event })
+    console.log(token)
     if (token) event.context.auth = token
     else
       throw createError({
         statusCode: 401,
-        message: "Authentication Required",
+        message: `Authentication Required ${token}`,
       })
   }
 })
