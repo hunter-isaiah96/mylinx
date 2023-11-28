@@ -8,6 +8,10 @@ export default defineNuxtConfig({
   // Application configuration
   ssr: true,
   auth: {
+    session: {
+      enableRefreshOnWindowFocus: false,
+      enableRefreshPeriodically: false,
+    },
     isEnabled: true,
     globalAppMiddleware: true,
     provider: {
