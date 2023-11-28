@@ -12,6 +12,7 @@ export default defineNuxtConfig({
       enableRefreshOnWindowFocus: false,
       enableRefreshPeriodically: false,
     },
+    isEnabled: true,
     globalAppMiddleware: true,
     provider: {
       type: "authjs",
