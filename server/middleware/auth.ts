@@ -3,9 +3,9 @@ export default defineEventHandler(async (event) => {
   const protectedRoutes = ["/api/auth/currentuser", "/api/blocks", "/api/profile/update"]
   const url = getRequestURL(event)
   const isProtected = protectedRoutes.some((route) => url.pathname.includes(route))
+  console.log(event)
   if (isProtected) {
     const token = await getToken({ event })
-    console.log(token, "Auth Required")
     if (token) event.context.auth = token
     else
       throw createError({

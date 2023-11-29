@@ -7,17 +7,6 @@ export default defineNuxtConfig({
   css: ["@/assets/scss/global.scss", "@/assets/scss/themes.scss"],
   // Application configuration
   ssr: true,
-  auth: {
-    session: {
-      enableRefreshOnWindowFocus: false,
-      enableRefreshPeriodically: false,
-    },
-    isEnabled: true,
-    globalAppMiddleware: true,
-    provider: {
-      type: "authjs",
-    },
-  },
   app: {
     head: {
       // Set the title for the application
@@ -40,6 +29,20 @@ export default defineNuxtConfig({
       theme: {
         // defaultTheme: "dark",
       },
+    },
+  },
+  auth: {
+    isEnabled: true,
+    session: {
+      enableRefreshOnWindowFocus: false,
+      enableRefreshPeriodically: false,
+    },
+    baseURL: process.env.AUTH_ORIGIN,
+    provider: {
+      type: "authjs",
+    },
+    globalAppMiddleware: {
+      isEnabled: true,
     },
   },
 })
