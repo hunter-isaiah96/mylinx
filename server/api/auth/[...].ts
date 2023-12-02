@@ -1,5 +1,6 @@
 // Import necessary modules and dependencies
 import CredentialsProvider from "next-auth/providers/credentials"
+import { type AuthConfig } from "@auth/core/types"
 import { NuxtAuthHandler } from "#auth"
 import { db } from "@/server/initial-services"
 import { eq, or } from "drizzle-orm"
@@ -7,7 +8,8 @@ import { profile, users } from "@/drizzle/schema"
 import argon2 from "argon2"
 
 // Create and export the NuxtAuthHandler configuration
-export default NuxtAuthHandler({
+const runtimeConfig = useRuntimeConfig()
+export const authOptions: AuthConfig = {
   secret: process.env.JWT_SECRET,
   pages: {
     // Change the default behavior to use `/login` as the path for the sign-in page
@@ -17,29 +19,22 @@ export default NuxtAuthHandler({
     strategy: "jwt",
   },
   callbacks: {
-    // JWT callback to customize the JWT token
-    jwt: async ({ token, user }: any) => {
-      const isSignIn = !!user
-      if (isSignIn) {
-        token.uid = user ? user.id : ""
-        token.pid = user ? user.profileId : ""
-        token.username = user ? user.username : ""
-      }
-      return Promise.resolve(token)
+    session({ session, token }: any) {
+      session.user = token.user
+      return session
     },
-    // Session callback to customize the session
-    session: async ({ session, token }: any) => {
-      ;(session as any).uid = token.id
-      ;(session as any).username = token.username
-      ;(session as any).pid = token.profileId
-      return Promise.resolve(session)
+    jwt({ token, user }) {
+      if (user) {
+        token.user = user
+      }
+      return token
     },
   },
   providers: [
     // Configure the CredentialsProvider
     // @ts-expect-error
     CredentialsProvider.default({
-      name: "credentials",
+      name: "credentias",
       async authorize(credentials: any) {
         const { username, password } = credentials
 
@@ -75,11 +70,13 @@ export default NuxtAuthHandler({
         }
         // Return user information if the credentials are valid
         return {
-          id: user.id,
-          profileId: userProfile.id,
+          uid: user.id,
+          pid: userProfile.id,
           username: user.username,
         }
       },
     }),
   ],
-})
+}
+
+export default NuxtAuthHandler(authOptions, runtimeConfig)

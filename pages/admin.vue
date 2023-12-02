@@ -85,7 +85,7 @@ import { useAdminStore } from "@/store/admin"
 definePageMeta({ middleware: "auth" })
 
 const { data } = await useFetch<Block[]>("/api/blocks")
-console.log(data)
+// console.log(data)
 const { getCurrentUser } = useAuthStore()
 const { currentUser } = storeToRefs(useAuthStore())
 const { setBlocks } = useAdminStore()

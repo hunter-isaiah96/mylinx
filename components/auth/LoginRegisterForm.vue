@@ -179,11 +179,8 @@ const submitForm = async () => {
   }
 
   if (error) {
+    setAuthenticating(false)
     useNuxtApp().$toast.error(error, { theme: "colored" })
-  } else {
-    navigateTo({ path: "/" })
   }
-
-  setAuthenticating(false)
 }
 </script>

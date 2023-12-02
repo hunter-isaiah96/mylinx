@@ -1,8 +1,10 @@
+import { resolve } from "node:path"
+
 export default defineNuxtConfig({
   // Enable Vue Devtools for better development experience
   devtools: { enabled: true },
   // List of Nuxt.js modules to include
-  modules: ["vuetify-nuxt-module", "@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt", "@sidebase/nuxt-auth"],
+  modules: ["vuetify-nuxt-module", "@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt", "@hebilicious/authjs-nuxt"],
   plugins: ["@/plugins/vue3-toastify"],
   css: ["@/assets/scss/global.scss", "@/assets/scss/themes.scss"],
   // Application configuration
@@ -31,18 +33,29 @@ export default defineNuxtConfig({
       },
     },
   },
-  auth: {
-    isEnabled: true,
-    session: {
-      enableRefreshOnWindowFocus: false,
-      enableRefreshPeriodically: false,
-    },
-    baseURL: process.env.AUTH_ORIGIN,
-    provider: {
-      type: "authjs",
-    },
-    globalAppMiddleware: {
-      isEnabled: true,
+  alias: {
+    cookie: resolve(__dirname, "node_modules/cookie"),
+  },
+  runtimeConfig: {
+    public: {
+      authJs: {
+        baseUrl: "http://localhost:3000",
+        verifyClientOnEveryRequest: true,
+      },
     },
   },
+  // auth: {
+  //   isEnabled: true,
+  //   session: {
+  //     enableRefreshOnWindowFocus: false,
+  //     enableRefreshPeriodically: false,
+  //   },
+  //   baseURL: process.env.AUTH_ORIGIN,
+  //   provider: {
+  //     type: "authjs",
+  //   },
+  //   globalAppMiddleware: {
+  //     isEnabled: true,
+  //   },
+  // },
 })

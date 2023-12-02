@@ -1,16 +1,17 @@
-import { getToken } from "#auth"
+import { authOptions } from "../api/auth/[...]"
+import { getServerSession, getServerToken } from "#auth"
 export default defineEventHandler(async (event) => {
   const protectedRoutes = ["/api/auth/currentuser", "/api/blocks", "/api/profile/update"]
   const url = getRequestURL(event)
   const isProtected = protectedRoutes.some((route) => url.pathname.includes(route))
-  console.log(event)
   if (isProtected) {
-    const token = await getToken({ event })
-    if (token) event.context.auth = token
+    const session = await getServerSession(event, authOptions)
+    console.log(session?.user)
+    if (session) event.context.auth = session.user
     else
       throw createError({
         statusCode: 401,
-        message: `Authentication Required ${token}`,
+        message: `Authentication Required`,
       })
   }
 })

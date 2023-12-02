@@ -62,10 +62,8 @@ import { storeToRefs } from "pinia"
 
 // Define page meta for authentication
 definePageMeta({
-  auth: {
-    unauthenticatedOnly: true,
-    navigateAuthenticatedTo: "/admin",
-  },
+  middleware: "guest-only",
+  auth: { authenticatedRedirectTo: "/admin" },
 })
 
 // Get the current route using useRoute
