@@ -41,26 +41,18 @@ const { updateBlock } = useAdminStore()
 
 const toggle = ref(false)
 const textInput: Ref<HTMLInputElement | null> = ref(null)
-const props = defineProps({
-  model: String,
-  fontWeight: String,
-  data: Object,
-  placeholder: {
-    type: String,
-    default: "Title",
-  },
-  centered: Boolean,
-})
-// const props = defineProps({
-//   model: String || null || undefined,
-//   fontWeight: String,
-//   data: Object,
-//   placeholder: {
-//     type: String,
-//     default: "Title",
-//   },
-//   centered: Boolean,
-// })
+const props = withDefaults(
+  defineProps<{
+    model: string
+    fontWeight?: string
+    data: object
+    placeholder?: string
+    centered?: boolean
+  }>(),
+  {
+    placeholder: "Title",
+  }
+)
 defineEmits(["update:modelValue"])
 
 const toggleInput = async () => {

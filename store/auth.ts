@@ -1,5 +1,5 @@
 import { defineStore } from "pinia"
-import type { Block, Theme } from "@/drizzle/schema"
+import type { Block, ProfileWithBlocks, Theme } from "@/drizzle/schema"
 
 export interface Profile {
   title: string
@@ -23,7 +23,7 @@ export interface Profile {
 
 interface AuthState {
   authenticating: boolean
-  currentUser: null | Profile
+  currentUser: null | ProfileWithBlocks
   updatingProfilePicture: boolean
 }
 
@@ -41,7 +41,7 @@ export const useAuthStore = defineStore({
     },
     async getCurrentUser() {
       try {
-        const user: Profile = await $fetch("/api/auth/currentuser")
+        const user: ProfileWithBlocks = await $fetch("/api/auth/currentuser")
         this.currentUser = user
       } catch (e: unknown) {
         if (e instanceof Error) handleError(e.message)
@@ -74,7 +74,7 @@ export const useAuthStore = defineStore({
         if (e instanceof Error) handleError(e.message)
       }
     },
-    async updateProfileBio(bio: string) {
+    async updateProfileBio(bio: string | null) {
       try {
         await $fetch(`/api/profile/update/bio`, {
           method: "PUT",

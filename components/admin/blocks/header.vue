@@ -59,48 +59,6 @@
           </v-col>
         </v-row>
       </v-container>
-      <!-- Icon button for grid view -->
-      <!-- <v-btn
-        icon="mdi-dots-grid"
-        size="small"
-        density="comfortable"
-        variant="plain"
-        class="handle block-item-left"
-        flat
-      ></v-btn>
-      <div class="text-center px-12"> -->
-      <!-- Name Input -->
-      <!-- <ToggleInput
-          :data="data"
-          :model="data.name!"
-          @update:model-value="(newValue) => (data.name = newValue)"
-          placeholder="Headline title"
-          class="font-weight-bold"
-          centered
-        />
-      </div> -->
-      <!-- Column for the switch and delete button -->
-      <!-- <div class="block-item-right"> -->
-      <!-- Switch component to toggle the 'active' property -->
-      <!-- <v-switch
-          v-model="data.active"
-          color="green"
-          density="compact"
-          :disabled="!data.name"
-          @update:model-value="updateBlock(data)"
-          hide-details
-        ></v-switch> -->
-      <!-- Button to trigger delete action -->
-      <!-- <v-btn
-          icon="mdi-trash-can-outline"
-          size="small"
-          density="comfortable"
-          :variant="isExpansionOpen('blockDelete').variant"
-          :color="isExpansionOpen('blockDelete').color"
-          @click="toggleExpansion('blockDelete')"
-          flat
-        ></v-btn> -->
-      <!-- </div> -->
     </v-card-text>
 
     <!-- Expansion panels section -->

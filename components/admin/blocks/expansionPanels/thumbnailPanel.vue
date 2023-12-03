@@ -76,9 +76,9 @@ import { useAdminStore } from "@/store/admin"
 const { deleteBlockThumbnail } = useAdminStore()
 const { selectPhoto } = useCropperStore() // Accessing the authentication store
 
-defineProps({
-  id: Number,
-  image: String,
-  toggle: Function,
-})
+defineProps<{
+  id: number
+  image?: string
+  toggle: Function
+}>()
 </script>

@@ -101,9 +101,11 @@
   </div>
 </template>
 <script setup lang="ts">
-const props = defineProps({
-  profile: Object,
-})
+import type { ProfileWithBlocks } from "@/drizzle/schema"
+
+const props = defineProps<{
+  profile?: ProfileWithBlocks
+}>()
 </script>
 <style>
 .main-container {

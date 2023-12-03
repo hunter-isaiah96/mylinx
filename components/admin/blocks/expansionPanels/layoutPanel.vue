@@ -101,8 +101,8 @@
 
 <script setup lang="ts">
 const selectedLayout = ref("classic")
-const props = defineProps({
-  id: Number,
-  toggle: Function,
-})
+const props = defineProps<{
+  id: number
+  toggle: Function
+}>()
 </script>
