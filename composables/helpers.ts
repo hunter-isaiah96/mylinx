@@ -33,14 +33,14 @@ export const headerItems = [
     icon: "mdi-shape-outline",
     to: "/admin/appearance",
   },
-  {
-    title: "Analytics",
-    icon: "mdi-chart-box-outline",
-    to: "/admin/analytics",
-  },
-  {
-    title: "Settings",
-    icon: "mdi-octagon-outline",
-    to: "/admin/settings",
-  },
+  // {
+  //   title: "Analytics",
+  //   icon: "mdi-chart-box-outline",
+  //   to: "/admin/analytics",
+  // },
+  // {
+  //   title: "Settings",
+  //   icon: "mdi-octagon-outline",
+  //   to: "/admin/settings",
+  // },
 ]

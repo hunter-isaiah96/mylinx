@@ -28,7 +28,7 @@
       </div>
       <v-spacer></v-spacer>
       <div class="d-flex align-center nav-item-spacing mr-4">
-        <v-btn
+        <!-- <v-btn
           prepend-icon="mdi-lightning-bolt"
           class="text-capitalize font-weight-black"
           variant="tonal"
@@ -36,7 +36,10 @@
         >
           Try Pro for free
         </v-btn>
-        <ShareButton />
+        <ShareButton /> -->
+        <h4>
+          {{ currentUser?.displayName }}
+        </h4>
         <v-menu
           v-if="currentUser"
           v-model="accountMenu"
