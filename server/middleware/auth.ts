@@ -6,7 +6,6 @@ export default defineEventHandler(async (event) => {
   const isProtected = protectedRoutes.some((route) => url.pathname.includes(route))
   if (isProtected) {
     const session = await getServerSession(event, authOptions)
-    console.log(session?.user)
     if (session) event.context.auth = session.user
     else
       throw createError({

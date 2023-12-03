@@ -39,7 +39,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       authJs: {
-        baseUrl: "https://mylinx.netlify.app",
+        baseUrl: "",
         verifyClientOnEveryRequest: true,
       },
     },
