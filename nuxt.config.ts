@@ -39,7 +39,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       authJs: {
-        baseUrl: "",
+        baseUrl: process.env.AUTH_ORIGIN,
         verifyClientOnEveryRequest: true,
       },
     },
