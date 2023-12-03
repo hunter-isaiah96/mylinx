@@ -54,7 +54,6 @@
 
 <script setup lang="ts">
 import { useAdminStore } from "@/store/admin"
-import { storeToRefs } from "pinia"
 
 const { blocks } = storeToRefs(useAdminStore())
 

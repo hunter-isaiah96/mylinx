@@ -148,7 +148,6 @@
 <script setup lang="ts">
 import { useAuthStore } from "@/store/auth"
 import { useCropperStore } from "@/store/cropper"
-import { storeToRefs } from "pinia"
 const themes = [
   { class: "default", display: "default" },
   { class: "ocean-breeze", display: "ocean breeze" },

@@ -12,7 +12,6 @@
 <script setup lang="ts">
 import ProfileViewer from "../profile/profileViewer.vue"
 import { useAuthStore } from "@/store/auth"
-import { storeToRefs } from "pinia"
 const { currentUser } = storeToRefs(useAuthStore())
 </script>
 <style lang="scss" scoped>

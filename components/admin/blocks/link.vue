@@ -50,7 +50,7 @@
             <v-row no-gutters>
               <v-col>
                 <div class="d-flex">
-                  <v-btn
+                  <!-- <v-btn
                     icon="mdi-format-line-style"
                     size="small"
                     density="comfortable"
@@ -58,9 +58,8 @@
                     :color="isExpansionOpen('blockLayout').color"
                     @click="toggleExpansion('blockLayout')"
                     flat
-                  ></v-btn>
+                  ></v-btn> -->
                   <v-btn
-                    class="ml-2"
                     icon="mdi-image"
                     size="small"
                     density="comfortable"
@@ -96,10 +95,10 @@
         :toggle="toggleExpansion"
         :id="data.id"
       />
-      <LayoutPanel
+      <!-- <LayoutPanel
         :toggle="toggleExpansion"
         :id="data.id"
-      />
+      /> -->
       <ThumbnailPanel
         :image="data.thumbnail?.secure_url"
         :toggle="toggleExpansion"

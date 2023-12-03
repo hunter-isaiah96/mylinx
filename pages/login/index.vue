@@ -58,7 +58,6 @@
 <script setup lang="ts">
 // Import statements
 import { useAuthStore } from "@/store/auth"
-import { storeToRefs } from "pinia"
 
 // Define page meta for authentication
 definePageMeta({

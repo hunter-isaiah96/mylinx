@@ -10,10 +10,6 @@
 </template>
 <script setup lang="ts">
 import ProfileViewer from "@/components/admin/profile/profileViewer.vue"
-
-definePageMeta({
-  auth: false,
-})
 const route = useRoute()
 const { data: profile } = await useFetch(`/api/profile/${route.params.username}`)
 if (!profile) {

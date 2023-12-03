@@ -56,7 +56,6 @@
 <script setup lang="ts">
 import { Cropper } from "vue-advanced-cropper"
 import "vue-advanced-cropper/dist/style.css"
-import { storeToRefs } from "pinia"
 import { useCropperStore } from "@/store/cropper"
 
 const { updatePhoto, reset } = useCropperStore()

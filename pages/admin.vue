@@ -78,19 +78,16 @@ import ProfileViewer from "@/components/admin/profile/profileViewer.vue"
 import PhonePreview from "@/components/admin/mobile/phonePreview.vue"
 import ImageCropper from "@/components/admin/imageCropper.vue"
 import type { Block } from "@/drizzle/schema"
-import { storeToRefs } from "pinia"
 import { useAuthStore } from "@/store/auth"
 import { useAdminStore } from "@/store/admin"
 
 definePageMeta({ middleware: "auth" })
 
 const { data } = await useFetch<Block[]>("/api/blocks")
-// console.log(data)
 const { getCurrentUser } = useAuthStore()
 const { currentUser } = storeToRefs(useAuthStore())
 const { setBlocks } = useAdminStore()
 const { name, mdAndUp, smAndDown } = useDisplay()
-const { status } = useAuth()
 // Local Admin Variables
 const mobilePreviewScale = ref(1)
 const profilePreview = ref(false)

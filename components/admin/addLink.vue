@@ -49,7 +49,6 @@
   </div>
 </template>
 <script setup lang="ts">
-import { storeToRefs } from "pinia"
 import { useAdminStore } from "@/store/admin"
 import type { Block } from "~/drizzle/schema"
 const { addBlock } = useAdminStore()
