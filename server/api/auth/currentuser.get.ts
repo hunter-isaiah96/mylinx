@@ -1,8 +1,6 @@
 import { db } from "@/server/initial-services"
 import { type ProfileWithBlocks, profile, block } from "@/drizzle/schema"
 import { or, eq, ne, and } from "drizzle-orm"
-import { getServerToken } from "#auth"
-import { authOptions } from "./[...]"
 
 export default defineEventHandler(async (event) => {
   try {
