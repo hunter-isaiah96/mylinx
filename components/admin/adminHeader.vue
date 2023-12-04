@@ -7,13 +7,16 @@
       app
     >
       <div class="d-flex align-center nav-item-spacing nav-items">
-        <div class="ml-7">
+        <router-link
+          to="/admin"
+          class="ml-7"
+        >
           <v-img
             src="@/assets/images/logo.svg"
             width="30px"
             contain
           ></v-img>
-        </div>
+        </router-link>
         <div v-if="$vuetify.display.mdAndUp.value">
           <v-btn
             v-for="navItem in headerItems"
