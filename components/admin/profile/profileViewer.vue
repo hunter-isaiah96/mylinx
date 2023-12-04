@@ -78,20 +78,20 @@
                   style="width: 48px"
                 ></div>
               </v-col>
-              <v-col class="px-1 overflow-hidden text-caption font-weight-medium">
+              <v-col class="overflow-hidden text-caption font-weight-medium">
                 {{ block.name }}
               </v-col>
               <v-col
                 cols="auto"
-                class="d-flex align-center"
+                class="d-flex align-center pr-12"
               >
-                <v-btn
+                <!-- <v-btn
                   size="48"
                   icon="mdi-dots-horizontal"
                   variant="plain"
                   @click.stop=""
                   flat
-                ></v-btn>
+                ></v-btn> -->
               </v-col>
             </v-row>
           </v-card>
