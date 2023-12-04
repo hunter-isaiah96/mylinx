@@ -1,14 +1,6 @@
 <template>
   <v-app>
     <v-no-ssr>
-      <v-btn
-        v-if="smAndDown"
-        class="preview-profile-button rounded-pill"
-        :prepend-icon="profilePreview ? 'mdi-close' : 'mdi-eye'"
-        @click="profilePreview = !profilePreview"
-      >
-        Preview
-      </v-btn>
       <AdminHeader />
       <v-navigation-drawer
         v-if="mdAndUp"
@@ -41,34 +33,45 @@
           </v-row>
         </v-container>
         <ImageCropper />
-      </v-main>
-      <v-bottom-navigation v-if="smAndDown && !profilePreview">
         <v-btn
-          class="preview-profile-button"
-          append-icon="mdi-eye"
-          >Preview</v-btn
+          v-if="smAndDown"
+          class="preview-profile-button rounded-pill"
+          :prepend-icon="profilePreview ? 'mdi-close' : 'mdi-eye'"
+          @click="profilePreview = !profilePreview"
         >
-        <v-btn
-          v-for="navItem in headerItems"
-          :key="navItem.title"
-          :to="navItem.to"
-          :active="false"
-          :prepend-icon="navItem.icon"
-          class="text-capitalize"
-          exact
-        >
-          {{ navItem.title }}
+          Preview
         </v-btn>
-      </v-bottom-navigation>
-      <v-overlay
-        v-if="smAndDown"
-        width="100%"
-        height="100%"
-        v-model="profilePreview"
-        class="overflow-auto"
-      >
-        <ProfileViewer :profile="currentUser!" />
-      </v-overlay>
+        <v-bottom-navigation v-if="smAndDown && !profilePreview">
+          <v-btn
+            class="preview-profile-button"
+            append-icon="mdi-eye"
+            >Preview</v-btn
+          >
+          <v-btn
+            v-for="navItem in headerItems"
+            :key="navItem.title"
+            :to="navItem.to"
+            :active="false"
+            :prepend-icon="navItem.icon"
+            class="text-capitalize"
+            exact
+          >
+            {{ navItem.title }}
+          </v-btn>
+        </v-bottom-navigation>
+        <v-overlay
+          v-if="smAndDown"
+          width="100%"
+          height="100%"
+          v-model="profilePreview"
+          class="overflow-auto"
+        >
+          <ProfileViewer
+            v-if="currentUser"
+            :profile="currentUser"
+          />
+        </v-overlay>
+      </v-main>
     </v-no-ssr>
   </v-app>
 </template>
