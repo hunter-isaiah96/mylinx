@@ -4,9 +4,11 @@ $block-control-space: 17px;
   width: 100%;
   outline: none;
 }
+
 .block-editable-text {
   max-width: 100%;
 }
+
 .ellipsis-text {
   white-space: nowrap;
   overflow: hidden;
@@ -33,6 +35,7 @@ $block-control-space: 17px;
 .outline-active {
   outline: 2px solid black !important;
 }
+
 .outline-idle {
   outline: 1px solid rgb(211, 211, 211) !important;
 }
@@ -43,6 +46,7 @@ $block-control-space: 17px;
   transform: translate(-50%, -50%);
   top: 50%;
 }
+
 .block-item-left {
   left: $block-control-space;
 }

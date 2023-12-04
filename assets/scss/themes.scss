@@ -34,42 +34,34 @@
   &.default {
     @include v-card-styles(#f2f3f0, none, black);
   }
-
   // Ocean Breeze Theme
   &.ocean-breeze {
     @include v-card-styles(linear-gradient(0deg, #00bcd4, #2196f3), #ff9800, white);
   }
-
   // Sunset Horizon Theme
   &.sunset-horizon {
     @include v-card-styles(linear-gradient(0deg, #ff5722, #ff9800), #4caf50, black);
   }
-
   // Forest Green Theme
   &.forest-green {
     @include v-card-styles(linear-gradient(0deg, #4caf50, #8bc34a), #e91e63, white);
   }
-
   // Lavender Fields Theme
   &.lavender-fields {
     @include v-card-styles(linear-gradient(0deg, #9c27b0, #e91e63), #ff9800, black);
   }
-
   // Golden Hour Theme
   &.golden-hour {
     @include v-card-styles(linear-gradient(0deg, #ffc107, #ff9800), #e91e63, white);
   }
-
   // Dark Night Sky Theme
   &.dark-night-sky {
     @include v-card-styles(linear-gradient(0deg, #333333, #000000), #00bcd4, white);
   }
-
   // Tropical Paradise Theme
   &.tropical-paradise {
     @include v-card-styles(linear-gradient(0deg, #ff5722, #00bcd4), #8bc34a, black);
   }
-
   // Desert Sands Theme
   &.desert-sands {
     @include v-card-styles(linear-gradient(0deg, #ff9800, #e91e63), #2196f3, white);
