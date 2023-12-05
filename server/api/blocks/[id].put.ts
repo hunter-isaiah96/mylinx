@@ -2,13 +2,18 @@ import { db } from "@/server/initial-services"
 import { and, eq } from "drizzle-orm"
 import { block } from "@/drizzle/schema"
 
-const updateBlock = async (profileId: number, blockId: number, updateBlock: { id: string; name: string; link: string; active: boolean }) => {
+const updateBlock = async (
+  profileId: number,
+  blockId: number,
+  updateBlock: { id: string; name: string; link: string; active: boolean; style: "classic" | "featured" }
+) => {
   await db
     .update(block)
     .set({
       link: updateBlock.link,
       name: updateBlock.name,
       active: updateBlock.active,
+      style: updateBlock.style,
     })
     .where(and(eq(block.profileId, profileId), eq(block.id, blockId)))
 }

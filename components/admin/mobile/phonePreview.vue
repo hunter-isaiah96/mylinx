@@ -10,7 +10,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import ProfileViewer from "../profile/profileViewer.vue"
+import ProfileViewer from "@/components/profile/profileViewer.vue"
 import { useAuthStore } from "@/store/auth"
 const { currentUser } = storeToRefs(useAuthStore())
 </script>

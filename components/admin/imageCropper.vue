@@ -17,7 +17,7 @@
               adjustStencil: false,
             }"
             :default-size="defaultSize"
-            :src="img"
+            :src="image"
             image-restriction="stencil"
             ref="cropperTool"
           />
@@ -59,7 +59,7 @@ import "vue-advanced-cropper/dist/style.css"
 import { useCropperStore } from "@/store/cropper"
 
 const { updatePhoto, reset } = useCropperStore()
-const { img, open } = storeToRefs(useCropperStore())
+const { image, open } = storeToRefs(useCropperStore())
 
 const emit = defineEmits(["clearCropper"])
 const cropperTool = ref<any>(null)

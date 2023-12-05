@@ -23,7 +23,8 @@
       <div class="font-weight-light text-subtitle-2 py-6 px-6">Choose a layout for your link.</div>
       <v-container class="pt-0">
         <v-item-group
-          v-model="selectedLayout"
+          :model-value="style"
+          @update:model-value="$emit('update:modelValue', $event)"
           mandatory
         >
           <v-item
@@ -63,32 +64,10 @@
               <v-list-item
                 title="Featured"
                 subtitle="Make your link standout with a larger, more attractive display."
-                class="py-4"
+                class="py-6"
               >
                 <template v-slot:prepend>
                   <v-radio :model-value="isSelected"></v-radio>
-                </template>
-                <template v-slot:append>
-                  <v-card
-                    class="mx-auto"
-                    rounded="lg"
-                    flat
-                  >
-                    <v-responsive
-                      :aspect-ratio="16 / 9"
-                      width="150"
-                    >
-                      <v-img
-                        src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-                        class="align-end"
-                        height="100%"
-                        width="100%"
-                        cover
-                      >
-                        <v-card-title class="text-white text-subtitle-2"> Example Title </v-card-title>
-                      </v-img>
-                    </v-responsive>
-                  </v-card>
                 </template>
               </v-list-item>
             </v-card>
@@ -100,9 +79,10 @@
 </template>
 
 <script setup lang="ts">
-const selectedLayout = ref("classic")
 const props = defineProps<{
   id: number
+  style: string
   toggle: Function
 }>()
+defineEmits(["update:modelValue"])
 </script>

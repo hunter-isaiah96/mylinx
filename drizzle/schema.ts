@@ -69,6 +69,7 @@ export const block = mysqlTable(
     link: text("link"),
     thumbnail: json("thumbnail").$type<CloudinaryImage>(),
     position: int("position").default(1).notNull(),
+    style: mysqlEnum("style", ["classic", "featured"]).notNull().default("classic"),
   },
   (table) => {
     return {

@@ -4,7 +4,7 @@ import { useAdminStore } from "./admin"
 
 type CropperState = {
   open: boolean
-  img: string
+  image: string
   uploadAction: string
   id: number | null
 }
@@ -14,7 +14,7 @@ export const useCropperStore = defineStore({
   state: (): CropperState => ({
     // State properties for Cropper
     open: false,
-    img: "",
+    image: "",
     uploadAction: "",
     id: null,
   }),
@@ -39,21 +39,11 @@ export const useCropperStore = defineStore({
           break
       }
     },
-    async selectPhoto(uploadAction: string, id: number | null) {
-      const input = document.createElement("input")
-      input.setAttribute("type", "file")
-      input.setAttribute("accept", "image/png, image/jpeg")
-      input.onchange = async (event) => {
-        this.open = true
-        this.img = await readFile(event)
-        this.uploadAction = uploadAction
-        this.id = id
-        input.remove()
-      }
-      input.addEventListener("cancel", () => {
-        input.remove()
-      })
-      input.click()
+    async setPhoto(image: string, uploadAction: string, id: number | null) {
+      this.image = image
+      this.uploadAction = uploadAction
+      this.id = id
+      this.open = true
     },
     async reset() {
       this.$reset()

@@ -50,7 +50,7 @@
             <v-row no-gutters>
               <v-col>
                 <div class="d-flex">
-                  <!-- <v-btn
+                  <v-btn
                     icon="mdi-format-line-style"
                     size="small"
                     density="comfortable"
@@ -58,7 +58,7 @@
                     :color="isExpansionOpen('blockLayout').color"
                     @click="toggleExpansion('blockLayout')"
                     flat
-                  ></v-btn> -->
+                  ></v-btn>
                   <v-btn
                     icon="mdi-image"
                     size="small"
@@ -95,10 +95,12 @@
         :toggle="toggleExpansion"
         :id="data.id"
       />
-      <!-- <LayoutPanel
+      <LayoutPanel
         :toggle="toggleExpansion"
         :id="data.id"
-      /> -->
+        :style="data.style"
+        @update:model-value="updateBlockStyle"
+      />
       <ThumbnailPanel
         :image="data.thumbnail?.secure_url"
         :toggle="toggleExpansion"
@@ -126,7 +128,7 @@ const { deleteBlock, updateBlock } = useAdminStore()
 const panel: Ref<string[]> = ref([])
 
 // Define props for the component, specifying the expected data type
-defineProps<{
+const props = defineProps<{
   data: Block
 }>()
 
@@ -145,6 +147,11 @@ const toggleExpansion = (name: string) => {
     panel.value.length = 0
     panel.value.push(name)
   }
+}
+
+const updateBlockStyle = (newValue: any) => {
+  props.data.style = newValue
+  updateBlock(props.data)
 }
 </script>
 

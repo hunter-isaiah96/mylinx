@@ -42,7 +42,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import ProfileMenu from "@/components/admin/profile/profileMenu.vue"
+import ProfileMenu from "@/components/admin/profileMenu.vue"
 import { useAuthStore } from "@/store/auth"
 const { $vuetify } = useNuxtApp()
 

@@ -51,50 +51,10 @@
           >
             {{ block.name }}
           </v-card-text>
-          <v-card
-            v-else-if="block.type == 'link'"
-            class="pa-2 rounded-lg item"
-            target="_blank"
-            :href="block.link || ''"
-          >
-            <v-row
-              no-gutters
-              align="center"
-            >
-              <v-col
-                cols="auto"
-                class="d-flex align-center"
-              >
-                <v-img
-                  v-if="block.thumbnail"
-                  class="rounded-lg"
-                  width="48"
-                  aspect-ratio="1"
-                  cover
-                  :src="block.thumbnail.secure_url"
-                ></v-img>
-                <div
-                  v-else
-                  style="width: 48px"
-                ></div>
-              </v-col>
-              <v-col class="overflow-hidden text-caption font-weight-medium">
-                {{ block.name }}
-              </v-col>
-              <v-col
-                cols="auto"
-                class="d-flex align-center pr-12"
-              >
-                <!-- <v-btn
-                  size="48"
-                  icon="mdi-dots-horizontal"
-                  variant="plain"
-                  @click.stop=""
-                  flat
-                ></v-btn> -->
-              </v-col>
-            </v-row>
-          </v-card>
+          <LinkBlock
+            v-else
+            :block="block"
+          />
         </v-list-item>
       </v-list>
     </v-container>
@@ -102,7 +62,7 @@
 </template>
 <script setup lang="ts">
 import type { ProfileWithBlocks } from "@/drizzle/schema"
-
+import LinkBlock from "@/components/profile/blocks/link.vue"
 const props = defineProps<{
   profile?: ProfileWithBlocks
 }>()

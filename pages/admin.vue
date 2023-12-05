@@ -77,7 +77,7 @@
 </template>
 <script setup lang="ts">
 import AdminHeader from "@/components/admin/adminHeader.vue"
-import ProfileViewer from "@/components/admin/profile/profileViewer.vue"
+import ProfileViewer from "@/components/profile/profileViewer.vue"
 import PhonePreview from "@/components/admin/mobile/phonePreview.vue"
 import ImageCropper from "@/components/admin/imageCropper.vue"
 import type { Block } from "@/drizzle/schema"

@@ -1,25 +1,5 @@
 import { defineStore } from "pinia"
-import type { Block, ProfileWithBlocks, Theme } from "@/drizzle/schema"
-
-export interface Profile {
-  title: string
-  bio: string
-  blocks: {
-    type: "link" | "header"
-    position: number
-    link: string | null
-    active: boolean
-    id: number
-    name: string | null
-    profileId: number
-    thumbnail: unknown
-  }[]
-  theme: Theme
-  id: number
-  userId: number
-  displayName: string
-  profilePicture: CloudinaryImage | null
-}
+import type { Block, ProfileWithBlocks } from "@/drizzle/schema"
 
 interface AuthState {
   authenticating: boolean
