@@ -1,5 +1,9 @@
 <template>
-  <v-container v-if="currentUser">
+  <v-container
+    v-if="currentUser"
+    @mouseup="updateQRCode"
+    v-click-outside="updateQRCode"
+  >
     <div class="d-flex justify-center">
       <div
         class="qr-code mb-3"
@@ -139,6 +143,12 @@
         </template>
       </v-expansion-panel> -->
     </v-expansion-panels>
+    <v-btn
+      color="primary"
+      block
+    >
+      Save QR Code
+    </v-btn>
   </v-container>
 </template>
 <script setup lang="ts">

@@ -1339,10 +1339,10 @@
     "@sentry/types" "7.85.0"
     "@sentry/utils" "7.85.0"
 
-"@sidebase/nuxt-auth@^0.6.0-rc.1":
-  version "0.6.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@sidebase/nuxt-auth/-/nuxt-auth-0.6.0-rc.1.tgz#ad2e9ac916fe09b91efe07903bf45f6e4ea064cf"
-  integrity sha512-ncwDLD1koXeO/fFwcCwjA9uxf0b755s5yHJQxsBjRoCyRNadz9snSCe8e78N8i/NW8da7rZrzKWejIOXlVSizw==
+"@sidebase/nuxt-auth@^0.6.3-alpha.1":
+  version "0.6.3-alpha.1"
+  resolved "https://registry.yarnpkg.com/@sidebase/nuxt-auth/-/nuxt-auth-0.6.3-alpha.1.tgz#002bae0d2304a42cd222570b15ca4ea547f3c224"
+  integrity sha512-ohd9MJgnbG0S88d6fTs+iSg2h3jAC/kmgTGZGusjXejPKt6TzL8gaZWISimgWdr614F+Q2gDuADoFy8qa/legw==
   dependencies:
     "@nuxt/kit" "^3.4.2"
     "@vueuse/core" "^9.13.0"

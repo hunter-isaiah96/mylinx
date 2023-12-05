@@ -17,7 +17,7 @@
     "@nuxt/test-utils": "^3.8.0",
     "@nuxtjs/pwa": "^3.3.5",
     "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
-    "@sidebase/nuxt-auth": "^0.6.0-rc.1",
+    "@sidebase/nuxt-auth": "^0.6.3-alpha.1",
     "@types/express": "^4.17.20",
     "@vitejs/plugin-vue": "^4.4.0",
     "drizzle-kit": "^0.19.13",
