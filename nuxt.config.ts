@@ -1,8 +1,6 @@
 import { resolve } from "node:path"
 
 export default defineNuxtConfig({
-  // Enable Vue Devtools for better development experience
-  devtools: { enabled: true },
   // List of Nuxt.js modules to include
   modules: ["vuetify-nuxt-module", "@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt", "@sidebase/nuxt-auth"],
   plugins: ["@/plugins/vue3-toastify"],
@@ -36,12 +34,18 @@ export default defineNuxtConfig({
   alias: {
     cookie: resolve(__dirname, "node_modules/cookie"),
   },
-  runtimeConfig: {
-    public: {
-      authJs: {
-        baseUrl: process.env.AUTH_ORIGIN,
-        verifyClientOnEveryRequest: true,
-      },
+  auth: {
+    isEnabled: true,
+    session: {
+      enableRefreshOnWindowFocus: false,
+      enableRefreshPeriodically: false,
+    },
+    baseURL: "/api/auth",
+    provider: {
+      type: "authjs",
+    },
+    globalAppMiddleware: {
+      isEnabled: true,
     },
   },
   // auth: {

@@ -61,8 +61,10 @@ import { useAuthStore } from "@/store/auth"
 
 // Define page meta for authentication
 definePageMeta({
-  middleware: "guest-only",
-  auth: { authenticatedRedirectTo: "/admin" },
+  auth: {
+    unauthenticatedOnly: true,
+    navigateAuthenticatedTo: "/admin",
+  },
 })
 
 // Get the current route using useRoute

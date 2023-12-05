@@ -44,7 +44,7 @@
     "html-metadata-parser": "^2.0.4",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.6.2",
-    "next-auth": "^4.24.5",
+    "next-auth": "4.21.1",
     "pinia": "^2.1.7",
     "qrcode-vue3": "^1.6.8",
     "qrcode.vue": "^3.4.1",
