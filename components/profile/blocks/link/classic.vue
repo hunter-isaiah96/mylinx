@@ -49,5 +49,5 @@ import type { Block } from "@/drizzle/schema"
 const props = defineProps<{
   block: Block
 }>()
-console.log(props)
+// console.log(props)
 </script>
