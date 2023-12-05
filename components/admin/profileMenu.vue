@@ -22,11 +22,11 @@
     </template>
     <v-list width="340">
       <v-list-item
+        :to="`/${currentUser.displayName}`"
         :title="currentUser.displayName"
-        :subtitle="`mylinx.com/${currentUser.displayName}`"
-        class="pb-5"
+        class="py-2 pr-2"
       >
-        <template v-slot:prepend>
+        <template #prepend>
           <v-avatar :color="currentUser?.profilePicture ? '' : 'primary'">
             <v-img
               v-if="currentUser?.profilePicture"
@@ -36,6 +36,16 @@
             />
             <span v-else>{{ currentUser?.displayName[0] }}</span>
           </v-avatar>
+        </template>
+        <template #subtitle>
+          <div class="ellipsis-text">{{ profileURL }}</div>
+        </template>
+        <template #append>
+          <qrcode-vue
+            :value="profileURL"
+            :size="60"
+            level="H"
+          />
         </template>
       </v-list-item>
       <!-- Account Menu Items -->
@@ -82,7 +92,10 @@
 </template>
 <script setup lang="ts">
 import { useAuthStore } from "@/store/auth"
+import QrcodeVue from "qrcode.vue"
+
 const { signOut } = useAuth()
 const { updatingProfilePicture, currentUser } = storeToRefs(useAuthStore())
 const accountMenu = ref(false)
+const profileURL = computed(() => `${useRequestURL().host}/${currentUser.value?.displayName}`)
 </script>
