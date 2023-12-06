@@ -22,7 +22,8 @@
     </template>
     <v-list width="340">
       <v-list-item
-        :to="`/${currentUser.displayName}`"
+        :href="`/${currentUser.displayName}`"
+        target="_blank"
         :title="currentUser.displayName"
         class="py-2 pr-2"
       >
