@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   // Enable Vue Devtools for better development experience
   devtools: { enabled: true },
   // List of Nuxt.js modules to include
-  modules: ["vuetify-nuxt-module", "@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt", "@hebilicious/authjs-nuxt"],
+  modules: ["vuetify-nuxt-module", "@pinia/nuxt", "@hebilicious/authjs-nuxt"],
   plugins: ["@/plugins/vue3-toastify"],
   css: ["@/assets/scss/global.scss", "@/assets/scss/themes.scss"],
   // Application configuration
@@ -13,6 +13,11 @@ export default defineNuxtConfig({
     head: {
       // Set the title for the application
       title: "MyLinx",
+    },
+  },
+  nitro: {
+    devProxy: {
+      host: "127.0.0.1",
     },
   },
   // Development server configuration

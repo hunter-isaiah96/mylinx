@@ -1,10 +1,7 @@
 <template>
   <v-container v-if="currentUser">
     <div class="d-flex justify-center">
-      <div
-        class="qr-code mb-3"
-        :style="qrBorder"
-      >
+      <div class="qr-code mb-3">
         <QRCodeVue3
           :width="200"
           :height="200"
@@ -139,6 +136,7 @@
         </template>
       </v-expansion-panel> -->
     </v-expansion-panels>
+    <v-btn block> Save QR </v-btn>
   </v-container>
 </template>
 <script setup lang="ts">
@@ -193,7 +191,7 @@ const updateQRCode = () => {
 }
 updateQRCode()
 </script>
-<style>
+<style lang="scss">
 .qr-code {
   overflow: hidden;
   [button-name="Download"] {
