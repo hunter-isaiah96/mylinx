@@ -2,7 +2,7 @@
   <v-container v-if="currentUser">
     <div class="d-flex justify-center">
       <div class="qr-code mb-3">
-        <QRCodeVue3
+        <!-- <QRCodeVue3
           :width="200"
           :height="200"
           :value="options.qrOptions.value"
@@ -11,7 +11,7 @@
           :cornersSquareOptions="options.qrOptions.cornersSquareOptions"
           :cornersDotOptions="options.qrOptions.cornersDotOptions"
           ref="qrcode"
-        />
+        /> -->
       </div>
     </div>
     <v-expansion-panels
@@ -140,7 +140,7 @@
   </v-container>
 </template>
 <script setup lang="ts">
-import QRCodeVue3 from "qrcode-vue3"
+// import QRCodeVue3 from "qrcode-vue3"
 import { useAuthStore } from "@/store/auth"
 const { currentUser } = storeToRefs(useAuthStore())
 const qrcode: any = ref(null)

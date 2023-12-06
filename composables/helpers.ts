@@ -33,11 +33,11 @@ export const headerItems = [
     icon: "mdi-shape-outline",
     to: "/admin/appearance",
   },
-  {
-    title: "QR Code",
-    icon: "mdi-qrcode",
-    to: "/admin/qrcode",
-  },
+  // {
+  //   title: "QR Code",
+  //   icon: "mdi-qrcode",
+  //   to: "/admin/qrcode",
+  // },
   // {
   //   title: "Analytics",
   //   icon: "mdi-chart-box-outline",
